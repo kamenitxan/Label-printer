@@ -1,10 +1,13 @@
 package cz.kamenitxan.labelprinter;
 
+import cz.kamenitxan.labelprinter.models.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 public class Main extends Application {
 
@@ -18,6 +21,20 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+		String filename = "";
+        //launch(args);
+        for (String arg : args) {
+			if (arg.contains("-file=")) {
+				arg = arg.replace("-file=", "");
+				filename = arg;
+				break;
+			}
+		}
+		if (filename.equals("")) {
+			System.out.println("Nezadáno jméno suboru jako parametr (-file=cesta k souboru)");
+		}
+		List<Product> products = ExcelReader.importFile(filename);
+
+		products.forEach(System.out::println);
     }
 }
