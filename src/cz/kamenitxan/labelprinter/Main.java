@@ -31,10 +31,12 @@ public class Main extends Application {
 			}
 		}
 		if (filename.equals("")) {
-			System.out.println("Nezadáno jméno suboru jako parametr (-file=cesta k souboru)");
+			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
 		}
-		List<Product> products = ExcelReader.importFile(filename);
+		List<Product> products = ExcelReader.importFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx");
 
 		products.forEach(System.out::println);
     }
+    
 }
+

@@ -29,7 +29,7 @@ public class ExcelReader {
 
 		try {
 			file = new FileInputStream(new File(filename));
-			workbook = new XSSFWorkbook (file);
+			workbook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("Soubor nenalezen!!!");
 			return products;
