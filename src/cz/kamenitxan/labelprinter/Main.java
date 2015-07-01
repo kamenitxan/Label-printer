@@ -36,6 +36,10 @@ public class Main extends Application {
 		List<Product> products = ExcelReader.importFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx");
 
 		products.forEach(System.out::println);
+                for (Product product : products) {
+                    PdfGenerator.generatePdf(product);
+                }
+                
     }
     
 }
