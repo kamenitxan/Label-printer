@@ -7,9 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Main extends Application {
+    public static final double startTime = System.nanoTime();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -35,12 +40,22 @@ public class Main extends Application {
 		}
 		List<Product> products = ExcelReader.importFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx");
 
-		products.forEach(System.out::println);
-                for (Product product : products) {
-                    PdfGenerator.generatePdf(product);
-                }
-                
+		//products.forEach(System.out::println);
+        products.parallelStream().forEach(PdfGenerator::generatePdf);
+        System.out.println(getTime());
     }
+
+	/**
+	 * @return elapsed time of generation
+	 */
+	private static String getTime(){
+		final DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+		final Date today = Calendar.getInstance().getTime();
+		final String reportDate = df.format(today);
+		final double cas = (System.nanoTime() - Main.startTime) / 1000000000;
+
+		return "Generováno " + reportDate + ". Export trval " + cas + " s";
+	}
     
 }
 

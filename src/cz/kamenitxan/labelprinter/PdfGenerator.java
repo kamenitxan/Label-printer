@@ -56,8 +56,7 @@ public class PdfGenerator {
             contentStream.drawString( product.color );
             contentStream.moveTextPositionByAmount( 0, pageWidth-30 );
             contentStream.drawString( product.color );
-            
-            
+
             //texty
             contentStream.setNonStrokingColor(Color.BLACK);
             contentStream.setTextRotation(90*Math.PI*0.25,110,100);
@@ -163,12 +162,8 @@ public class PdfGenerator {
             return Color.BLACK;
         }
     }
-    
-    
-    
-    
-    public PdfGenerator()
+
+    private PdfGenerator()
     {
     }
-
 }
