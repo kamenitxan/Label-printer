@@ -1,38 +1,20 @@
-
 package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.models.Product;
-import java.awt.Color;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import org.apache.pdfbox.encoding.StandardEncoding;
-import org.apache.pdfbox.encoding.Type1Encoding;
-import org.apache.pdfbox.encoding.WinAnsiEncoding;
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.common.PDStream;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
-import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
-import static org.apache.poi.hssf.usermodel.HeaderFooter.page;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-public class PdfGenerator
-
-
-
-{
+public class PdfGenerator {
     public static final float pageWidth = 843;
     public static final float pageHeigth = 596;
     public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( pageHeigth, pageWidth );
@@ -41,27 +23,18 @@ public class PdfGenerator
 
     public static void generatePdf(Product product){
 
-    PDDocument document = new PDDocument();
-    
-    PDPage page = new PDPage(PAGE_SIZE_A4);
-    document.addPage( page );
-    
-    page.setRotation(90);
-    
-  
-  
-  
-    
-    PDFont font = PDType1Font.HELVETICA;
-    PDFont boldFont = PDType1Font.HELVETICA_BOLD;  
-    font.setFontEncoding(new StandardEncoding());
-    boldFont.setFontEncoding(new WinAnsiEncoding());
-    
-    
-    
-    PDPageContentStream contentStream;
+		PDDocument document = new PDDocument();
+
+		PDPage page = new PDPage(PAGE_SIZE_A4);
+		document.addPage( page );
+
+		page.setRotation(90);
+
+		PDPageContentStream contentStream;
         try {
             contentStream = new PDPageContentStream(document, page);
+			PDType0Font font = PDType0Font.load(document, new File("/Users/tomaspavel/Dropbox/Dokumenty/Programovani/labelprinter/src/cz/kamenitxan/labelprinter/OpenSans-Regular.ttf"));
+
             //barevne obdelniky
             contentStream.setNonStrokingColor(getProductColor(product.color));
             contentStream.fillRect(0, 0, pageHeigth, 30);
@@ -89,7 +62,7 @@ public class PdfGenerator
             contentStream.setNonStrokingColor(Color.BLACK);
             contentStream.setTextRotation(90*Math.PI*0.25,110,100);
             contentStream.moveTextPositionByAmount( 0, 0 );
-            contentStream.setFont( boldFont, 12 );
+            //contentStream.setFont( boldFont, 12 );
             contentStream.drawString( product.name );
             contentStream.setFont( font, 12 );
             contentStream.moveTextPositionByAmount( 0, -15 );
@@ -100,16 +73,15 @@ public class PdfGenerator
             contentStream.drawString("Výrobce: Lamdaprint cz s.r.o.");
             
             
-
             contentStream.endText();
             
             //obrazky
             InputStream in = new FileInputStream(new File("img//lamda.jpg"));
-            PDJpeg img = new PDJpeg(document, in);
+           // PDJpeg img = new PDJpeg(document, in);
             // width, 0, 0, height, x, y - šířka a výška je naopak, kvůli rotaci
             AffineTransform at = new AffineTransform(50, 0, 0, 200, 70, 80);
             at.rotate(Math.toRadians(90));
-            contentStream.drawXObject(img, at);
+            //contentStream.drawXObject(img, at);
             
             
             
@@ -121,10 +93,10 @@ public class PdfGenerator
     
 
         try {
-            document.save("pdf//" + product.invNum);
+            document.save("pdf/" + product.invNum + ".pdf");
+        } catch (FileNotFoundException ex) {
+            System.out.println("Nenalezena složka pro výstup!!!");
         } catch (IOException ex) {
-            Logger.getLogger(PdfGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (COSVisitorException ex) {
             Logger.getLogger(PdfGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
 
