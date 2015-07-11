@@ -50,6 +50,7 @@ public class ExcelReader {
 					name = getCellValue(row.getCell(1), row.getCell(1).getCellType(), evaluator);
 					capacity = getCellValue(row.getCell(7), row.getCell(7).getCellType(), evaluator);
 					color = getCellValue(row.getCell(2), row.getCell(2).getCellType(), evaluator);
+                                        productCode = getCellValue(row.getCell(4), row.getCell(4).getCellType(), evaluator);
 				}};
 				products.add(product);
 			} catch (NullPointerException ex) {

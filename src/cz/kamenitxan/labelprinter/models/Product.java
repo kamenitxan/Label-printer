@@ -8,17 +8,20 @@ public class Product {
 	public String name = "";
 	public String capacity = "";
 	public String color = "";
+        public String productCode = "";
 
 	public Product() {
 	}
 
-	public Product(String invNum, String name, String capacity, String color) {
+	public Product(String invNum, String name, String capacity, String color, String productCode) {
 		this.invNum = invNum;
 		this.name = name;
 		this.capacity = capacity;
 		this.color = color;
+                this.productCode = productCode;
 	}
 
+        
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -26,6 +29,7 @@ public class Product {
 				", name='" + name + '\'' +
 				", capacity='" + capacity + '\'' +
 				", color='" + color + '\'' +
+                                ", productCode='" + productCode + '\'' +
 				'}';
 	}
 }
