@@ -1,5 +1,6 @@
 package cz.kamenitxan.labelprinter;
 
+import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,10 +40,15 @@ public class Main extends Application {
 		if (filename.equals("")) {
 			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
 		}
-		List<Product> products = ExcelReader.importFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx");
+		if (!System.getProperty("os.name").equals("Mac OS X")) {
+			filename = "C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx";
+		}
+		List<Product> products = ExcelReader.importFile(filename);
+		final ArrayList<Manufacturer> manufacturers = ExcelReader.importManufacturers(filename);
+
 
 		//products.forEach(System.out::println);
-        products.parallelStream().forEach(PdfGenerator::generatePdf);
+        products.parallelStream().forEach(a -> PdfGenerator.generatePdf(a, manufacturers));
         System.out.println(getTime());
     }
 

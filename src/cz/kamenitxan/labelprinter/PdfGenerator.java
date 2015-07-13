@@ -1,6 +1,6 @@
 package cz.kamenitxan.labelprinter;
 
-import cz.kamenitxan.labelprinter.models.Manufacturers;
+import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -9,10 +9,10 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 
@@ -29,7 +29,8 @@ public class PdfGenerator {
     
     
 
-    public static void generatePdf(Product product, ArrayList<Manufacturers> manufacturers){
+    public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
+        Manufacturer manufacturer = manufacturers.get(0);
 
 		PDDocument document = new PDDocument();
 
@@ -42,8 +43,18 @@ public class PdfGenerator {
 
         try {
             contentStream = new PDPageContentStream(document, page);
-            PDType0Font font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Regular.ttf"));
-            PDType0Font boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Bold.ttf"));
+            PDType0Font font = PDType0Font.load(document, new File(Main.class.getResource("OpenSans-Regular.ttf").toURI()));
+            PDType0Font boldFont = PDType0Font.load(document, new File(Main.class.getResource("OpenSans-Bold.ttf").toURI()));
+
+            //obrazky
+            PDImageXObject lamdaImage = PDImageXObject.createFromFile("img/lamda.jpg", document);
+            PDImageXObject labelImage = PDImageXObject.createFromFile("img/label.jpg", document);
+            if (!System.getProperty("os.name").equals("Mac OS X")) {
+                font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Regular.ttf"));
+                boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Bold.ttf"));
+                lamdaImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\lamda.jpg", document);
+                labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document);
+            }
 
             
             //barevne obdelniky
@@ -53,9 +64,7 @@ public class PdfGenerator {
             contentStream.addRect(0, pageWidth-30, pageHeight, 30);
             contentStream.fill();
            
-            //obrazky
-            PDImageXObject lamdaImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\lamda.jpg", document); 
-            PDImageXObject labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document); 
+
 
             contentStream.drawImage(lamdaImage, 0, ((pageWidth/3)-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
             contentStream.drawImage(lamdaImage, 0, ((4*(pageWidth/5))-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
@@ -135,9 +144,9 @@ public class PdfGenerator {
             contentStream.showText( product.productCode);
             //Kód výrobce
             contentStream.newLineAtOffset( -350, -15 );
-            contentStream.showText(Manufacturers.GRAS_KOMPATIBIL.getCode());
+            contentStream.showText(manufacturer.code);
             contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText(Manufacturers.GRAS_KOMPATIBIL.getCode());
+            contentStream.showText(manufacturer.code);
             // matice(výška, 0, 0, šířka, y, x)
             Matrix matrix2 = new Matrix(1, 0, 0, 1, ((pageHeight/2)+15), 50);
             matrix2.rotate(Math.toRadians(90));
@@ -178,9 +187,9 @@ public class PdfGenerator {
             contentStream.showText( product.productCode);
             //Kód výrobce
             contentStream.newLineAtOffset( -350, -15 );
-            contentStream.showText(Manufacturers.GRAS_KOMPATIBIL.getCode());
+            contentStream.showText(manufacturer.code);
             contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText(Manufacturers.GRAS_KOMPATIBIL.getCode());
+            contentStream.showText(manufacturer.code);
             // matice(výška, 0, 0, šířka, y, x)
             Matrix matrix3 = new Matrix(1, 0, 0, 1, ((5*(pageHeight/6))+15), 50);
             matrix3.rotate(Math.toRadians(90));
@@ -221,9 +230,9 @@ public class PdfGenerator {
             contentStream.showText( product.productCode);
             //Kód výrobce
             contentStream.newLineAtOffset( -350, -15 );
-            contentStream.showText(Manufacturers.GRAS_KOMPATIBIL.getCode());
+            contentStream.showText(manufacturer.code);
             contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText(Manufacturers.GRAS_KOMPATIBIL.getCode());
+            contentStream.showText(manufacturer.code);
 
             
             contentStream.endText();
@@ -244,9 +253,11 @@ public class PdfGenerator {
             
             contentStream.close();
         } catch (IOException ex) {
-            System.out.println("Nelze zavřít stream.");
+            System.out.println(ex);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-    
+
 
         try {
             document.save("pdf/" + product.invNum + ".pdf");
