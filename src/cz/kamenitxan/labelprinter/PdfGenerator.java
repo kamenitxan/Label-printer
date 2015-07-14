@@ -30,256 +30,251 @@ public class PdfGenerator {
     
 
     public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
-        Manufacturer manufacturer = manufacturers.get(0);
+        for (Manufacturer manufacturer : manufacturers) {
+            PDDocument document = new PDDocument();
 
-		PDDocument document = new PDDocument();
+            PDPage page = new PDPage(PAGE_SIZE_A4);
+            document.addPage(page);
 
-		PDPage page = new PDPage(PAGE_SIZE_A4);
-		document.addPage( page );
+            page.setRotation(90);
 
-		page.setRotation(90);
+            PDPageContentStream contentStream;
 
-		PDPageContentStream contentStream;
+            try {
+                contentStream = new PDPageContentStream(document, page);
+                PDType0Font font = PDType0Font.load(document, new File(Main.class.getResource("OpenSans-Regular.ttf").toURI()));
+                PDType0Font boldFont = PDType0Font.load(document, new File(Main.class.getResource("OpenSans-Bold.ttf").toURI()));
 
-        try {
-            contentStream = new PDPageContentStream(document, page);
-            PDType0Font font = PDType0Font.load(document, new File(Main.class.getResource("OpenSans-Regular.ttf").toURI()));
-            PDType0Font boldFont = PDType0Font.load(document, new File(Main.class.getResource("OpenSans-Bold.ttf").toURI()));
+                //obrazky
+                PDImageXObject lamdaImage = PDImageXObject.createFromFile("img/lamda.jpg", document);
+                PDImageXObject labelImage = PDImageXObject.createFromFile("img/label.jpg", document);
+                if (!System.getProperty("os.name").equals("Mac OS X")) {
+                    font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Regular.ttf"));
+                    boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Bold.ttf"));
+                    lamdaImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\lamda.jpg", document);
+                    labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document);
+                }
 
-            //obrazky
-            PDImageXObject lamdaImage = PDImageXObject.createFromFile("img/lamda.jpg", document);
-            PDImageXObject labelImage = PDImageXObject.createFromFile("img/label.jpg", document);
-            if (!System.getProperty("os.name").equals("Mac OS X")) {
-                font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Regular.ttf"));
-                boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Bold.ttf"));
-                lamdaImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\lamda.jpg", document);
-                labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document);
+
+                //barevne obdelniky
+                contentStream.setNonStrokingColor(getProductColor(product.color));
+                contentStream.addRect(0, 0, pageHeight, 30);
+                contentStream.fill();
+                contentStream.addRect(0, pageWidth - 30, pageHeight, 30);
+                contentStream.fill();
+
+
+                contentStream.drawImage(lamdaImage, 0, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 0, ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
+                contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
+
+                contentStream.drawImage(lamdaImage, pageHeight / 3, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, pageHeight / 3, ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
+                contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
+
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3)), ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3)), ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
+                contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
+
+
+                //text barvy
+                contentStream.setNonStrokingColor(switchColor(product.color));
+                contentStream.beginText();
+                contentStream.setFont(font, 12);
+
+                contentStream.newLineAtOffset((pageHeight / 6) - 30, 10);
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset(0, pageWidth - 30);
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset(0, pageWidth - 30);
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset(0, pageWidth - 30);
+                contentStream.showText(product.color);
+
+
+                //texty
+                contentStream.setNonStrokingColor(Color.BLACK);
+                // matice(výška, 0, 0, šířka, y, x)
+                Matrix matrix = new Matrix(1, 0, 0, 1, ((pageHeight / 6) + 15), 50);
+                matrix.rotate(Math.toRadians(90));
+                contentStream.setTextMatrix(matrix);
+                //název produktu
+                contentStream.setFont(boldFont, 14);
+                contentStream.newLineAtOffset(0, 0);
+                contentStream.showText(product.name);
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText(product.name);
+                //Katalogové číslo
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(-460, -30);
+                contentStream.showText("Katalogové číslo: ");
+                contentStream.setFont(boldFont, 14);
+                contentStream.showText(product.invNum);
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText("Katalogové číslo: ");
+                contentStream.setFont(boldFont, 14);
+                contentStream.showText(product.invNum);
+                //Kapacita
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(-145, 0);
+                contentStream.showText(product.capacity);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(product.capacity);
+                //Výrobce
+                contentStream.setFont(font, 12);
+                contentStream.newLineAtOffset(-665, -15);
+                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                //Kód produktu
+                contentStream.newLineAtOffset(-145, 0);
+                contentStream.showText(product.productCode);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(product.productCode);
+                //Kód výrobce
+                contentStream.newLineAtOffset(-350, -15);
+                contentStream.showText(manufacturer.code);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(manufacturer.code);
+                // matice(výška, 0, 0, šířka, y, x)
+                Matrix matrix2 = new Matrix(1, 0, 0, 1, ((pageHeight / 2) + 15), 50);
+                matrix2.rotate(Math.toRadians(90));
+                contentStream.setTextMatrix(matrix2);
+                //název produktu
+                contentStream.setFont(boldFont, 14);
+                contentStream.newLineAtOffset(0, 0);
+                contentStream.showText(product.name);
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText(product.name);
+                //Katalogové číslo
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(-460, -30);
+                contentStream.showText("Katalogové číslo: ");
+                contentStream.setFont(boldFont, 14);
+                contentStream.showText(product.invNum);
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText("Katalogové číslo: ");
+                contentStream.setFont(boldFont, 14);
+                contentStream.showText(product.invNum);
+                //Kapacita
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(-145, 0);
+                contentStream.showText(product.capacity);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(product.capacity);
+                //Výrobce
+                contentStream.setFont(font, 12);
+                contentStream.newLineAtOffset(-665, -15);
+                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                //Kód produktu
+                contentStream.newLineAtOffset(-145, 0);
+                contentStream.showText(product.productCode);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(product.productCode);
+                //Kód výrobce
+                contentStream.newLineAtOffset(-350, -15);
+                contentStream.showText(manufacturer.code);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(manufacturer.code);
+                // matice(výška, 0, 0, šířka, y, x)
+                Matrix matrix3 = new Matrix(1, 0, 0, 1, ((5 * (pageHeight / 6)) + 15), 50);
+                matrix3.rotate(Math.toRadians(90));
+                contentStream.setTextMatrix(matrix3);
+                //název produktu
+                contentStream.setFont(boldFont, 14);
+                contentStream.newLineAtOffset(0, 0);
+                contentStream.showText(product.name);
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText(product.name);
+                //Katalogové číslo
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(-460, -30);
+                contentStream.showText("Katalogové číslo: ");
+                contentStream.setFont(boldFont, 14);
+                contentStream.showText(product.invNum);
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText("Katalogové číslo: ");
+                contentStream.setFont(boldFont, 14);
+                contentStream.showText(product.invNum);
+                //Kapacita
+                contentStream.setFont(font, 14);
+                contentStream.newLineAtOffset(-145, 0);
+                contentStream.showText(product.capacity);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(product.capacity);
+                //Výrobce
+                contentStream.setFont(font, 12);
+                contentStream.newLineAtOffset(-665, -15);
+                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                contentStream.newLineAtOffset(460, 0);
+                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                //Kód produktu
+                contentStream.newLineAtOffset(-145, 0);
+                contentStream.showText(product.productCode);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(product.productCode);
+                //Kód výrobce
+                contentStream.newLineAtOffset(-350, -15);
+                contentStream.showText(manufacturer.code);
+                contentStream.newLineAtOffset(350, 0);
+                contentStream.showText(manufacturer.code);
+
+
+                contentStream.endText();
+
+                //linky
+                contentStream.moveTo(0, (6 * pageWidth) / 10);
+                contentStream.lineTo(pageHeight, (6 * pageWidth) / 10);
+                contentStream.stroke();
+
+                contentStream.moveTo(pageHeight / 3, 0);
+                contentStream.lineTo(pageHeight / 3, pageWidth);
+                contentStream.stroke();
+
+                contentStream.moveTo((pageHeight / 3) * 2, 0);
+                contentStream.lineTo((pageHeight / 3) * 2, pageWidth);
+                contentStream.stroke();
+
+
+                contentStream.close();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
             }
 
-            
-            //barevne obdelniky
-            contentStream.setNonStrokingColor(getProductColor(product.color));
-            contentStream.addRect(0, 0, pageHeight, 30);
-            contentStream.fill();
-            contentStream.addRect(0, pageWidth-30, pageHeight, 30);
-            contentStream.fill();
-           
 
+            try {
+                File file = new File("pdf/" + manufacturer.name + "/" + product.invNum + ".pdf");
+                file.getParentFile().mkdirs();
+                document.save(file);
+            } catch (FileNotFoundException ex) {
+                System.out.println("Nenalezena složka pro výstup!!!");
+            } catch (IOException ex) {
+                System.out.println("IO Exception - nelze uložit.");
 
-            contentStream.drawImage(lamdaImage, 0, ((pageWidth/3)-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
-            contentStream.drawImage(lamdaImage, 0, ((4*(pageWidth/5))-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
-            contentStream.drawImage(labelImage, ((pageHeight/3)-labelImageWidth-5), ((pageWidth/3)-(labelImageHeight/2)), labelImageWidth, labelImageHeight);
-            contentStream.drawImage(labelImage, ((pageHeight/3)-labelImageWidth-5), ((4*(pageWidth/5))-(labelImageHeight/2)), labelImageWidth, labelImageHeight);
-            
-            contentStream.drawImage(lamdaImage, pageHeight/3, ((pageWidth/3)-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
-            contentStream.drawImage(lamdaImage, pageHeight/3, ((4*(pageWidth/5))-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
-            contentStream.drawImage(labelImage, ((2*(pageHeight/3))-labelImageWidth-5), ((pageWidth/3)-(labelImageHeight/2)), labelImageWidth, labelImageHeight);
-            contentStream.drawImage(labelImage, ((2*(pageHeight/3))-labelImageWidth-5), ((4*(pageWidth/5))-(labelImageHeight/2)), labelImageWidth, labelImageHeight);
-            
-            contentStream.drawImage(lamdaImage, (2*(pageHeight/3)), ((pageWidth/3)-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
-            contentStream.drawImage(lamdaImage, (2*(pageHeight/3)), ((4*(pageWidth/5))-(lamdaImageHeight/2)), lamdaImageWidth, lamdaImageHeight);
-            contentStream.drawImage(labelImage, ((pageHeight)-labelImageWidth-5), ((pageWidth/3)-(labelImageHeight/2)), labelImageWidth, labelImageHeight);
-            contentStream.drawImage(labelImage, ((pageHeight)-labelImageWidth-5), ((4*(pageWidth/5))-(labelImageHeight/2)), labelImageWidth, labelImageHeight);
+            }
 
-            
-            //text barvy
-            contentStream.setNonStrokingColor(switchColor(product.color));
-            contentStream.beginText();
-            contentStream.setFont( font, 12 );
-            
-            contentStream.newLineAtOffset((pageHeight/6)-30, 10);
-            contentStream.showText(product.color);
-            contentStream.newLineAtOffset(0, pageWidth-30);
-            contentStream.showText(product.color);
-            contentStream.newLineAtOffset((pageHeight/3), -(pageWidth-30));
-            contentStream.showText(product.color);
-            contentStream.newLineAtOffset(0, pageWidth-30);
-            contentStream.showText(product.color);
-            contentStream.newLineAtOffset((pageHeight/3), -(pageWidth-30));
-            contentStream.showText(product.color);
-            contentStream.newLineAtOffset(0, pageWidth-30);
-            contentStream.showText(product.color);
-            
-
-        
-            //texty
-            contentStream.setNonStrokingColor(Color.BLACK);
-            // matice(výška, 0, 0, šířka, y, x)
-            Matrix matrix = new Matrix(1, 0, 0, 1, ((pageHeight/6)+15), 50);
-            matrix.rotate(Math.toRadians(90));
-            contentStream.setTextMatrix(matrix);
-            //název produktu
-            contentStream.setFont(boldFont, 14);
-            contentStream.newLineAtOffset( 0, 0 );
-            contentStream.showText( product.name );
-            contentStream.newLineAtOffset(460, 0);
-            contentStream.showText(product.name);
-            //Katalogové číslo
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( -460, -30 );
-            contentStream.showText("Katalogové číslo: ");
-            contentStream.setFont(boldFont, 14);
-            contentStream.showText( product.invNum );
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( 460, 0 );
-            contentStream.showText("Katalogové číslo: ");
-            contentStream.setFont(boldFont, 14);
-            contentStream.showText( product.invNum );
-            //Kapacita
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( -145, 0 );
-            contentStream.showText( product.capacity);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText( product.capacity );
-            //Výrobce
-            contentStream.setFont( font, 12 );
-            contentStream.newLineAtOffset( -665, -15 );
-            contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-            contentStream.newLineAtOffset( 460, 0 );
-            contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-            //Kód produktu 
-            contentStream.newLineAtOffset( -145, 0 );
-            contentStream.showText( product.productCode);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText( product.productCode);
-            //Kód výrobce
-            contentStream.newLineAtOffset( -350, -15 );
-            contentStream.showText(manufacturer.code);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText(manufacturer.code);
-            // matice(výška, 0, 0, šířka, y, x)
-            Matrix matrix2 = new Matrix(1, 0, 0, 1, ((pageHeight/2)+15), 50);
-            matrix2.rotate(Math.toRadians(90));
-            contentStream.setTextMatrix(matrix2);
-            //název produktu
-            contentStream.setFont(boldFont, 14);
-            contentStream.newLineAtOffset( 0, 0 );
-            contentStream.showText( product.name );
-            contentStream.newLineAtOffset(460, 0);
-            contentStream.showText(product.name);
-            //Katalogové číslo
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( -460, -30 );
-            contentStream.showText("Katalogové číslo: ");
-            contentStream.setFont(boldFont, 14);
-            contentStream.showText( product.invNum );
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( 460, 0 );
-            contentStream.showText("Katalogové číslo: ");
-            contentStream.setFont(boldFont, 14);
-            contentStream.showText( product.invNum );
-            //Kapacita
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( -145, 0 );
-            contentStream.showText( product.capacity);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText( product.capacity );
-            //Výrobce
-            contentStream.setFont( font, 12 );
-            contentStream.newLineAtOffset( -665, -15 );
-            contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-            contentStream.newLineAtOffset( 460, 0 );
-            contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-            //Kód produktu 
-            contentStream.newLineAtOffset( -145, 0 );
-            contentStream.showText( product.productCode);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText( product.productCode);
-            //Kód výrobce
-            contentStream.newLineAtOffset( -350, -15 );
-            contentStream.showText(manufacturer.code);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText(manufacturer.code);
-            // matice(výška, 0, 0, šířka, y, x)
-            Matrix matrix3 = new Matrix(1, 0, 0, 1, ((5*(pageHeight/6))+15), 50);
-            matrix3.rotate(Math.toRadians(90));
-            contentStream.setTextMatrix(matrix3);
-            //název produktu
-            contentStream.setFont(boldFont, 14);
-            contentStream.newLineAtOffset( 0, 0 );
-            contentStream.showText( product.name );
-            contentStream.newLineAtOffset(460, 0);
-            contentStream.showText(product.name);
-            //Katalogové číslo
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( -460, -30 );
-            contentStream.showText("Katalogové číslo: ");
-            contentStream.setFont(boldFont, 14);
-            contentStream.showText( product.invNum );
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( 460, 0 );
-            contentStream.showText("Katalogové číslo: ");
-            contentStream.setFont(boldFont, 14);
-            contentStream.showText( product.invNum );
-            //Kapacita
-            contentStream.setFont( font, 14 );
-            contentStream.newLineAtOffset( -145, 0 );
-            contentStream.showText( product.capacity);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText( product.capacity );
-            //Výrobce
-            contentStream.setFont( font, 12 );
-            contentStream.newLineAtOffset( -665, -15 );
-            contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-            contentStream.newLineAtOffset( 460, 0 );
-            contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-            //Kód produktu 
-            contentStream.newLineAtOffset( -145, 0 );
-            contentStream.showText( product.productCode);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText( product.productCode);
-            //Kód výrobce
-            contentStream.newLineAtOffset( -350, -15 );
-            contentStream.showText(manufacturer.code);
-            contentStream.newLineAtOffset( 350, 0 );
-            contentStream.showText(manufacturer.code);
-
-            
-            contentStream.endText();
-            
-            //linky
-            contentStream.moveTo(0, (6*pageWidth)/10);
-            contentStream.lineTo(pageHeight, (6*pageWidth)/10);
-            contentStream.stroke();
-            
-            contentStream.moveTo(pageHeight/3, 0);
-            contentStream.lineTo(pageHeight/3, pageWidth);
-            contentStream.stroke();
-            
-            contentStream.moveTo((pageHeight/3)*2, 0);
-            contentStream.lineTo((pageHeight/3)*2, pageWidth);
-            contentStream.stroke();
-            
-            
-            contentStream.close();
-        } catch (IOException ex) {
-            System.out.println(ex);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            document.save("pdf/" + product.invNum + ".pdf");
-        } catch (FileNotFoundException ex) {
-            System.out.println("Nenalezena složka pro výstup!!!");
-        } catch (IOException ex) {
-                        System.out.println("IO Exception - nelze uložit.");
-
-        }
-
-        try {
-            document.close();
-        } catch (IOException ex) {
-            System.out.println("Nelze uzavřít soubor.");
+            try {
+                document.close();
+            } catch (IOException ex) {
+                System.out.println("Nelze uzavřít soubor.");
+            }
         }
     }
-    
-    private static void generateSupplier(Product product, String code){
-    
-    }
-    
-    
+
     private static Color getProductColor(String color){
         Color currentColor;
         switch (color){

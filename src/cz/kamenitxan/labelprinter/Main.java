@@ -29,11 +29,16 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 		String filename = "";
+		Boolean limit = false;
         //launch(args);
         for (String arg : args) {
 			if (arg.contains("-file=")) {
 				arg = arg.replace("-file=", "");
 				filename = arg;
+				break;
+			}
+			if (arg.contains("-limit")) {
+				limit = true;
 				break;
 			}
 		}
@@ -43,13 +48,18 @@ public class Main extends Application {
 		if (!System.getProperty("os.name").equals("Mac OS X")) {
 			filename = "C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx";
 		}
+
 		List<Product> products = ExcelReader.importFile(filename);
+		if (limit) {
+			products = products.subList(0, 50);
+		}
 		final ArrayList<Manufacturer> manufacturers = ExcelReader.importManufacturers(filename);
 
 
 		//products.forEach(System.out::println);
         products.parallelStream().forEach(a -> PdfGenerator.generatePdf(a, manufacturers));
         System.out.println(getTime());
+		System.out.println("Uloženo " + (products.size() * manufacturers.size()) + " PDF");
     }
 
 	/**
