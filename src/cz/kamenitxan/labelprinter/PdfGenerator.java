@@ -2,6 +2,7 @@ package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
+import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -55,13 +56,14 @@ public class PdfGenerator {
                     labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document);
                 }
 
+                float firstH = 0;
+                float secondH = pageHeight/3;
+                float thirdH = 2*secondH;
 
                 //barevne obdelniky
-                contentStream.setNonStrokingColor(getProductColor(product.color));
-                contentStream.addRect(0, 0, pageHeight, 30);
-                contentStream.fill();
-                contentStream.addRect(0, pageWidth - 30, pageHeight, 30);
-                contentStream.fill();
+                paintRectangle(firstH, contentStream, getProductColor(product.color));
+                paintRectangle(secondH, contentStream, getProductColor(product.color));
+                paintRectangle(thirdH, contentStream, getProductColor(product.color));
 
 
                 contentStream.drawImage(lamdaImage, 0, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
@@ -275,6 +277,35 @@ public class PdfGenerator {
         }
     }
 
+    private static void paintRectangle(float pos, PDPageContentStream contentStream, Color color) {
+
+        try {
+            if (color != Color.WHITE) {
+                contentStream.setNonStrokingColor(color);
+                contentStream.addRect(0, 0, pageHeight, 30);
+                contentStream.fill();
+                contentStream.addRect(0, pageWidth-30, pageHeight, 30);
+                contentStream.fill();
+            } else {
+                float part = pageHeight / 9;
+                contentStream.setNonStrokingColor(Color.CYAN);
+                contentStream.addRect(pos, 0, pageHeight / 3, 30);
+                contentStream.addRect(pos, pageWidth-30, pageHeight / 3, 30);
+                contentStream.fill();
+                contentStream.setNonStrokingColor(Color.MAGENTA);
+                contentStream.addRect(pos + part, 0, pageHeight / 3, 30);
+                contentStream.addRect(pos+part, pageWidth-30, pageHeight/3, 30);
+                contentStream.fill();
+                contentStream.setNonStrokingColor(Color.YELLOW);
+                contentStream.addRect(pos + (2 * part), 0, pageHeight / 3, 30);
+                contentStream.addRect(pos+(2*part), pageWidth-30, pageHeight/3, 30);
+                contentStream.fill();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static Color getProductColor(String color){
         Color currentColor;
         switch (color){
@@ -300,7 +331,7 @@ public class PdfGenerator {
                 break;
             case "Matte black" : currentColor =  Color.BLACK;
                 break;
-            case "Photo" : currentColor =  Color.WHITE;
+            case "Photo" : currentColor =  Color.BLACK;
                 break;
             case "Photo Black" : currentColor =  Color.BLACK;
                 break;
@@ -312,7 +343,7 @@ public class PdfGenerator {
                 break;
             case "Violett" : currentColor =  Color.magenta.darker();
                 break;
-            default : currentColor = Color.WHITE;
+            default : currentColor = Color.BLACK;
                 break;
                     }
         return currentColor;

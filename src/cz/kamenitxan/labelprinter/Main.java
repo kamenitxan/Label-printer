@@ -35,11 +35,9 @@ public class Main extends Application {
 			if (arg.contains("-file=")) {
 				arg = arg.replace("-file=", "");
 				filename = arg;
-				break;
 			}
 			if (arg.contains("-limit")) {
 				limit = true;
-				break;
 			}
 		}
 		if (filename.equals("")) {
