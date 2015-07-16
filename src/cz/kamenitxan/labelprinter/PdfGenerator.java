@@ -106,9 +106,9 @@ public class PdfGenerator {
                 //texty
                 contentStream.setNonStrokingColor(Color.BLACK);
                 
-                writeTextMatrix(((pageHeight / 6) + 15), contentStream, product.name, product.invNum, product.capacity, product.productCode, manufacturer.code, font, boldFont);
-                writeTextMatrix(((pageHeight / 2) + 15), contentStream, product.name, product.invNum, product.capacity, product.productCode, manufacturer.code, font, boldFont);
-                writeTextMatrix(((5 * (pageHeight / 6)) + 15), contentStream, product.name, product.invNum, product.capacity, product.productCode, manufacturer.code, font, boldFont);
+                writeTextMatrix(((pageHeight / 6) + 15), contentStream, product, manufacturer.code, font, boldFont);
+                writeTextMatrix(((pageHeight / 2) + 15), contentStream, product, manufacturer.code, font, boldFont);
+                writeTextMatrix(((5 * (pageHeight / 6)) + 15), contentStream, product, manufacturer.code, font, boldFont);
 
                 contentStream.endText();
 
@@ -150,7 +150,7 @@ public class PdfGenerator {
         }
     }
 
-    private static void writeTextMatrix(float y, PDPageContentStream contentStream, String productName, String invNumber, String capacity, String productCode, String manufacturerCode, PDType0Font font, PDType0Font boldFont) {
+    private static void writeTextMatrix(float y, PDPageContentStream contentStream, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont) {
               
         Matrix matrix = new Matrix(1, 0, 0, 1, y, 50);
                 matrix.rotate(Math.toRadians(90));
@@ -159,19 +159,19 @@ public class PdfGenerator {
             //název produktu
                 contentStream.setFont(boldFont, 14);
                 contentStream.newLineAtOffset(0, 0);
-                substringProductName(contentStream, productName, 54);
+                substringProductName(contentStream, product.name, 54);
                 contentStream.newLineAtOffset(460, 0);
-                substringProductName(contentStream, productName, 35);
+                substringProductName(contentStream, product.name, 35);
                 contentStream.setFont(font, 14);
                 contentStream.newLineAtOffset(-460, -30);
                 contentStream.showText("Katalogové číslo: ");
                 contentStream.setFont(boldFont, 14);
-                contentStream.showText(invNumber);
+                contentStream.showText(product.invNum);
                 contentStream.setFont(font, 14);
                 contentStream.newLineAtOffset(460, 0);
                 contentStream.showText("Katalogové číslo: ");
                 contentStream.setFont(boldFont, 14);
-                contentStream.showText(invNumber);
+                contentStream.showText(product.invNum);
                 //Výrobce
                 contentStream.setFont(font, 12);
                 contentStream.newLineAtOffset(-460, -15);
@@ -183,21 +183,21 @@ public class PdfGenerator {
                 
                 //Kapacita vpravo
                 contentStream.newLineAtOffset(205, 15);
-                contentStream.showText(capacity);
+                contentStream.showText(product.capacity);
                 //Kód produktu vpravo
                 contentStream.newLineAtOffset(0, -15);
-                contentStream.showText(productCode);
+                contentStream.showText(product.productCode);
                 //Kód výrobce vpravo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
                 
                 
                 //Kapacita vlevo
-                capacityPosition(contentStream, capacity, productCode, 11);
-                contentStream.showText(capacity);
+                capacityPosition(contentStream, product.capacity, product.productCode, 11);
+                contentStream.showText(product.capacity);
                 //Kód produktu vlevo
                 contentStream.newLineAtOffset(0, -15);
-                contentStream.showText(productCode);
+                contentStream.showText(product.productCode);
                 //Kód výrobce vlevo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
