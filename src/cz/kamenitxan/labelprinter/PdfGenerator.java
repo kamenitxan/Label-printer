@@ -189,7 +189,8 @@ public class PdfGenerator {
                 
                 //Kód produktu vpravo
                 contentStream.newLineAtOffset(0, -15);
-                contentStream.showText(product.productCode);
+                substringProductCode(contentStream, product.productCode, 12);
+                
                 //Kód výrobce vpravo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
@@ -217,6 +218,27 @@ public class PdfGenerator {
         }
                 
     }
+    private static void substringProductCode(PDPageContentStream contentStream, String productCode, int maxLength){
+        
+        int length = productCode.length();
+        try {
+        if (maxLength>=length){
+            
+                contentStream.showText(productCode); 
+        }
+        else{
+            String shortLine = productCode.substring(0, maxLength);
+            contentStream.showText(shortLine + "...");
+            }
+            
+        
+        } catch (IOException ex) {
+                System.out.println("Nelze napsat kód produktu.");
+                System.out.println("Chyba: " + ex);
+            }
+        
+    }
+    
     
     private static void substringProductName(PDPageContentStream contentStream, String productName, int maxLength){
     
