@@ -2,22 +2,19 @@ package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
-import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
-
-import java.awt.*;
-import java.io.*;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
+
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class PdfGenerator {
@@ -45,18 +42,20 @@ public class PdfGenerator {
 
             try {
                 contentStream = new PDPageContentStream(document, page);
-                Main.class.getResource("OpenSans-Regular.ttf").getPath();
-                PDType0Font font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\OpenSans-Regular.ttf"));
-                PDType0Font boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\OpenSans-Bold.ttf"));
+                //Main.class.getResource("OpenSans-Regular.ttf").getPath();
+                //PDType0Font font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\OpenSans-Regular.ttf"));
+                //PDType0Font boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\OpenSans-Bold.ttf"));
+                PDType0Font font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"));
+                PDType0Font boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"));
                 //obrazky
                 PDImageXObject lamdaImage = PDImageXObject.createFromFile("img/lamda.jpg", document);
                 PDImageXObject labelImage = PDImageXObject.createFromFile("img/label.jpg", document);
-                if (!System.getProperty("os.name").equals("Mac OS X")) {
+                /*if (!System.getProperty("os.name").equals("Mac OS X")) {
                     font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Regular.ttf"));
                     boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Bold.ttf"));
                     lamdaImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\lamda.jpg", document);
                     labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document);
-                }
+                }*/
 
                 float firstH = 0;
                 float secondH = pageHeight/3;
