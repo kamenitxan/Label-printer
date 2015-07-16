@@ -88,7 +88,8 @@ public class PdfGenerator {
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
 
-                contentStream.newLineAtOffset((pageHeight / 6) - 30, 10);
+                
+                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10);
                 contentStream.showText(product.color);
                 contentStream.newLineAtOffset(0, pageWidth - 30);
                 contentStream.showText(product.color);
@@ -183,6 +184,9 @@ public class PdfGenerator {
                 //Kapacita vpravo
                 contentStream.newLineAtOffset(205, 15);
                 contentStream.showText(product.capacity);
+                
+                contentStream.setFont(font, 12);
+                
                 //Kód produktu vpravo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(product.productCode);
@@ -190,10 +194,14 @@ public class PdfGenerator {
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
                 
+                contentStream.setFont(font, 14);
                 
                 //Kapacita vlevo
                 capacityPosition(contentStream, product.capacity, product.productCode, 11);
                 contentStream.showText(product.capacity);
+                
+                contentStream.setFont(font, 12);
+
                 //Kód produktu vlevo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(product.productCode);
@@ -220,12 +228,22 @@ public class PdfGenerator {
                 contentStream.showText(productName); 
         }
         else{
+            
             String firstLine = productName.substring(0, maxLength);
             String secondLine = productName.substring(maxLength);
             
             contentStream.showText(firstLine);
             contentStream.newLineAtOffset(0, -15);
+            
+            if (secondLine.length()<maxLength){
+            
             contentStream.showText(secondLine);
+            
+            }
+            else{
+            String lastLine = secondLine.substring(0, maxLength-3);
+            contentStream.showText(lastLine + "...");
+            }
             contentStream.newLineAtOffset(0, 15);
         }
         } catch (IOException ex) {
@@ -243,7 +261,7 @@ public class PdfGenerator {
         try {
         if (maxLength>=capacityLength && maxLength>=productCodeLength){
    
-                contentStream.newLineAtOffset(-320, 30);
+                contentStream.newLineAtOffset(-300, 30);
         }
         else{
                 contentStream.newLineAtOffset(-350, 30);
