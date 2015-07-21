@@ -18,31 +18,29 @@ import java.util.ArrayList;
 
 
 public class PdfGenerator {
-<<<<<<< HEAD
+
     public static final float pageWidth = 833;
     public static final float pageHeight = 586;
     public static final float wholePageWidth = 843;
     public static final float wholePageHeight = 596;
     public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( wholePageHeight, wholePageWidth );
     
-=======
-    public static final float pageWidth = 843;
-    public static final float pageHeight = 596;
-    public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( pageHeight, pageWidth );
 
->>>>>>> origin/master
+    
+
+
     public static final float lamdaImageWidth = 90;
     public static final float lamdaImageHeight  = 196;
     public static final float labelImageWidth = 15;
     public static final float labelImageHeight  = 67;
-<<<<<<< HEAD
+
     
     public static final float margin = 5;
     
     
-=======
+
 	
->>>>>>> origin/master
+
 
     public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
         for (Manufacturer manufacturer : manufacturers) {
