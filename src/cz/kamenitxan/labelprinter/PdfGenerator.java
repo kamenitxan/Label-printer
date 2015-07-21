@@ -18,14 +18,18 @@ import java.util.ArrayList;
 
 
 public class PdfGenerator {
-    public static final float pageWidth = 843;
-    public static final float pageHeight = 596;
-    public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( pageHeight, pageWidth );
+    public static final float pageWidth = 833;
+    public static final float pageHeight = 586;
+    public static final float wholePageWidth = 843;
+    public static final float wholePageHeight = 596;
+    public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( wholePageHeight, wholePageWidth );
     
     public static final float lamdaImageWidth = 90;
     public static final float lamdaImageHeight  = 196;
     public static final float labelImageWidth = 15;
     public static final float labelImageHeight  = 67;
+    
+    public static final float margin = 5;
     
     
 
@@ -67,8 +71,8 @@ public class PdfGenerator {
                 paintRectangle(thirdH, contentStream, getProductColor(product.color));
 
 
-                contentStream.drawImage(lamdaImage, 0, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, 0, ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 0+margin, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 0+margin, ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
@@ -117,6 +121,7 @@ public class PdfGenerator {
                 contentStream.lineTo(pageHeight, (6 * pageWidth) / 10);
                 contentStream.stroke();
 
+                //
                 contentStream.moveTo(pageHeight / 3, 0);
                 contentStream.lineTo(pageHeight / 3, pageWidth);
                 contentStream.stroke();
