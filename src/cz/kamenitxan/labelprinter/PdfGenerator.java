@@ -18,20 +18,31 @@ import java.util.ArrayList;
 
 
 public class PdfGenerator {
+<<<<<<< HEAD
     public static final float pageWidth = 833;
     public static final float pageHeight = 586;
     public static final float wholePageWidth = 843;
     public static final float wholePageHeight = 596;
     public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( wholePageHeight, wholePageWidth );
     
+=======
+    public static final float pageWidth = 843;
+    public static final float pageHeight = 596;
+    public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( pageHeight, pageWidth );
+
+>>>>>>> origin/master
     public static final float lamdaImageWidth = 90;
     public static final float lamdaImageHeight  = 196;
     public static final float labelImageWidth = 15;
     public static final float labelImageHeight  = 67;
+<<<<<<< HEAD
     
     public static final float margin = 5;
     
     
+=======
+	
+>>>>>>> origin/master
 
     public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
         for (Manufacturer manufacturer : manufacturers) {
@@ -39,27 +50,16 @@ public class PdfGenerator {
 
             PDPage page = new PDPage(PAGE_SIZE_A4);
             document.addPage(page);
-
             page.setRotation(90);
 
             PDPageContentStream contentStream;
-
             try {
                 contentStream = new PDPageContentStream(document, page);
-                //Main.class.getResource("OpenSans-Regular.ttf").getPath();
-                //PDType0Font font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\OpenSans-Regular.ttf"));
-                //PDType0Font boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\OpenSans-Bold.ttf"));
                 PDType0Font font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"));
                 PDType0Font boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"));
                 //obrazky
                 PDImageXObject lamdaImage = PDImageXObject.createFromFile("img/lamda.jpg", document);
                 PDImageXObject labelImage = PDImageXObject.createFromFile("img/label.jpg", document);
-                /*if (!System.getProperty("os.name").equals("Mac OS X")) {
-                    font = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Regular.ttf"));
-                    boldFont = PDType0Font.load(document, new File("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\src\\cz\\kamenitxan\\labelprinter\\OpenSans-Bold.ttf"));
-                    lamdaImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\lamda.jpg", document);
-                    labelImage = PDImageXObject.createFromFile("C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\img\\label.jpg", document);
-                }*/
 
                 float firstH = 0;
                 float secondH = pageHeight/3;
@@ -92,7 +92,7 @@ public class PdfGenerator {
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
 
-                
+
                 contentStream.newLineAtOffset((pageHeight / 6) - 15, 10);
                 contentStream.showText(product.color);
                 contentStream.newLineAtOffset(0, pageWidth - 30);
@@ -109,7 +109,7 @@ public class PdfGenerator {
 
                 //texty
                 contentStream.setNonStrokingColor(Color.BLACK);
-                
+
                 writeTextMatrix(((pageHeight / 6) + 15), contentStream, product, manufacturer.code, font, boldFont);
                 writeTextMatrix(((pageHeight / 2) + 15), contentStream, product, manufacturer.code, font, boldFont);
                 writeTextMatrix(((5 * (pageHeight / 6)) + 15), contentStream, product, manufacturer.code, font, boldFont);
@@ -134,7 +134,7 @@ public class PdfGenerator {
                 contentStream.close();
             } catch (IOException ex) {
                 System.out.println(ex);
-            } 
+            }
 
             try {
                 File file = new File("pdf/" + manufacturer.name + "/" + product.invNum + ".pdf");
@@ -156,7 +156,6 @@ public class PdfGenerator {
     }
 
     private static void writeTextMatrix(float y, PDPageContentStream contentStream, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont) {
-              
         Matrix matrix = new Matrix(1, 0, 0, 1, y, 50);
                 matrix.rotate(Math.toRadians(90));
         try {
@@ -183,29 +182,29 @@ public class PdfGenerator {
                 contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
                 contentStream.newLineAtOffset(460, 0);
                 contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-                
+
                 contentStream.setFont(font, 14);
-                
+
                 //Kapacita vpravo
                 contentStream.newLineAtOffset(205, 15);
                 contentStream.showText(product.capacity);
-                
+
                 contentStream.setFont(font, 12);
-                
+
                 //Kód produktu vpravo
                 contentStream.newLineAtOffset(0, -15);
                 substringProductCode(contentStream, product.productCode, 12);
-                
+
                 //Kód výrobce vpravo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
-                
+
                 contentStream.setFont(font, 14);
-                
+
                 //Kapacita vlevo
                 capacityPosition(contentStream, product.capacity, product.productCode, 11);
                 contentStream.showText(product.capacity);
-                
+
                 contentStream.setFont(font, 12);
 
                 //Kód produktu vlevo
@@ -214,94 +213,72 @@ public class PdfGenerator {
                 //Kód výrobce vlevo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
-                
-                
-                
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
             System.out.println("Chyba: " + ex);
         }
-                
+
     }
+
     private static void substringProductCode(PDPageContentStream contentStream, String productCode, int maxLength){
-        
         int length = productCode.length();
         try {
-        if (maxLength>=length){
-            
-                contentStream.showText(productCode); 
-        }
-        else{
-            String shortLine = productCode.substring(0, maxLength);
-            contentStream.showText(shortLine + "...");
-            }
-            
-        
+			if (maxLength>=length){
+				contentStream.showText(productCode);
+			} else{
+				String shortLine = productCode.substring(0, maxLength);
+				contentStream.showText(shortLine + "...");
+			}
         } catch (IOException ex) {
-                System.out.println("Nelze napsat kód produktu.");
-                System.out.println("Chyba: " + ex);
-            }
-        
+			System.out.println("Nelze napsat kód produktu.");
+			System.out.println("Chyba: " + ex);
+		}
     }
-    
-    
+
     private static void substringProductName(PDPageContentStream contentStream, String productName, int maxLength){
-    
-        
         int length = productName.length();
         try {
-        if (maxLength>=length){
-            
-                contentStream.showText(productName); 
-        }
-        else{
-            
-            String firstLine = productName.substring(0, maxLength);
-            String secondLine = productName.substring(maxLength);
-            
-            contentStream.showText(firstLine);
-            contentStream.newLineAtOffset(0, -15);
-            
-            if (secondLine.length()<maxLength){
-            
-            contentStream.showText(secondLine);
-            
-            }
-            else{
-            String lastLine = secondLine.substring(0, maxLength-3);
-            contentStream.showText(lastLine + "...");
-            }
-            contentStream.newLineAtOffset(0, 15);
-        }
+			if (maxLength>=length){
+				contentStream.showText(productName);
+			} else{
+				String firstLine = productName.substring(0, maxLength);
+				String secondLine = productName.substring(maxLength);
+
+				contentStream.showText(firstLine);
+				contentStream.newLineAtOffset(0, -15);
+
+				if (secondLine.length()<maxLength) {
+					contentStream.showText(secondLine);
+				} else {
+					String lastLine = secondLine.substring(0, maxLength-3);
+					contentStream.showText(lastLine + "...");
+				}
+				contentStream.newLineAtOffset(0, 15);
+			}
         } catch (IOException ex) {
-                System.out.println("Nelze napsat název produktu.");
-                System.out.println("Chyba: " + ex);
-            }
-       
+			System.out.println("Nelze napsat název produktu.");
+			System.out.println("Chyba: " + ex);
+		}
+
     }
-    
+
     private static void capacityPosition (PDPageContentStream contentStream, String capacity, String productCode, int maxLength){
-    
         int capacityLength = capacity.length();
         int productCodeLength = productCode.length();
-        
-        try {
-        if (maxLength>=capacityLength && maxLength>=productCodeLength){
-   
-                contentStream.newLineAtOffset(-300, 30);
-        }
-        else{
-                contentStream.newLineAtOffset(-350, 30);
-        }
-            } catch (IOException ex) {
-                System.out.println("Nelze dát pozici kapacitě.");
-                System.out.println("Chyba: " + ex);
-            }
-            
-        }
-    
-    private static void paintRectangle(float pos, PDPageContentStream contentStream, Color color) {
 
+        try {
+			if (maxLength>=capacityLength && maxLength>=productCodeLength) {
+				contentStream.newLineAtOffset(-300, 30);
+			} else {
+				contentStream.newLineAtOffset(-350, 30);
+			}
+		} catch (IOException ex) {
+			System.out.println("Nelze dát pozici kapacitě.");
+			System.out.println("Chyba: " + ex);
+		}
+	}
+
+    private static void paintRectangle(float pos, PDPageContentStream contentStream, Color color) {
         try {
             if (color != Color.WHITE) {
                 contentStream.setNonStrokingColor(color);
@@ -370,14 +347,12 @@ public class PdfGenerator {
                 break;
                     }
         return currentColor;
-        
     }
-    
+
     private static Color switchColor(String currentColor){
-        if (currentColor.equals("Black")){
+        if (currentColor.equals("Black")) {
              return Color.WHITE;
-        }
-        else{
+        } else {
             return Color.BLACK;
         }
     }
