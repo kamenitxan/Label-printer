@@ -91,17 +91,17 @@ public class PdfGenerator {
                 contentStream.setFont(font, 12);
 
 
-                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10);
+                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
                 contentStream.showText(product.color);
-                contentStream.newLineAtOffset(0, pageWidth - 30);
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset(0, pageWidth - 30);
+                contentStream.newLineAtOffset(0, (pageWidth - 30));
                 contentStream.showText(product.color);
                 contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
                 contentStream.showText(product.color);
-                contentStream.newLineAtOffset(0, pageWidth - 30);
+                contentStream.newLineAtOffset(0, (pageWidth - 30));
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+                contentStream.showText(product.color);
+                contentStream.newLineAtOffset(0, (pageWidth - 30));
                 contentStream.showText(product.color);
 
 
@@ -114,20 +114,10 @@ public class PdfGenerator {
 
                 contentStream.endText();
 
-                //linky
+                //linka
                 contentStream.moveTo(0, (6 * pageWidth) / 10);
-                contentStream.lineTo(pageHeight, (6 * pageWidth) / 10);
+                contentStream.lineTo(wholePageHeight, (6 * pageWidth) / 10);
                 contentStream.stroke();
-
-                //
-                contentStream.moveTo(pageHeight / 3, 0);
-                contentStream.lineTo(pageHeight / 3, pageWidth);
-                contentStream.stroke();
-
-                contentStream.moveTo((pageHeight / 3) * 2, 0);
-                contentStream.lineTo((pageHeight / 3) * 2, pageWidth);
-                contentStream.stroke();
-
 
                 contentStream.close();
             } catch (IOException ex) {
@@ -280,23 +270,23 @@ public class PdfGenerator {
         try {
             if (color != Color.WHITE) {
                 contentStream.setNonStrokingColor(color);
-                contentStream.addRect(0, 0, pageHeight, 30);
+                contentStream.addRect(0, 0, wholePageHeight, 30+margin);
                 contentStream.fill();
-                contentStream.addRect(0, pageWidth-30, pageHeight, 30);
+                contentStream.addRect(0, wholePageWidth-30-margin, wholePageHeight, 30+margin);
                 contentStream.fill();
             } else {
                 float part = pageHeight / 9;
                 contentStream.setNonStrokingColor(Color.CYAN);
-                contentStream.addRect(pos, 0, pageHeight / 3, 30);
-                contentStream.addRect(pos, pageWidth-30, pageHeight / 3, 30);
+                contentStream.addRect(pos, 0, pageHeight / 3, 30+margin);
+                contentStream.addRect(pos, wholePageWidth-30-margin, pageHeight / 3, 30+margin);
                 contentStream.fill();
                 contentStream.setNonStrokingColor(Color.MAGENTA);
-                contentStream.addRect(pos + part, 0, pageHeight / 3, 30);
-                contentStream.addRect(pos+part, pageWidth-30, pageHeight/3, 30);
+                contentStream.addRect(pos + part, 0, pageHeight / 3, 30+margin);
+                contentStream.addRect(pos+part, wholePageWidth-30-margin, pageHeight/3, 30+margin);
                 contentStream.fill();
                 contentStream.setNonStrokingColor(Color.YELLOW);
-                contentStream.addRect(pos + (2 * part), 0, pageHeight / 3, 30);
-                contentStream.addRect(pos+(2*part), pageWidth-30, pageHeight/3, 30);
+                contentStream.addRect(pos + (2 * part), 0, pageHeight / 3, 30+margin);
+                contentStream.addRect(pos+(2*part), wholePageWidth-30-margin, pageHeight/3, 30+margin);
                 contentStream.fill();
             }
         } catch (IOException e) {
@@ -329,7 +319,7 @@ public class PdfGenerator {
                 break;
             case "Matte black" : currentColor =  Color.BLACK;
                 break;
-            case "Photo" : currentColor =  Color.BLACK;
+            case "Photo" : currentColor =  Color.WHITE;
                 break;
             case "Photo Black" : currentColor =  Color.BLACK;
                 break;
