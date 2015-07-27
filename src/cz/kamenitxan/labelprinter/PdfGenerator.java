@@ -64,23 +64,26 @@ public class PdfGenerator {
                 float thirdH = 2*secondH;
 
                 //barevne obdelniky
-                paintRectangle(firstH, contentStream, getProductColor(product.color));
-                paintRectangle(secondH, contentStream, getProductColor(product.color));
-                paintRectangle(thirdH, contentStream, getProductColor(product.color));
+                //paintRectangle(firstH, contentStream, getProductColor(product.color));
+                //paintRectangle(secondH, contentStream, getProductColor(product.color));
+                //paintRectangle(thirdH, contentStream, getProductColor(product.color));
+                paintColor(firstH, contentStream, getProductColor(product.color));
+                paintColor(secondH, contentStream, getProductColor(product.color));
+                paintColor(thirdH, contentStream, getProductColor(product.color));
 
 
-                contentStream.drawImage(lamdaImage, 0+margin, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, 0+margin, ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 0+margin, 50, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 0+margin, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                contentStream.drawImage(lamdaImage, pageHeight / 3, ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, pageHeight / 3, ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, 50, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3)), ((pageWidth / 3) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3)), ((4 * (pageWidth / 5)) - (lamdaImageHeight / 2)), lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, 50, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
@@ -90,19 +93,20 @@ public class PdfGenerator {
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
 
+                writeColorMatrix(10, 10, contentStream, product.color);
 
-                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset(0, (pageWidth - 30));
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset(0, (pageWidth - 30));
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-                contentStream.showText(product.color);
-                contentStream.newLineAtOffset(0, (pageWidth - 30));
-                contentStream.showText(product.color);
+//                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
+//                contentStream.showText(product.color);
+//                contentStream.newLineAtOffset(0, (pageWidth - 30));
+//                contentStream.showText(product.color);
+//                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+//                contentStream.showText(product.color);
+//                contentStream.newLineAtOffset(0, (pageWidth - 30));
+//                contentStream.showText(product.color);
+//                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+//                contentStream.showText(product.color);
+//                contentStream.newLineAtOffset(0, (pageWidth - 30));
+//                contentStream.showText(product.color);
 
 
                 //texty
@@ -143,6 +147,30 @@ public class PdfGenerator {
         }
     }
 
+    private static void writeColorMatrix(float y, float x, PDPageContentStream contentStream, String productColor){
+        Matrix matrix = new Matrix(1, 0, 0, 1, y, x);
+                matrix.rotate(Math.toRadians(90));
+        try {
+            contentStream.setTextMatrix(matrix);
+            contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
+                contentStream.showText(productColor);
+                contentStream.newLineAtOffset(0, (pageWidth - 30));
+                contentStream.showText(productColor);
+                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+                contentStream.showText(productColor);
+                contentStream.newLineAtOffset(0, (pageWidth - 30));
+                contentStream.showText(productColor);
+                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+                contentStream.showText(productColor);
+                contentStream.newLineAtOffset(0, (pageWidth - 30));
+                contentStream.showText(productColor);
+                
+        } catch (IOException ex) {
+            System.out.println("Nelze napsat název barvy.");
+            System.out.println("Chyba: " + ex);
+        }
+    }
+    
     private static void writeTextMatrix(float y, PDPageContentStream contentStream, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont) {
         Matrix matrix = new Matrix(1, 0, 0, 1, y, 50);
                 matrix.rotate(Math.toRadians(90));
@@ -273,6 +301,34 @@ public class PdfGenerator {
                 contentStream.addRect(0, 0, wholePageHeight, 30+margin);
                 contentStream.fill();
                 contentStream.addRect(0, wholePageWidth-30-margin, wholePageHeight, 30+margin);
+                contentStream.fill();
+            } else {
+                float part = pageHeight / 9;
+                contentStream.setNonStrokingColor(Color.CYAN);
+                contentStream.addRect(pos, 0, pageHeight / 3, 30+margin);
+                contentStream.addRect(pos, wholePageWidth-30-margin, pageHeight / 3, 30+margin);
+                contentStream.fill();
+                contentStream.setNonStrokingColor(Color.MAGENTA);
+                contentStream.addRect(pos + part, 0, pageHeight / 3, 30+margin);
+                contentStream.addRect(pos+part, wholePageWidth-30-margin, pageHeight/3, 30+margin);
+                contentStream.fill();
+                contentStream.setNonStrokingColor(Color.YELLOW);
+                contentStream.addRect(pos + (2 * part), 0, pageHeight / 3, 30+margin);
+                contentStream.addRect(pos+(2*part), wholePageWidth-30-margin, pageHeight/3, 30+margin);
+                contentStream.fill();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static void paintColor(float pos, PDPageContentStream contentStream, Color color) {
+        try {
+            if (color != Color.WHITE) {
+                contentStream.setNonStrokingColor(color);
+                contentStream.addRect(lamdaImageHeight, lamdaImageWidth/2, 20, 50);
+                contentStream.fill();
+                contentStream.addRect((2*(pageWidth/3))+lamdaImageHeight, lamdaImageWidth/2, 20, 50);
                 contentStream.fill();
             } else {
                 float part = pageHeight / 9;
