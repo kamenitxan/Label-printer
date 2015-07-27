@@ -18,15 +18,12 @@ import java.util.ArrayList;
 
 
 public class PdfGenerator {
-
     public static final float pageWidth = 833;
     public static final float pageHeight = 586;
     public static final float wholePageWidth = 843;
     public static final float wholePageHeight = 596;
     public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( wholePageHeight, wholePageWidth );
-    
-
-    
+    private static PDPageContentStream contentStream = null;
 
 
     public static final float lamdaImageWidth = 90;
@@ -37,10 +34,6 @@ public class PdfGenerator {
     
     public static final float margin = 5;
     
-    
-
-	
-
 
     public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
         for (Manufacturer manufacturer : manufacturers) {
@@ -50,7 +43,7 @@ public class PdfGenerator {
             document.addPage(page);
             page.setRotation(90);
 
-            PDPageContentStream contentStream;
+
             try {
                 contentStream = new PDPageContentStream(document, page);
                 PDType0Font font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"));
@@ -67,9 +60,9 @@ public class PdfGenerator {
                 //paintRectangle(firstH, contentStream, getProductColor(product.color));
                 //paintRectangle(secondH, contentStream, getProductColor(product.color));
                 //paintRectangle(thirdH, contentStream, getProductColor(product.color));
-                paintColor(firstH, contentStream, getProductColor(product.color));
+                /*paintColor(firstH, contentStream, getProductColor(product.color));
                 paintColor(secondH, contentStream, getProductColor(product.color));
-                paintColor(thirdH, contentStream, getProductColor(product.color));
+                paintColor(thirdH, contentStream, getProductColor(product.color));*/
 
 
                 contentStream.drawImage(lamdaImage, 0+margin, 50, lamdaImageWidth, lamdaImageHeight);
@@ -93,7 +86,6 @@ public class PdfGenerator {
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
 
-                writeColorMatrix(10, 10, contentStream, product.color);
 
 //                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
 //                contentStream.showText(product.color);
@@ -112,9 +104,9 @@ public class PdfGenerator {
                 //texty
                 contentStream.setNonStrokingColor(Color.BLACK);
 
-                writeTextMatrix(((pageHeight / 6) + 15), contentStream, product, manufacturer.code, font, boldFont);
-                writeTextMatrix(((pageHeight / 2) + 15), contentStream, product, manufacturer.code, font, boldFont);
-                writeTextMatrix(((5 * (pageHeight / 6)) + 15), contentStream, product, manufacturer.code, font, boldFont);
+                writeTextMatrix(((pageHeight / 6) + 15), product, manufacturer.code, font, boldFont);
+                writeTextMatrix(((pageHeight / 2) + 15), product, manufacturer.code, font, boldFont);
+                writeTextMatrix(((5 * (pageHeight / 6)) + 15), product, manufacturer.code, font, boldFont);
 
                 contentStream.endText();
 
@@ -147,31 +139,22 @@ public class PdfGenerator {
         }
     }
 
-    private static void writeColorMatrix(float y, float x, PDPageContentStream contentStream, String productColor){
-        Matrix matrix = new Matrix(1, 0, 0, 1, y, x);
-                matrix.rotate(Math.toRadians(90));
-        try {
-            contentStream.setTextMatrix(matrix);
-            contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
-                contentStream.showText(productColor);
-                contentStream.newLineAtOffset(0, (pageWidth - 30));
-                contentStream.showText(productColor);
-                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-                contentStream.showText(productColor);
-                contentStream.newLineAtOffset(0, (pageWidth - 30));
-                contentStream.showText(productColor);
-                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-                contentStream.showText(productColor);
-                contentStream.newLineAtOffset(0, (pageWidth - 30));
-                contentStream.showText(productColor);
-                
-        } catch (IOException ex) {
-            System.out.println("Nelze napsat název barvy.");
-            System.out.println("Chyba: " + ex);
-        }
+    private static void writeColorRectangle(float y, float x, String productColor) throws IOException {
+        contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
+        contentStream.showText(productColor);
+        contentStream.newLineAtOffset(0, (pageWidth - 30));
+        contentStream.showText(productColor);
+        contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+        contentStream.showText(productColor);
+        contentStream.newLineAtOffset(0, (pageWidth - 30));
+        contentStream.showText(productColor);
+        contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
+        contentStream.showText(productColor);
+        contentStream.newLineAtOffset(0, (pageWidth - 30));
+        contentStream.showText(productColor);
     }
     
-    private static void writeTextMatrix(float y, PDPageContentStream contentStream, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont) {
+    private static void writeTextMatrix(float y, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont) {
         Matrix matrix = new Matrix(1, 0, 0, 1, y, 50);
                 matrix.rotate(Math.toRadians(90));
         try {
@@ -179,9 +162,9 @@ public class PdfGenerator {
             //název produktu
                 contentStream.setFont(boldFont, 14);
                 contentStream.newLineAtOffset(0, 0);
-                substringProductName(contentStream, product.name, 54);
+                substringProductName(product.name, 54);
                 contentStream.newLineAtOffset(460, 0);
-                substringProductName(contentStream, product.name, 35);
+                substringProductName(product.name, 35);
                 contentStream.setFont(font, 14);
                 contentStream.newLineAtOffset(-460, -30);
                 contentStream.showText("Katalogové číslo: ");
@@ -209,7 +192,7 @@ public class PdfGenerator {
 
                 //Kód produktu vpravo
                 contentStream.newLineAtOffset(0, -15);
-                substringProductCode(contentStream, product.productCode, 12);
+                substringProductCode(product.productCode, 12);
 
                 //Kód výrobce vpravo
                 contentStream.newLineAtOffset(0, -15);
@@ -218,7 +201,7 @@ public class PdfGenerator {
                 contentStream.setFont(font, 14);
 
                 //Kapacita vlevo
-                capacityPosition(contentStream, product.capacity, product.productCode, 11);
+                capacityPosition(product.capacity, product.productCode, 11);
                 contentStream.showText(product.capacity);
 
                 contentStream.setFont(font, 12);
@@ -229,6 +212,9 @@ public class PdfGenerator {
                 //Kód výrobce vlevo
                 contentStream.newLineAtOffset(0, -15);
                 contentStream.showText(manufacturerCode);
+
+            contentStream.setNonStrokingColor(Color.BLACK);
+            writeColorRectangle(y, 50, product.color );
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
             System.out.println("Chyba: " + ex);
@@ -236,7 +222,7 @@ public class PdfGenerator {
 
     }
 
-    private static void substringProductCode(PDPageContentStream contentStream, String productCode, int maxLength){
+    private static void substringProductCode(String productCode, int maxLength){
         int length = productCode.length();
         try {
 			if (maxLength>=length){
@@ -251,7 +237,7 @@ public class PdfGenerator {
 		}
     }
 
-    private static void substringProductName(PDPageContentStream contentStream, String productName, int maxLength){
+    private static void substringProductName(String productName, int maxLength){
         int length = productName.length();
         try {
 			if (maxLength>=length){
@@ -278,7 +264,7 @@ public class PdfGenerator {
 
     }
 
-    private static void capacityPosition (PDPageContentStream contentStream, String capacity, String productCode, int maxLength){
+    private static void capacityPosition (String capacity, String productCode, int maxLength){
         int capacityLength = capacity.length();
         int productCodeLength = productCode.length();
 
@@ -294,7 +280,8 @@ public class PdfGenerator {
 		}
 	}
 
-    private static void paintRectangle(float pos, PDPageContentStream contentStream, Color color) {
+    @Deprecated
+    private static void paintRectangle(float pos, Color color) {
         try {
             if (color != Color.WHITE) {
                 contentStream.setNonStrokingColor(color);
@@ -321,8 +308,10 @@ public class PdfGenerator {
             e.printStackTrace();
         }
     }
+
+
     
-    private static void paintColor(float pos, PDPageContentStream contentStream, Color color) {
+    private static void paintColor(float pos, Color color) {
         try {
             if (color != Color.WHITE) {
                 contentStream.setNonStrokingColor(color);
