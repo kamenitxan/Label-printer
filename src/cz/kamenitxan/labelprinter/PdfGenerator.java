@@ -140,17 +140,9 @@ public class PdfGenerator {
     }
 
     private static void writeColorRectangle(float y, float x, String productColor, PDPageContentStream contentStream) throws IOException {
-        contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
+        contentStream.newLineAtOffset(-50, 115);
         contentStream.showText(productColor);
-        contentStream.newLineAtOffset(0, (pageWidth - 30));
-        contentStream.showText(productColor);
-        contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-        contentStream.showText(productColor);
-        contentStream.newLineAtOffset(0, (pageWidth - 30));
-        contentStream.showText(productColor);
-        contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-        contentStream.showText(productColor);
-        contentStream.newLineAtOffset(0, (pageWidth - 30));
+        contentStream.newLineAtOffset(400, 0);
         contentStream.showText(productColor);
     }
     
@@ -214,7 +206,9 @@ public class PdfGenerator {
                 contentStream.showText(manufacturerCode);
 
             contentStream.setNonStrokingColor(Color.BLACK);
+            
             writeColorRectangle(y, 50, product.color, contentStream);
+            
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
             System.out.println("Chyba: " + ex);
