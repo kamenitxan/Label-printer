@@ -2,7 +2,6 @@ package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
-import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -31,9 +30,9 @@ public class PdfGenerator {
     public static final float labelImageWidth = 15;
     public static final float labelImageHeight  = 67;
 
-    
+
     public static final float margin = 5;
-    
+
 
     public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
         for (Manufacturer manufacturer : manufacturers) {
@@ -80,6 +79,9 @@ public class PdfGenerator {
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
+                colorRectangle(getProductColor(product.color), contentStream, firstH);
+				colorRectangle(getProductColor(product.color), contentStream, secondH);
+				colorRectangle(getProductColor(product.color), contentStream, thirdH);
 
                 //text barvy
                 contentStream.setNonStrokingColor(switchColor(product.color));
@@ -108,7 +110,10 @@ public class PdfGenerator {
                 writeTextMatrix(((pageHeight / 2) + 15), product, manufacturer.code, font, boldFont, contentStream);
                 writeTextMatrix(((5 * (pageHeight / 6)) + 15), product, manufacturer.code, font, boldFont, contentStream);
 
+
                 contentStream.endText();
+
+
 
                 //linka
                 contentStream.moveTo(0, (6 * pageWidth) / 10);
@@ -140,16 +145,19 @@ public class PdfGenerator {
     }
 
     private static void writeColorRectangle(float y, float x, String productColor, PDPageContentStream contentStream) throws IOException {
+		contentStream.setNonStrokingColor(Color.WHITE);
         contentStream.newLineAtOffset(-50, 115);
         contentStream.showText(productColor);
         contentStream.newLineAtOffset(400, 0);
         contentStream.showText(productColor);
+
     }
-    
+
     private static void writeTextMatrix(float y, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont, PDPageContentStream contentStream) {
         Matrix matrix = new Matrix(1, 0, 0, 1, y, 50);
                 matrix.rotate(Math.toRadians(90));
         try {
+			contentStream.setNonStrokingColor(Color.BLACK);
             contentStream.setTextMatrix(matrix);
             //název produktu
                 contentStream.setFont(boldFont, 14);
@@ -206,9 +214,9 @@ public class PdfGenerator {
                 contentStream.showText(manufacturerCode);
 
             contentStream.setNonStrokingColor(Color.BLACK);
-            
+
             writeColorRectangle(y, 50, product.color, contentStream);
-            
+
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
             System.out.println("Chyba: " + ex);
@@ -274,6 +282,26 @@ public class PdfGenerator {
 		}
 	}
 
+    private static void colorRectangle(Color color, PDPageContentStream contentStream, float pos) throws IOException {
+		final int xp = 350;
+		final int xk = 420;
+		final int yh = 40;
+		final int yd = 70;
+		contentStream.setNonStrokingColor(color);
+		contentStream.moveTo(pos + 40, xp+5);
+        contentStream.lineTo(pos + 40, xp+5);
+		contentStream.lineTo(pos + 40, xk - 10);
+		contentStream.curveTo(pos + 40, xk, pos + 40, xk, pos + 50, xk);
+		contentStream.lineTo(pos + 60, xk);
+		contentStream.curveTo(pos + 70, xk, pos + 70, xk, pos + 70, xk-10);
+		contentStream.lineTo(pos + 70, xp + 10);
+		contentStream.curveTo(pos + 70, xp, pos + 70, xp, pos + 60, xp);
+		contentStream.lineTo(pos + 50, xp);
+		contentStream.curveTo(pos + 40, xp, pos+40, xp, pos+40, xp+ 10);
+		contentStream.fill();
+		contentStream.setNonStrokingColor(Color.BLACK);
+    }
+
     @Deprecated
     private static void paintRectangle(float pos, Color color, PDPageContentStream contentStream) {
         try {
@@ -304,7 +332,7 @@ public class PdfGenerator {
     }
 
 
-    
+
     private static void paintColor(float pos, Color color, PDPageContentStream contentStream) {
         try {
             if (color != Color.WHITE) {
