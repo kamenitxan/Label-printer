@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class PdfGenerator {
@@ -79,28 +80,16 @@ public class PdfGenerator {
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                colorRectangle(getProductColor(product.color), contentStream, firstH);
-				colorRectangle(getProductColor(product.color), contentStream, secondH);
-				colorRectangle(getProductColor(product.color), contentStream, thirdH);
+                colorRectangle(getProductColor(product.color), contentStream, firstH, false);
+				colorRectangle(getProductColor(product.color), contentStream, secondH, false);
+				colorRectangle(getProductColor(product.color), contentStream, thirdH, false);
+                colorRectangle(getProductColor(product.color), contentStream, firstH, true);
+                colorRectangle(getProductColor(product.color), contentStream, secondH, true);
+                colorRectangle(getProductColor(product.color), contentStream, thirdH, true);
 
                 //text barvy
-                contentStream.setNonStrokingColor(switchColor(product.color));
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
-
-
-//                contentStream.newLineAtOffset((pageHeight / 6) - 15, 10+margin);
-//                contentStream.showText(product.color);
-//                contentStream.newLineAtOffset(0, (pageWidth - 30));
-//                contentStream.showText(product.color);
-//                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-//                contentStream.showText(product.color);
-//                contentStream.newLineAtOffset(0, (pageWidth - 30));
-//                contentStream.showText(product.color);
-//                contentStream.newLineAtOffset((pageHeight / 3), -(pageWidth - 30));
-//                contentStream.showText(product.color);
-//                contentStream.newLineAtOffset(0, (pageWidth - 30));
-//                contentStream.showText(product.color);
 
 
                 //texty
@@ -145,8 +134,12 @@ public class PdfGenerator {
     }
 
     private static void writeColorRectangle(float y, float x, String productColor, PDPageContentStream contentStream) throws IOException {
-		contentStream.setNonStrokingColor(Color.WHITE);
-        contentStream.newLineAtOffset(-50, 115);
+        if (Objects.equals(productColor, "Black")) {
+            contentStream.setNonStrokingColor(Color.WHITE);
+        } else {
+            contentStream.setNonStrokingColor(Color.BLACK);
+        }
+        contentStream.newLineAtOffset(-50, 113);
         contentStream.showText(productColor);
         contentStream.newLineAtOffset(400, 0);
         contentStream.showText(productColor);
@@ -282,23 +275,64 @@ public class PdfGenerator {
 		}
 	}
 
-    private static void colorRectangle(Color color, PDPageContentStream contentStream, float pos) throws IOException {
-		final int xp = 350;
-		final int xk = 420;
-		final int yh = 40;
+    /**
+     * Metoda nakreslí obdélník s barvou toneru
+     */
+    private static void colorRectangle(Color color, PDPageContentStream contentStream, float pos, boolean right) throws IOException {
+        int xp = 350;
+        int xk = 420;
+        final int yh = 40;
 		final int yd = 70;
-		contentStream.setNonStrokingColor(color);
-		contentStream.moveTo(pos + 40, xp+5);
-        contentStream.lineTo(pos + 40, xp+5);
-		contentStream.lineTo(pos + 40, xk - 10);
-		contentStream.curveTo(pos + 40, xk, pos + 40, xk, pos + 50, xk);
-		contentStream.lineTo(pos + 60, xk);
-		contentStream.curveTo(pos + 70, xk, pos + 70, xk, pos + 70, xk-10);
-		contentStream.lineTo(pos + 70, xp + 10);
-		contentStream.curveTo(pos + 70, xp, pos + 70, xp, pos + 60, xp);
-		contentStream.lineTo(pos + 50, xp);
-		contentStream.curveTo(pos + 40, xp, pos+40, xp, pos+40, xp+ 10);
-		contentStream.fill();
+        if (right) {
+            xp += 400;
+            xk += 400;
+        }
+        final float xpr1 = xp + (xk-xp)/3;
+        final float xpr2= xpr1 + + (xk-xp)/3;
+
+        if (color != Color.WHITE) {
+            contentStream.setNonStrokingColor(color);
+            contentStream.moveTo(pos + 40, xp+5);
+            contentStream.lineTo(pos + 40, xp+5);
+            contentStream.lineTo(pos + 40, xk - 10);
+            contentStream.curveTo(pos + 40, xk, pos + 40, xk, pos + 50, xk);
+            contentStream.lineTo(pos + 60, xk);
+            contentStream.curveTo(pos + 70, xk, pos + 70, xk, pos + 70, xk-10);
+            contentStream.lineTo(pos + 70, xp + 10);
+            contentStream.curveTo(pos + 70, xp, pos + 70, xp, pos + 60, xp);
+            contentStream.lineTo(pos + 50, xp);
+            contentStream.curveTo(pos + 40, xp, pos+40, xp, pos+40, xp+ 10);
+            contentStream.fill();
+
+        } else {
+            // levy kus
+            contentStream.setNonStrokingColor(Color.CYAN);
+            contentStream.moveTo(pos + 70, xpr1);
+            contentStream.lineTo(pos + 70, xpr1);
+            contentStream.lineTo(pos + 70, xp + 10);
+            contentStream.curveTo(pos + 70, xp, pos + 70, xp, pos + 60, xp);
+            contentStream.lineTo(pos + 50, xp);
+            contentStream.curveTo(pos + 40, xp, pos + 40, xp, pos + 40, xp + 10);
+            contentStream.lineTo(pos + 40, xpr1);
+            contentStream.fill();
+
+            //prostredek
+            contentStream.setNonStrokingColor(Color.MAGENTA);
+            contentStream.addRect(pos + 40, xpr1, 30, (xk - xp) / 3);
+            contentStream.fill();
+
+            //pravy kus
+            contentStream.setNonStrokingColor(Color.YELLOW);
+            contentStream.moveTo(pos + 40, xpr2);
+            contentStream.lineTo(pos + 40, xpr2);
+            contentStream.lineTo(pos + 40, xk - 10);
+            contentStream.curveTo(pos + 40, xk, pos + 40, xk, pos + 50, xk);
+            contentStream.lineTo(pos + 60, xk);
+            contentStream.curveTo(pos + 70, xk, pos + 70, xk, pos + 70, xk - 10);
+            contentStream.lineTo(pos + 70, xpr2 );
+
+            contentStream.fill();
+        }
 		contentStream.setNonStrokingColor(Color.BLACK);
     }
 
@@ -332,7 +366,7 @@ public class PdfGenerator {
     }
 
 
-
+    @Deprecated
     private static void paintColor(float pos, Color color, PDPageContentStream contentStream) {
         try {
             if (color != Color.WHITE) {
