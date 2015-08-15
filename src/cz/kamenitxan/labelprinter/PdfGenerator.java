@@ -133,11 +133,14 @@ public class PdfGenerator {
         }
     }
 
-    private static void writeColorRectangle(float y, float x, String productColor, PDPageContentStream contentStream) throws IOException {
-        if (Objects.equals(productColor, "Black")) {
+    private static void writeColorText(float y, float x, String productColor, PDPageContentStream contentStream) throws IOException {
+        if (Color.BLACK == getProductColor(productColor)) {
             contentStream.setNonStrokingColor(Color.WHITE);
         } else {
             contentStream.setNonStrokingColor(Color.BLACK);
+        }
+        if (productColor.equals("")) {
+            productColor = "Black";
         }
         contentStream.newLineAtOffset(-50, 113);
         contentStream.showText(productColor);
@@ -208,7 +211,7 @@ public class PdfGenerator {
 
             contentStream.setNonStrokingColor(Color.BLACK);
 
-            writeColorRectangle(y, 50, product.color, contentStream);
+            writeColorText(y, 50, product.color, contentStream);
 
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
