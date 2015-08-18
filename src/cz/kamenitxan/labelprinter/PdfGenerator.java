@@ -33,6 +33,8 @@ public class PdfGenerator {
 
 
     public static final float margin = 5;
+    
+    private static boolean capacityMove = false;
 
 
     public static void generatePdf(Product product, ArrayList<Manufacturer> manufacturers){
@@ -65,17 +67,17 @@ public class PdfGenerator {
                 paintColor(thirdH, contentStream, getProductColor(product.color));*/
 
 
-                contentStream.drawImage(lamdaImage, 0+margin, 50, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 0+margin, 25, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(lamdaImage, 0+margin, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, 50, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, 25, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, 50, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, 25, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
@@ -142,15 +144,46 @@ public class PdfGenerator {
         if (productColor.equals("")) {
             productColor = "Black";
         }
-        contentStream.newLineAtOffset(-50, 113);
-        contentStream.showText(productColor);
+        String modifyProductColor = addBlankSpace(productColor);
+        contentStream.newLineAtOffset(-60, 113);
+        contentStream.showText(modifyProductColor);
         contentStream.newLineAtOffset(400, 0);
-        contentStream.showText(productColor);
+        contentStream.showText(modifyProductColor);
 
     }
+    
+    private static String addBlankSpace(String productColor){
+    
+        int productColorLength = productColor.length();
+        int maxLength = 10;
+        
+        String modifyProductColor;
+        
+        switch (productColorLength){
+            case 4 : modifyProductColor = "\u00a0" + "\u00a0" + "\u00a0" + "\u00a0" + productColor;
+                break;
+            case 5 : modifyProductColor = "\u00a0" + "\u00a0" + productColor;
+                break;
+            case 6 : modifyProductColor = "\u00a0" + "\u00a0" + productColor;
+                break;
+            case 7 : modifyProductColor = "\u00a0" + "\u00a0"  + productColor;
+                break;
+            case 8 : modifyProductColor = "\u00a0" + productColor;
+                break;
+            case 9 : modifyProductColor = productColor;
+                break;
+            case 10 : modifyProductColor = productColor;
+                break;
+            default : modifyProductColor = productColor;
+                break;
+        }
+        return modifyProductColor;
+        
+    }
+    
 
     private static void writeTextMatrix(float y, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont, PDPageContentStream contentStream) {
-        Matrix matrix = new Matrix(1, 0, 0, 1, y, 50);
+        Matrix matrix = new Matrix(1, 0, 0, 1, y, 25);
                 matrix.rotate(Math.toRadians(90));
         try {
 			contentStream.setNonStrokingColor(Color.BLACK);
@@ -159,23 +192,23 @@ public class PdfGenerator {
                 contentStream.setFont(boldFont, 14);
                 contentStream.newLineAtOffset(0, 0);
                 substringProductName(product.name, 54, contentStream);
-                contentStream.newLineAtOffset(460, 0);
+                contentStream.newLineAtOffset(485, 0);
                 substringProductName(product.name, 35, contentStream);
                 contentStream.setFont(font, 14);
-                contentStream.newLineAtOffset(-460, -30);
+                contentStream.newLineAtOffset(-485, -30);
                 contentStream.showText("Katalogové číslo: ");
                 contentStream.setFont(boldFont, 14);
                 contentStream.showText(product.invNum);
                 contentStream.setFont(font, 14);
-                contentStream.newLineAtOffset(460, 0);
+                contentStream.newLineAtOffset(485, 0);
                 contentStream.showText("Katalogové číslo: ");
                 contentStream.setFont(boldFont, 14);
                 contentStream.showText(product.invNum);
                 //Výrobce
                 contentStream.setFont(font, 12);
-                contentStream.newLineAtOffset(-460, -15);
+                contentStream.newLineAtOffset(-485, -15);
                 contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
-                contentStream.newLineAtOffset(460, 0);
+                contentStream.newLineAtOffset(485, 0);
                 contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
 
                 contentStream.setFont(font, 14);
@@ -210,6 +243,12 @@ public class PdfGenerator {
                 contentStream.showText(manufacturerCode);
 
             contentStream.setNonStrokingColor(Color.BLACK);
+            
+            if (capacityMove==true){
+                contentStream.newLineAtOffset(50, 0);
+            }
+            else{
+            }
 
             writeColorText(y, 50, product.color, contentStream);
 
@@ -271,6 +310,8 @@ public class PdfGenerator {
 				contentStream.newLineAtOffset(-300, 30);
 			} else {
 				contentStream.newLineAtOffset(-350, 30);
+                                capacityMove = true;
+                                
 			}
 		} catch (IOException ex) {
 			System.out.println("Nelze dát pozici kapacitě.");
