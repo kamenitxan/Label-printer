@@ -323,13 +323,13 @@ public class PdfGenerator {
      * Metoda nakreslí obdélník s barvou toneru
      */
     private static void colorRectangle(Color color, PDPageContentStream contentStream, float pos, boolean right) throws IOException {
-        int xp = 350;
-        int xk = 420;
+        int xp = 410;
+        int xk = 480;
         final int yh = 40;
 		final int yd = 70;
         if (right) {
-            xp += 400;
-            xk += 400;
+            xp += 340;
+            xk += 340;
         }
         final float xpr1 = xp + (xk-xp)/3;
         final float xpr2= xpr1 + + (xk-xp)/3;
