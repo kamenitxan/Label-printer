@@ -135,24 +135,47 @@ public class PdfGenerator {
         }
     }
 
-    private static void writeColorText(float y, float x, String productColor, PDPageContentStream contentStream) throws IOException {
+    private static void writeColorText(float y, float x, String productColor, PDPageContentStream contentStream, PDType0Font font) throws IOException {
+            
         if (Color.BLACK == getProductColor(productColor)) {
             contentStream.setNonStrokingColor(Color.WHITE);
         } else {
             contentStream.setNonStrokingColor(Color.BLACK);
         }
-        if (productColor.equals("")) {
+        if (productColor.isEmpty()) {
             productColor = "Black";
+        } else {}
+        
+        // 12 = fontsize
+        float titleWidth = font.getStringWidth(productColor) / 1000 * 12; 
+        int productColorLength = productColor.length();
+        int maxLength = 10;
+
+        if(productColorLength<=maxLength){    
+        contentStream.newLineAtOffset(-20-(titleWidth/2), 113);
+        contentStream.showText(productColor);
+        contentStream.newLineAtOffset(340, 0);
+        contentStream.showText(productColor);
+        } else {
+        String [] splitColor = productColor.split("\\s+");
+        float smallFont = 10;
+        float titleWidth1 = font.getStringWidth(splitColor[0]) / 1000 * smallFont; 
+        float titleWidth2 = font.getStringWidth(splitColor[1]) / 1000 * smallFont; 
+
+        contentStream.setFont(font, smallFont);
+        contentStream.newLineAtOffset(-20-(titleWidth1/2), 120);
+        contentStream.showText(splitColor[0]);
+        contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
+        contentStream.showText(splitColor[1]);
+        contentStream.newLineAtOffset((titleWidth2/2)-(titleWidth1/2)+340, 10);
+        contentStream.showText(splitColor[0]);
+        contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
+        contentStream.showText(splitColor[1]);
         }
-        String modifyProductColor = addBlankSpace(productColor);
-        contentStream.newLineAtOffset(-60, 113);
-        contentStream.showText(modifyProductColor);
-        contentStream.newLineAtOffset(400, 0);
-        contentStream.showText(modifyProductColor);
 
     }
     
-    private static String addBlankSpace(String productColor){
+    /*private static String addBlankSpace(String productColor){
     
         int productColorLength = productColor.length();
         int maxLength = 10;
@@ -180,7 +203,7 @@ public class PdfGenerator {
         return modifyProductColor;
         
     }
-    
+    */
 
     private static void writeTextMatrix(float y, Product product, String manufacturerCode, PDType0Font font, PDType0Font boldFont, PDPageContentStream contentStream) {
         Matrix matrix = new Matrix(1, 0, 0, 1, y, 25);
@@ -250,7 +273,7 @@ public class PdfGenerator {
             else{
             }
 
-            writeColorText(y, 50, product.color, contentStream);
+            writeColorText(y, 50, product.color, contentStream, font);
 
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
