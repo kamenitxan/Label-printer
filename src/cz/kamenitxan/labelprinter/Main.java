@@ -55,7 +55,7 @@ public class Main extends Application {
 
 
 		//products.forEach(System.out::println);
-        products.parallelStream().forEach(a -> PdfGenerator.generatePdf(a, manufacturers));
+        products.stream().forEach(a -> PdfGenerator.generatePdf(a, manufacturers));
         System.out.println(getTime());
 		System.out.println("Uloženo " + (products.size() * manufacturers.size()) + " PDF");
     }

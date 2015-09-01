@@ -89,6 +89,7 @@ public class PdfGenerator {
                 colorRectangle(getProductColor(product.color), contentStream, secondH, true);
                 colorRectangle(getProductColor(product.color), contentStream, thirdH, true);
 
+
                 //text barvy
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
@@ -135,8 +136,8 @@ public class PdfGenerator {
         }
     }
 
-    private static void writeColorText(float y, float x, String productColor, PDPageContentStream contentStream, PDType0Font font) throws IOException {
-            
+    private static void writeColorText(float y, String productColor, PDPageContentStream contentStream, PDType0Font font) throws IOException {
+
         if (Color.BLACK == getProductColor(productColor)) {
             contentStream.setNonStrokingColor(Color.WHITE);
         } else {
@@ -144,33 +145,34 @@ public class PdfGenerator {
         }
         if (productColor.isEmpty()) {
             productColor = "Black";
-        } else {}
+        }
         
         // 12 = fontsize
         float titleWidth = font.getStringWidth(productColor) / 1000 * 12; 
         int productColorLength = productColor.length();
         int maxLength = 10;
 
-        if(productColorLength<=maxLength){    
-        contentStream.newLineAtOffset(-20-(titleWidth/2), 113);
-        contentStream.showText(productColor);
-        contentStream.newLineAtOffset(340, 0);
-        contentStream.showText(productColor);
-        } else {
-        String [] splitColor = productColor.split("\\s+");
-        float smallFont = 10;
-        float titleWidth1 = font.getStringWidth(splitColor[0]) / 1000 * smallFont; 
-        float titleWidth2 = font.getStringWidth(splitColor[1]) / 1000 * smallFont; 
+        if(productColorLength<=maxLength){
+            contentStream.newLineAtOffset(30 -(titleWidth/2), 113);
+            contentStream.showText(productColor);
+            contentStream.newLineAtOffset(341, 0);
+            contentStream.showText(productColor);
 
-        contentStream.setFont(font, smallFont);
-        contentStream.newLineAtOffset(-20-(titleWidth1/2), 120);
-        contentStream.showText(splitColor[0]);
-        contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
-        contentStream.showText(splitColor[1]);
-        contentStream.newLineAtOffset((titleWidth2/2)-(titleWidth1/2)+340, 10);
-        contentStream.showText(splitColor[0]);
-        contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
-        contentStream.showText(splitColor[1]);
+        } else {
+            String [] splitColor = productColor.split("\\s+");
+            float smallFont = 10;
+            float titleWidth1 = font.getStringWidth(splitColor[0]) / 1000 * smallFont;
+            float titleWidth2 = font.getStringWidth(splitColor[1]) / 1000 * smallFont;
+
+            contentStream.setFont(font, smallFont);
+            contentStream.newLineAtOffset(-20-(titleWidth1/2), 120);
+            contentStream.showText(splitColor[0]);
+            contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
+            contentStream.showText(splitColor[1]);
+            contentStream.newLineAtOffset((titleWidth2/2)-(titleWidth1/2)+340, 10);
+            contentStream.showText(splitColor[0]);
+            contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
+            contentStream.showText(splitColor[1]);
         }
 
     }
@@ -273,7 +275,7 @@ public class PdfGenerator {
             else{
             }
 
-            writeColorText(y, 50, product.color, contentStream, font);
+            writeColorText(50, product.color, contentStream, font);
 
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
@@ -333,7 +335,7 @@ public class PdfGenerator {
 				contentStream.newLineAtOffset(-300, 30);
 			} else {
 				contentStream.newLineAtOffset(-350, 30);
-                                capacityMove = true;
+                capacityMove = true;
                                 
 			}
 		} catch (IOException ex) {
@@ -401,6 +403,7 @@ public class PdfGenerator {
             contentStream.fill();
         }
 		contentStream.setNonStrokingColor(Color.BLACK);
+
     }
 
     @Deprecated
