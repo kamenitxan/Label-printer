@@ -124,14 +124,15 @@ public class PdfGenerator {
 
     private void writeColorText(float y, String productColor, PDPageContentStream contentStream, PDType0Font font) throws IOException {
 
+        if (productColor.isEmpty()) {
+            productColor = "Black";
+        }
         if (Color.BLACK == getProductColor(productColor)) {
             contentStream.setNonStrokingColor(Color.WHITE);
         } else {
             contentStream.setNonStrokingColor(Color.BLACK);
         }
-        if (productColor.isEmpty()) {
-            productColor = "Black";
-        }
+        
         
         // 12 = fontsize
         float titleWidth = font.getStringWidth(productColor) / 1000 * 12; 
@@ -151,7 +152,7 @@ public class PdfGenerator {
             float titleWidth2 = font.getStringWidth(splitColor[1]) / 1000 * smallFont;
 
             contentStream.setFont(font, smallFont);
-            contentStream.newLineAtOffset(-20-(titleWidth1/2), 120);
+            contentStream.newLineAtOffset(30 -(titleWidth1/2), 120);
             contentStream.showText(splitColor[0]);
             contentStream.newLineAtOffset((titleWidth1/2)-(titleWidth2/2), -10);
             contentStream.showText(splitColor[1]);
