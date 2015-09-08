@@ -94,9 +94,9 @@ public class PdfGenerator {
                 contentStream.endText();
 
                 //linka
-                contentStream.moveTo(0, (6 * pageWidth) / 10);
+                /*contentStream.moveTo(0, (6 * pageWidth) / 10);
                 contentStream.lineTo(wholePageHeight, (6 * pageWidth) / 10);
-                contentStream.stroke();
+                contentStream.stroke();*/
 
                 contentStream.close();
             } catch (IOException ex) {

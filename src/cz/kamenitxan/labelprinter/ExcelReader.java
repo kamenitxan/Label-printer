@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 27.06.15.
@@ -48,10 +47,10 @@ public class ExcelReader {
 
 		for (Row row : sheet) {
 			try {
-				if (Objects.equals(getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator), "200853")) {
+				/*if (Objects.equals(getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator), "200853")) {
 					System.out.println("stuj");
 					evaluator.setDebugEvaluationOutputForNextEval(true);
-				}
+				}*/
 				Product product = new Product() {{
 					invNum = getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator);
 					name = getCellValue(row.getCell(1), row.getCell(1).getCellType(), evaluator);

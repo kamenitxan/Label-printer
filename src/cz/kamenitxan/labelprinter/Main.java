@@ -42,10 +42,11 @@ public class Main extends Application {
 		}
 		if (filename.equals("")) {
 			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
+			return;
 		}
-		if (!System.getProperty("os.name").equals("Mac OS X")) {
+		/*if (!System.getProperty("os.name").equals("Mac OS X")) {
 			filename = "C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx";
-		}
+		}*/
 
 		List<Product> products = ExcelReader.importFile(filename);
 		if (limit) {
@@ -62,6 +63,7 @@ public class Main extends Application {
 		});
         System.out.println(getTime());
 		System.out.println("Uloženo " + (products.size() * manufacturers.size()) + " PDF");
+		System.exit(0);
     }
 
 	/**
