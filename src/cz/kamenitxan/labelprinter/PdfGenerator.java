@@ -24,8 +24,8 @@ public class PdfGenerator {
     public static final float wholePageHeight = 596;
     public static final PDRectangle PAGE_SIZE_A4 = new PDRectangle( wholePageHeight, wholePageWidth);
 
-    public static final float lamdaImageWidth = 90;
-    public static final float lamdaImageHeight  = 196;
+    public static final float lamdaImageWidth = 77;
+    public static final float lamdaImageHeight  = 167;
     public static final float labelImageWidth = 15;
     public static final float labelImageHeight  = 67;
 
@@ -60,18 +60,18 @@ public class PdfGenerator {
                 float thirdH = 2*secondH;
 
 
-                contentStream.drawImage(lamdaImage, 0+margin, 25, lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, 0+margin, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 10+margin, 25, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, 10+margin, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight / 3) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, 25, lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, (pageHeight / 3)+2, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (pageHeight / 3)+12, 25, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (pageHeight / 3)+12, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((2 * (pageHeight / 3)) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, 25, lamdaImageWidth, lamdaImageHeight);
-                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+2, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+12, 25, lamdaImageWidth, lamdaImageHeight);
+                contentStream.drawImage(lamdaImage, (2 * (pageHeight / 3))+12, ((6 * pageWidth) / 10)+15, lamdaImageWidth, lamdaImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
