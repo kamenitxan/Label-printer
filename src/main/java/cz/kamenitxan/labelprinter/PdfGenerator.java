@@ -189,9 +189,9 @@ public class PdfGenerator {
                 //Výrobce
                 contentStream.setFont(font, 12);
                 contentStream.newLineAtOffset(-485, -15);
-                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                contentStream.showText("Výrobce: Lamdaprint cz a.s.");
                 contentStream.newLineAtOffset(485, 0);
-                contentStream.showText("Výrobce: Lamdaprint cz s.r.o.");
+                contentStream.showText("Výrobce: Lamdaprint cz a.s.");
 
                 contentStream.setFont(font, 14);
 
