@@ -1,5 +1,6 @@
 package cz.kamenitxan.labelprinter;
 
+import cz.kamenitxan.labelprinter.generators.LamdaInk;
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
 import javafx.application.Application;
@@ -56,9 +57,9 @@ public class Main extends Application {
 
 
 		//products.forEach(System.out::println);
-		PdfGenerator.manufacturers = manufacturers;
+		LamdaInk.manufacturers = manufacturers;
         products.parallelStream().forEach(a -> {
-			PdfGenerator g = new PdfGenerator();
+			LamdaInk g = new LamdaInk();
 			g.generatePdf(a);
 		});
         System.out.println(getTime());
