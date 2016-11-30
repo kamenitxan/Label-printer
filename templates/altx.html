@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @font-face {
+            font-family: 'ean';
+            src: url('/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/ean13.woff') format('woff'),
+            url('/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/ean13.ttf') format('truetype'); /* Safari, Android, iOS */
+        }
+
+        body {
+            margin: 0;
+            font-size: 0;
+        }
+
+        .polepka {
+            width: 25%;
+            height: 154px;
+            position: relative;
+            display: inline-block;
+            font-size: 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .ean {
+            font-family: 'ean';
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            display: block;
+            font-size: 54px;
+            position: absolute;
+            left: -36px;
+            top: 46px;
+            height: 61px;
+            overflow: hidden;
+            line-height: 46px;
+        }
+        .pn {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            position: relative;
+            display: block;
+            top: 60px;
+            left: 13px;
+            color: gray;
+            font-size: 25px;
+            float: left;
+            width: 150px;
+        }
+        .popis {
+            width: 53%;
+            margin-left: 43%;
+            display: block;
+            font-size: 16px;
+        }
+
+        .barva {
+            font-weight: bold;
+        }
+
+        .strany {
+            font-weight: bold;
+        }
+
+        .circle {
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            left: 110px;
+            bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+        </div>
+    </div>
+
+</body>
+</html>

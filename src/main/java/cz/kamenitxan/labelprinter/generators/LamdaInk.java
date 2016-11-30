@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static cz.kamenitxan.labelprinter.models.Product.getProductColor;
+
 public class LamdaInk extends PdfGenerator {
     private static final PDRectangle PAGE_SIZE_A4 = new PDRectangle(wholePageHeight, wholePageWidth);
 
@@ -67,12 +69,12 @@ public class LamdaInk extends PdfGenerator {
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((pageWidth / 3) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
                 contentStream.drawImage(labelImage, ((pageHeight) - labelImageWidth - 5), ((4 * (pageWidth / 5)) - (labelImageHeight / 2)), labelImageWidth, labelImageHeight);
 
-                colorRectangle(getProductColor(product.color), contentStream, firstH, false);
-                colorRectangle(getProductColor(product.color), contentStream, secondH, false);
-                colorRectangle(getProductColor(product.color), contentStream, thirdH, false);
-                colorRectangle(getProductColor(product.color), contentStream, firstH, true);
-                colorRectangle(getProductColor(product.color), contentStream, secondH, true);
-                colorRectangle(getProductColor(product.color), contentStream, thirdH, true);
+                colorRectangle(getProductColor(product.colorName), contentStream, firstH, false);
+                colorRectangle(getProductColor(product.colorName), contentStream, secondH, false);
+                colorRectangle(getProductColor(product.colorName), contentStream, thirdH, false);
+                colorRectangle(getProductColor(product.colorName), contentStream, firstH, true);
+                colorRectangle(getProductColor(product.colorName), contentStream, secondH, true);
+                colorRectangle(getProductColor(product.colorName), contentStream, thirdH, true);
 
                 //text barvy
                 contentStream.beginText();
@@ -219,7 +221,7 @@ public class LamdaInk extends PdfGenerator {
                 contentStream.newLineAtOffset(50, 0);
             }
 
-            writeColorText(50, product.color, contentStream, font);
+            writeColorText(50, product.colorName, contentStream, font);
 
         } catch (IOException ex) {
             System.out.println("Nelze nakreslit textovou matici.");
@@ -406,67 +408,6 @@ public class LamdaInk extends PdfGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static Color getProductColor(String color) {
-        Color currentColor;
-        switch (color) {
-            case "Black":
-                currentColor = Color.BLACK;
-                break;
-            case "Yellow":
-                currentColor = Color.YELLOW;
-                break;
-            case "Cyan":
-                currentColor = Color.CYAN;
-                break;
-            case "Magenta":
-                currentColor = Color.MAGENTA;
-                break;
-            case "Black/Rot":
-                currentColor = Color.BLACK;
-                break;
-            case "CMYK":
-                currentColor = Color.WHITE;
-                break;
-            case "Color":
-                currentColor = Color.WHITE;
-                break;
-            case "Grey":
-                currentColor = Color.GRAY;
-                break;
-            case "Light Cyan":
-                currentColor = Color.CYAN.brighter();
-                break;
-            case "Light Magenta":
-                currentColor = Color.MAGENTA.brighter();
-                break;
-            case "Matte black":
-                currentColor = Color.BLACK;
-                break;
-            case "Photo":
-                currentColor = Color.WHITE;
-                break;
-            case "Photo Black":
-                currentColor = Color.BLACK;
-                break;
-            case "Photo Cyan":
-                currentColor = Color.CYAN;
-                break;
-            case "Photo Magenta":
-                currentColor = Color.MAGENTA;
-                break;
-            case "Red/Black":
-                currentColor = Color.RED;
-                break;
-            case "Violett":
-                currentColor = Color.magenta.darker();
-                break;
-            default:
-                currentColor = Color.BLACK;
-                break;
-        }
-        return currentColor;
     }
 
     private static Color switchColor(String currentColor) {

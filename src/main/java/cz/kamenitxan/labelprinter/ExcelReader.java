@@ -1,5 +1,6 @@
 package cz.kamenitxan.labelprinter;
 
+import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
 import org.apache.poi.ss.usermodel.Cell;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class ExcelReader {
 
-	public static List<Product> importFile(String filename) {
+	public static List<Product> importFile(String filename, Generators generator) {
 		List<Product> products = new ArrayList<>();
 
 		System.setProperty("org.apache.poi.util.POILogger", "org.apache.poi.util.SystemOutLogger");
@@ -51,20 +52,43 @@ public class ExcelReader {
 					System.out.println("stuj");
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
-				Product product = new Product() {{
-					invNum = getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator);
-					name = getCellValue(row.getCell(1), row.getCell(1).getCellType(), evaluator);
-					capacity = getCellValue(row.getCell(7), row.getCell(7).getCellType(), evaluator);
-					color = getCellValue(row.getCell(2), row.getCell(2).getCellType(), evaluator);
-                    productCode = getCellValue(row.getCell(4), row.getCell(4).getCellType(), evaluator);
-				}};
-				products.add(product);
+				switch (generator) {
+					case INK_ALTX: {
+						products.add(createAltXInk(row, evaluator));
+						break;
+					}
+					case TONER_LAMDA: {
+						products.add(createLamdaToner(row, evaluator));
+						break;
+					}
+				}
+
 			} catch (NullPointerException ex) {
-				System.out.println("NULL na radce " + row.getRowNum() );
+				System.out.println("NULL na radce " + row.getRowNum());
 			}
 		}
 
 		return products;
+	}
+
+	private static Product createAltXInk(Row row, FormulaEvaluator evaluator) {
+		String invNum = getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator);
+		String name = getCellValue(row.getCell(5), row.getCell(5).getCellType(), evaluator);
+		String capacity = getCellValue(row.getCell(7), row.getCell(7).getCellType(), evaluator);
+		String colorName = getCellValue(row.getCell(6), row.getCell(6).getCellType(), evaluator);
+		String ean = getCellValue(row.getCell(8), row.getCell(8).getCellType(), evaluator);
+		String eanCode = getCellValue(row.getCell(8), row.getCell(8).getCellType(), evaluator);
+		return new Product(invNum, name, capacity, colorName, null, ean, eanCode);
+	}
+
+	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator) {
+		return new Product() {{
+			invNum = getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator);
+			name = getCellValue(row.getCell(1), row.getCell(1).getCellType(), evaluator);
+			capacity = getCellValue(row.getCell(7), row.getCell(7).getCellType(), evaluator);
+			colorName = getCellValue(row.getCell(2), row.getCell(2).getCellType(), evaluator);
+			productCode = getCellValue(row.getCell(4), row.getCell(4).getCellType(), evaluator);
+		}};
 	}
 
 	private static String getCellValue(Cell cell, int cellType, FormulaEvaluator evaluator) {
@@ -73,10 +97,10 @@ public class ExcelReader {
 		}
 		if (cellType == 0) {
 			return String.valueOf(cell.getNumericCellValue()).replace(".0", "");
-		} else if (cellType == 1){
+		} else if (cellType == 1) {
 			return cell.getStringCellValue();
 		} else if (cellType == 2) {
-			switch(cell.getCachedFormulaResultType()) {
+			switch (cell.getCachedFormulaResultType()) {
 				case XSSFCell.CELL_TYPE_STRING:
 					return cell.getStringCellValue();
 				case XSSFCell.CELL_TYPE_NUMERIC:
@@ -115,7 +139,7 @@ public class ExcelReader {
 				}};
 				manufacturers.add(manufacturer);
 			} catch (NullPointerException ex) {
-				System.out.println("NULL na radce " + row.getRowNum() );
+				System.out.println("NULL na radce " + row.getRowNum());
 			}
 		}
 

@@ -1,6 +1,8 @@
 package cz.kamenitxan.labelprinter;
 
+import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
+import cz.kamenitxan.labelprinter.generators.PdfGenerator;
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
 import javafx.application.Application;
@@ -17,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Main extends Application {
-    public static final double startTime = System.nanoTime();
+    private static final double startTime = System.nanoTime();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -31,6 +33,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 		String filename = "";
 		Boolean limit = false;
+		Generators generator = null;
         //launch(args);
         for (String arg : args) {
 			if (arg.contains("-file=")) {
@@ -40,6 +43,11 @@ public class Main extends Application {
 			if (arg.contains("-limit")) {
 				limit = true;
 			}
+			if (arg.contains("-generator")) {
+				arg = arg.replace("-generator=", "");
+				generator = Generators.valueOf(arg);
+			}
+
 		}
 		if (filename.equals("")) {
 			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
@@ -49,21 +57,31 @@ public class Main extends Application {
 			filename = "C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx";
 		}*/
 
-		List<Product> products = ExcelReader.importFile(filename);
+		List<Product> products = ExcelReader.importFile(filename, generator);
 		if (limit) {
 			products = products.subList(0, 50);
 		}
-		final ArrayList<Manufacturer> manufacturers = ExcelReader.importManufacturers(filename);
+
+		switch (generator) {
+			case INK_ALTX: {
+				generator.generator.generate(products);
+				break;
+			}
+			case TONER_LAMDA: {
+				final ArrayList<Manufacturer> manufacturers = ExcelReader.importManufacturers(filename);
+				//products.forEach(System.out::println);
+				LamdaInk.manufacturers = manufacturers;
+				products.parallelStream().forEach(a -> {
+					LamdaInk g = new LamdaInk();
+					g.generatePdf(a);
+				});
+				break;
+			}
+		}
 
 
-		//products.forEach(System.out::println);
-		LamdaInk.manufacturers = manufacturers;
-        products.parallelStream().forEach(a -> {
-			LamdaInk g = new LamdaInk();
-			g.generatePdf(a);
-		});
         System.out.println(getTime());
-		System.out.println("Uloženo " + (products.size() * manufacturers.size()) + " PDF");
+		//System.out.println("Uloženo " + (products.size() * manufacturers.size()) + " PDF");
 		System.exit(0);
     }
 
