@@ -1,8 +1,9 @@
 package cz.kamenitxan.labelprinter.generators;
 
-import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
+import cz.kamenitxan.labelprinter.PdfWrap;
 import cz.kamenitxan.labelprinter.models.Product;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,9 +22,9 @@ public abstract class PdfGenerator {
 		products.parallelStream().forEach(this::generatePdf);
 	}
 
-	public void savePdf(Pdf pdf, String name) {
+	public void savePdf(PdfWrap pdf, String name) {
 		try {
-			pdf.saveAs("export/" + name);
+			pdf.saveAs("export" + File.separator + name.trim() + ".pdf");
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

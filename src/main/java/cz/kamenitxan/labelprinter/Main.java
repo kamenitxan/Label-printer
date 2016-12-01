@@ -2,8 +2,6 @@ package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
-import cz.kamenitxan.labelprinter.generators.PdfGenerator;
-import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +11,6 @@ import javafx.stage.Stage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +50,10 @@ public class Main extends Application {
 			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
 			return;
 		}
+		if (generator == null) {
+			System.out.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
+			return;
+		}
 		/*if (!System.getProperty("os.name").equals("Mac OS X")) {
 			filename = "C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx";
 		}*/
@@ -68,9 +69,8 @@ public class Main extends Application {
 				break;
 			}
 			case TONER_LAMDA: {
-				final ArrayList<Manufacturer> manufacturers = ExcelReader.importManufacturers(filename);
 				//products.forEach(System.out::println);
-				LamdaInk.manufacturers = manufacturers;
+				LamdaInk.manufacturers = ExcelReader.importManufacturers(filename);
 				products.parallelStream().forEach(a -> {
 					LamdaInk g = new LamdaInk();
 					g.generatePdf(a);

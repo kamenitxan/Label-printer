@@ -1,6 +1,5 @@
 package cz.kamenitxan.labelprinter.generators;
 
-import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.page.PageType;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -48,14 +47,16 @@ public class AltxInk extends PdfGenerator {
 		PdfWrap pdf = new PdfWrap(); //--zoom 1.33 --dpi 130
 		pdf.addPage(writer.toString(), PageType.htmlAsString);
 		pdf.addParam(new Param("--zoom", "0.78125"));
-		pdf.addParam(new Param("--disable-smart-shrinking"), new Param("-B", "5mm"),
-				new Param("-L", "5mm"), new Param("-R", "5mm"), new Param("-T", "5mm"));
+		pdf.addParam(new Param("--disable-smart-shrinking"), new Param("-B", "4mm"),
+				new Param("-L", "8mm"), new Param("-R", "8mm"), new Param("-T", "10mm"));
 
+		savePdf(pdf, product.invNum);
+		/*
 		try {
 			pdf.saveAs("export/" + product.invNum.trim() + ".pdf");
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 
