@@ -22,7 +22,7 @@ import java.util.List;
 public class ExcelReader {
 
 	public static List<Product> importFile(String filename, Generators generator) {
-		List<Product> products = new ArrayList<>();
+		final List<Product> products = new ArrayList<>();
 
 		System.setProperty("org.apache.poi.util.POILogger", "org.apache.poi.util.SystemOutLogger");
 		System.setProperty("poi.log.level", POILogger.INFO + "");
@@ -42,7 +42,7 @@ public class ExcelReader {
 		}
 		FormulaEvaluator evaluator = new XSSFFormulaEvaluator(workbook);
 
-		XSSFSheet sheet = workbook.getSheetAt(0);
+		final XSSFSheet sheet = workbook.getSheetAt(0);
 		sheet.removeRow(sheet.getRow(0));
 
 
@@ -72,29 +72,31 @@ public class ExcelReader {
 	}
 
 	private static Product createAltXInk(Row row, FormulaEvaluator evaluator) {
-		String invNum = getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator);
-		String name = getCellValue(row.getCell(5), row.getCell(5).getCellType(), evaluator);
-		String capacity = getCellValue(row.getCell(7), row.getCell(7).getCellType(), evaluator);
-		String colorName = getCellValue(row.getCell(6), row.getCell(6).getCellType(), evaluator);
-		String ean = getCellValue(row.getCell(8), row.getCell(8).getCellType(), evaluator);
-		String eanCode = getCellValue(row.getCell(8), row.getCell(8).getCellType(), evaluator);
-		return new Product(invNum, name, capacity, colorName, null, ean, eanCode);
+		final String invNum = getCellValue(row.getCell(0), evaluator);
+		final String productCode = getCellValue(row.getCell(1), evaluator);
+		final String name = getCellValue(row.getCell(5), evaluator);
+		final String capacity = getCellValue(row.getCell(7), evaluator);
+		final String colorName = getCellValue(row.getCell(6), evaluator);
+		final String ean = getCellValue(row.getCell(8), evaluator);
+		final String eanCode = getCellValue(row.getCell(8), evaluator);
+		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode);
 	}
 
 	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator) {
 		return new Product() {{
-			invNum = getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator);
-			name = getCellValue(row.getCell(1), row.getCell(1).getCellType(), evaluator);
-			capacity = getCellValue(row.getCell(7), row.getCell(7).getCellType(), evaluator);
-			colorName = getCellValue(row.getCell(2), row.getCell(2).getCellType(), evaluator);
-			productCode = getCellValue(row.getCell(4), row.getCell(4).getCellType(), evaluator);
+			invNum = getCellValue(row.getCell(0), evaluator);
+			name = getCellValue(row.getCell(1), evaluator);
+			capacity = getCellValue(row.getCell(7), evaluator);
+			colorName = getCellValue(row.getCell(2), evaluator);
+			productCode = getCellValue(row.getCell(4), evaluator);
 		}};
 	}
 
-	private static String getCellValue(Cell cell, int cellType, FormulaEvaluator evaluator) {
+	private static String getCellValue(Cell cell, FormulaEvaluator evaluator) {
 		if (cell == null) {
 			return "";
 		}
+		final int cellType = cell.getCellType();
 		if (cellType == 0) {
 			return String.valueOf(cell.getNumericCellValue()).replace(".0", "");
 		} else if (cellType == 1) {
@@ -134,8 +136,8 @@ public class ExcelReader {
 		for (Row row : sheet) {
 			try {
 				Manufacturer manufacturer = new Manufacturer() {{
-					code = getCellValue(row.getCell(0), row.getCell(0).getCellType(), null);
-					name = getCellValue(row.getCell(1), row.getCell(1).getCellType(), null);
+					code = getCellValue(row.getCell(0), null);
+					name = getCellValue(row.getCell(1), null);
 				}};
 				manufacturers.add(manufacturer);
 			} catch (NullPointerException ex) {

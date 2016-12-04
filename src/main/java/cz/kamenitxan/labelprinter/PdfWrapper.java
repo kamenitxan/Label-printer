@@ -1,6 +1,5 @@
 package cz.kamenitxan.labelprinter;
 
-import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.PdfService;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.configurations.WrapperConfig;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.page.Page;
@@ -19,7 +18,7 @@ import java.util.UUID;
 /**
  * Created by tomaspavel on 30.11.16.
  */
-public class PdfWrap implements PdfService {
+public class PdfWrapper implements PdfService {
 	private static final String STDINOUT = "-";
 	private WrapperConfig wrapperConfig;
 	private Params params;
@@ -27,14 +26,14 @@ public class PdfWrap implements PdfService {
 	private boolean hasToc;
 	private String path;
 
-	public PdfWrap(WrapperConfig wrapperConfig) {
+	public PdfWrapper(WrapperConfig wrapperConfig) {
 		this.hasToc = false;
 		this.wrapperConfig = wrapperConfig;
 		this.params = new Params();
 		this.pages = new ArrayList();
 	}
 
-	public PdfWrap() {
+	public PdfWrapper() {
 		this(new WrapperConfig());
 	}
 

@@ -3,11 +3,6 @@ package cz.kamenitxan.labelprinter;
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
 import cz.kamenitxan.labelprinter.models.Product;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,17 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Main extends Application {
+public class Main  {
     private static final double startTime = System.nanoTime();
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
-    }
-
 
     public static void main(String[] args) {
 		String filename = "";
@@ -64,7 +50,8 @@ public class Main extends Application {
 		}
 
 		switch (generator) {
-			case INK_ALTX: {
+			case INK_ALTX:
+			case TONER_TESLA: {
 				generator.generator.generate(products);
 				break;
 			}

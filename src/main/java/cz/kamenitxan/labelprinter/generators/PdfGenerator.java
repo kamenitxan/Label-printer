@@ -1,6 +1,10 @@
 package cz.kamenitxan.labelprinter.generators;
 
-import cz.kamenitxan.labelprinter.PdfWrap;
+import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
+import com.mitchellbosecke.pebble.PebbleEngine;
+import com.mitchellbosecke.pebble.error.PebbleException;
+import com.mitchellbosecke.pebble.template.PebbleTemplate;
+import cz.kamenitxan.labelprinter.PdfWrapper;
 import cz.kamenitxan.labelprinter.models.Product;
 
 import java.io.File;
@@ -16,13 +20,38 @@ public abstract class PdfGenerator {
 	static final float wholePageWidth = 843;
 	static final float wholePageHeight = 596;
 
-	public abstract void generatePdf(Product product);
+	final PebbleEngine engine = new PebbleEngine.Builder().build();
+	PebbleTemplate compiledTemplate;
 
-	public void generate(List<Product> products) {
+	int leftBorder = 8;
+	int rightBorder = 8;
+	int topBorder = 10;
+	int bottomBorder = 4;
+
+	public PdfGenerator(final String templateName) {
+		if (templateName == null) return;
+		try {
+			compiledTemplate = engine.getTemplate(templateName);
+		} catch (PebbleException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public abstract void generatePdf(final Product product);
+
+	public void generate(final List<Product> products) {
+		if (compiledTemplate == null) return;
 		products.parallelStream().forEach(this::generatePdf);
 	}
 
-	public void savePdf(PdfWrap pdf, String name) {
+	public void savePdf(final PdfWrapper pdf, final String name) {
+		pdf.addParam(new Param("--zoom", "0.78125"));
+		pdf.addParam(new Param("--disable-smart-shrinking"),
+				new Param("-B", bottomBorder + "mm"),
+				new Param("-L", leftBorder + "mm"),
+				new Param("-R", rightBorder + "mm"),
+				new Param("-T", topBorder + "mm"));
+
 		try {
 			pdf.saveAs("export" + File.separator + name.trim() + ".pdf");
 		} catch (IOException | InterruptedException e) {

@@ -17,6 +17,7 @@ public class Product {
 	public String productCode = "";
 	public String ean = "";
 	public String eanCode = "";
+	public String manufacturer = "";
 
 	public Product() {
 	}
@@ -44,6 +45,7 @@ public class Product {
 		context.put("ean", ean);
 		context.put("eanCode", eanCode);
 		context.put("hexColor", hexColor);
+		context.put("manufacturer", manufacturer);
 		return context;
 	}
 

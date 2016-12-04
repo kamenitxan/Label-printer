@@ -32,6 +32,7 @@ public class LamdaInk extends PdfGenerator {
     private boolean capacityMove = false;
 
     public LamdaInk() {
+        super(null);
     }
 
     public void generatePdf(Product product) {
