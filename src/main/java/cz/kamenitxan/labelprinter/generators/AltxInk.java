@@ -26,14 +26,14 @@ public class AltxInk extends PdfGenerator {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
 
-		if (product.name.length() > 15) {
+		if (product.name.length() > 20) {
+			context.put("fs", "16px");
+		}
+		if (product.name.length() > 25) {
 			context.put("fs", "14px");
 		}
-		if (product.name.length() > 20) {
-			context.put("fs", "12px");
-		}
 		if (product.name.length() > 30) {
-			context.put("fs", "8px");
+			context.put("fs", "10px");
 		}
 		try {
 			compiledTemplate.evaluate(writer, context);

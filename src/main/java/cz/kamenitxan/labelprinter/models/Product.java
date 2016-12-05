@@ -3,6 +3,7 @@ package cz.kamenitxan.labelprinter.models;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 27.06.15.
@@ -18,6 +19,8 @@ public class Product {
 	public String ean = "";
 	public String eanCode = "";
 	public String manufacturer = "";
+
+	Function<Product, Boolean> validator;
 
 	public Product() {
 	}
@@ -36,6 +39,28 @@ public class Product {
 		if (this.name != null) {
 			this.name = this.name.replace("+", "+ ");
 		}
+	}
+
+	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String eanCode, Function<Product, Boolean> validator) {
+		this.invNum = invNum;
+		this.name = name;
+		this.capacity = capacity;
+		this.colorName = colorName;
+		this.color = getProductColor(colorName);
+		this.hexColor =  String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+		this.productCode = productCode;
+		this.ean = ean;
+		this.eanCode = eanCode;
+
+		if (this.name != null) {
+			this.name = this.name.replace("+", "+ ");
+		}
+		this.validator = validator;
+	}
+
+	public boolean isValid() {
+		if (validator == null) return true;
+		return validator.apply(this);
 	}
 
 	public Map<String, Object> getContext() {

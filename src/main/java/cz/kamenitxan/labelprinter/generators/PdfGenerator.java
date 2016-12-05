@@ -41,7 +41,7 @@ public abstract class PdfGenerator {
 
 	public void generate(final List<Product> products) {
 		if (compiledTemplate == null) return;
-		products.parallelStream().forEach(this::generatePdf);
+		products.parallelStream().filter(Product::isValid).forEach(this::generatePdf);
 	}
 
 	public void savePdf(final PdfWrapper pdf, final String name) {
@@ -58,4 +58,6 @@ public abstract class PdfGenerator {
 			e.printStackTrace();
 		}
 	}
+
+
 }

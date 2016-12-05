@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 27.06.15.
@@ -79,7 +80,8 @@ public class ExcelReader {
 		final String colorName = getCellValue(row.getCell(6), evaluator);
 		final String ean = getCellValue(row.getCell(8), evaluator);
 		final String eanCode = getCellValue(row.getCell(8), evaluator);
-		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode);
+		final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
+		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator);
 	}
 
 	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator) {
