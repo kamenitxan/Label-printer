@@ -32,6 +32,10 @@ public class Product {
 		this.productCode = productCode;
 		this.ean = ean;
 		this.eanCode = eanCode;
+
+		if (this.name != null) {
+			this.name = this.name.replace("+", "+ ");
+		}
 	}
 
 	public Map<String, Object> getContext() {

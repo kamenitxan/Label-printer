@@ -8,12 +8,15 @@ import cz.kamenitxan.labelprinter.models.Product;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 
 /**
  * Created by tomaspavel on 30.11.16.
  */
 public class AltxInk extends PdfGenerator {
-	
+
 	public AltxInk() {
 		super("templates/altx.html");
 	}
@@ -21,9 +24,26 @@ public class AltxInk extends PdfGenerator {
 	@Override
 	public void generatePdf(Product product) {
 		Writer writer = new StringWriter();
+		Map<String, Object> context = product.getContext();
+
+		if (product.name.length() > 15) {
+			context.put("fs", "14px");
+		}
+		if (product.name.length() > 20) {
+			context.put("fs", "12px");
+		}
+		if (product.name.length() > 30) {
+			context.put("fs", "8px");
+		}
 		try {
-			compiledTemplate.evaluate(writer, product.getContext());
+			compiledTemplate.evaluate(writer, context);
 		} catch (PebbleException | IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Files.write(Paths.get("html/" + product.invNum.trim() + ".html"), writer.toString().getBytes());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

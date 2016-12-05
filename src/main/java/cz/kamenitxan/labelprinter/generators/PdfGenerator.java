@@ -46,7 +46,7 @@ public abstract class PdfGenerator {
 
 	public void savePdf(final PdfWrapper pdf, final String name) {
 		pdf.addParam(new Param("--zoom", "0.78125"));
-		pdf.addParam(new Param("--disable-smart-shrinking"),
+		pdf.addParam(new Param("--disable-smart-shrinking"), new Param("--javascript-delay", "500"),
 				new Param("-B", bottomBorder + "mm"),
 				new Param("-L", leftBorder + "mm"),
 				new Param("-R", rightBorder + "mm"),

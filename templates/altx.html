@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/textFit.min.js"></script>
     <style>
         @font-face {
             font-family: 'ean';
@@ -81,6 +82,13 @@
         }
         .small {
             height: 6px;
+        }
+
+        .jmeno {
+            height: 64px;
+            overflow: hidden;
+            padding-top: 10px;
+            font-size: {{fs}};
         }
     </style>
 </head>
@@ -471,6 +479,8 @@
             <div class="circle" style="background-color: {{hexColor}}"></div>
         </div>
     </div>
-
+<script>
+    //textFit(document.getElementsByClassName('jmeno'));
+</script>
 </body>
 </html>

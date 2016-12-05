@@ -10,10 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by tomaspavel on 30.11.16.
@@ -78,6 +75,7 @@ public class PdfWrapper implements PdfService {
 	public byte[] getPDF() throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		Process process = runtime.exec(this.getCommandAsArray());
+		System.out.println(Arrays.toString(this.getCommandAsArray()));
 		StreamEater outputStreamEater = new StreamEater(process.getInputStream());
 		outputStreamEater.start();
 		StreamEater errorStreamEater = new StreamEater(process.getErrorStream());
