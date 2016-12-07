@@ -35,6 +35,11 @@ public class LamdaInk extends PdfGenerator {
         super(null);
     }
 
+    @Override
+    public String getFolderName() {
+        return "ink_lamda";
+    }
+
     public void generatePdf(Product product) {
         for (Manufacturer manufacturer : manufacturers) {
             PDDocument document = new PDDocument();

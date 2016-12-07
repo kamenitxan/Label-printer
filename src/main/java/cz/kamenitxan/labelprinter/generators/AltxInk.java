@@ -22,6 +22,11 @@ public class AltxInk extends PdfGenerator {
 	}
 
 	@Override
+	public String getFolderName() {
+		return "ink_altx";
+	}
+
+	@Override
 	public void generatePdf(Product product) {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
@@ -41,22 +46,15 @@ public class AltxInk extends PdfGenerator {
 			e.printStackTrace();
 		}
 
-		try {
+		/*try {
 			Files.write(Paths.get("html/" + product.invNum.trim() + ".html"), writer.toString().getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		PdfWrapper pdf = new PdfWrapper(); //--zoom 1.33 --dpi 130
 		pdf.addPage(writer.toString(), PageType.htmlAsString);
 		savePdf(pdf, product.invNum);
-		/*
-		try {
-			pdf.saveAs("export/" + product.invNum.trim() + ".pdf");
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}*/
-
 	}
 
 }

@@ -9,6 +9,8 @@ import cz.kamenitxan.labelprinter.models.Product;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -19,6 +21,7 @@ public abstract class PdfGenerator {
 	static final float pageHeight = 586;
 	static final float wholePageWidth = 843;
 	static final float wholePageHeight = 596;
+	static final String exportFolder = "export";
 
 	final PebbleEngine engine = new PebbleEngine.Builder().build();
 	PebbleTemplate compiledTemplate;
@@ -35,7 +38,14 @@ public abstract class PdfGenerator {
 		} catch (PebbleException e) {
 			e.printStackTrace();
 		}
+		try {
+			Files.createDirectories(Paths.get(exportFolder + File.separator + getFolderName()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+
+	public abstract String getFolderName();
 
 	public abstract void generatePdf(final Product product);
 
@@ -53,7 +63,7 @@ public abstract class PdfGenerator {
 				new Param("-T", topBorder + "mm"));
 
 		try {
-			pdf.saveAs("export" + File.separator + name.trim() + ".pdf");
+			pdf.saveAs(exportFolder + File.separator + getFolderName() + File.separator + name.trim() + ".pdf");
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

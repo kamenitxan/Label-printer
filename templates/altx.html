@@ -62,7 +62,6 @@
         }
 
         .barva, .strany {
-            font-weight: bold;
             margin-top: 8px;
             margin-bottom: 8px;
         }
@@ -80,6 +79,14 @@
             left: 105px;
             bottom: 55px;
         }
+
+        .magenta {
+            bottom: 35px;
+        }
+        .yellow {
+            bottom: 15px;
+        }
+
         .space {
             height: 9px;
             width: 100%;
@@ -93,6 +100,7 @@
             overflow: hidden;
             padding-top: 10px;
             font-size: {{fs}};
+            font-weight: bold;
         }
     </style>
 </head>
@@ -106,7 +114,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -116,7 +130,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -126,7 +146,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -136,50 +162,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+                <div class="circle cyan" style="background-color: #00ffff"></div>
+                <div class="circle magenta" style="background-color: #ffff00"></div>
+                <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-    </div>
-    <div class="space"></div>
-    <div class="row">
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
     </div>
     <div class="space"></div>
@@ -192,7 +181,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -202,7 +197,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -212,7 +213,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -222,50 +229,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-    </div>
-    <div class="space"></div>
-    <div class="row">
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
     </div>
     <div class="space"></div>
@@ -278,7 +248,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -288,7 +264,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -298,7 +280,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -308,7 +296,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
     </div>
     <div class="space"></div>
@@ -321,7 +315,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -331,7 +331,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -341,7 +347,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -351,7 +363,147 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
     </div>
     <div class="space small"></div>
@@ -364,7 +516,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -374,7 +532,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -384,7 +548,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -394,50 +564,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-    </div>
-    <div class="space"></div>
-    <div class="row">
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
-        </div>
-        <div class="polepka">
-            <span class="ean">2AAKKAK*aafcih+</span>
-            <span class="pn">{{invNum}}</span>
-            <div class="popis">
-                <p class="jmeno">{{name}}</p>
-                <p class="barva">{{colorName}}</p>
-                <p class="strany">{{capacity}}</p>
-            </div>
-            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
     </div>
     <div class="space"></div>
@@ -450,7 +583,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -460,7 +599,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -470,7 +615,13 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
         <div class="polepka">
             <span class="ean">2AAKKAK*aafcih+</span>
@@ -480,7 +631,80 @@
                 <p class="barva">{{colorName}}</p>
                 <p class="strany">{{capacity}}</p>
             </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
             <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="row">
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
+        </div>
+        <div class="polepka">
+            <span class="ean">2AAKKAK*aafcih+</span>
+            <span class="pn">{{invNum}}</span>
+            <div class="popis">
+                <p class="jmeno">{{name}}</p>
+                <p class="barva">{{colorName}}</p>
+                <p class="strany">{{capacity}}</p>
+            </div>
+            {% if hexColor == "#ffffff" %}
+            <div class="circle cyan" style="background-color: #00ffff"></div>
+            <div class="circle magenta" style="background-color: #ffff00"></div>
+            <div class="circle yellow" style="background-color: #ff00ff"></div>
+            {% else %}
+            <div class="circle" style="background-color: {{hexColor}}"></div>
+            {% endif %}
         </div>
     </div>
 <script>

@@ -11,6 +11,11 @@ public class TeslaToner extends PdfGenerator {
 	}
 
 	@Override
+	public String getFolderName() {
+		return "toner_tesla";
+	}
+
+	@Override
 	public void generatePdf(Product product) {
 
 	}
