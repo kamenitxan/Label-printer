@@ -28,7 +28,7 @@ public abstract class PdfGenerator {
 
 	int leftBorder = 8;
 	int rightBorder = 8;
-	int topBorder = 10;
+	int topBorder = 9;
 	int bottomBorder = 4;
 
 	public PdfGenerator(final String templateName) {

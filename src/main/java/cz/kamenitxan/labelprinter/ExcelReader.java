@@ -54,6 +54,7 @@ public class ExcelReader {
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
 				switch (generator) {
+					case TONER_TESLA:
 					case INK_ALTX: {
 						products.add(createAltXInk(row, evaluator));
 						break;

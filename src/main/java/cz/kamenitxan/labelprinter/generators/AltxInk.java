@@ -2,6 +2,7 @@ package cz.kamenitxan.labelprinter.generators;
 
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.page.PageType;
 import com.mitchellbosecke.pebble.error.PebbleException;
+import cz.kamenitxan.labelprinter.Main;
 import cz.kamenitxan.labelprinter.PdfWrapper;
 import cz.kamenitxan.labelprinter.models.Product;
 
@@ -46,11 +47,13 @@ public class AltxInk extends PdfGenerator {
 			e.printStackTrace();
 		}
 
-		/*try {
-			Files.write(Paths.get("html/" + product.invNum.trim() + ".html"), writer.toString().getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+		if (Main.debug) {
+			try {
+				Files.write(Paths.get("html/" + product.invNum.trim() + ".html"), writer.toString().getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 		PdfWrapper pdf = new PdfWrapper(); //--zoom 1.33 --dpi 130
 		pdf.addPage(writer.toString(), PageType.htmlAsString);

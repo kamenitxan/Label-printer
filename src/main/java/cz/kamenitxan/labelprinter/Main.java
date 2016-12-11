@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Main  {
     private static final double startTime = System.nanoTime();
+    public static boolean debug = false;
 
     public static void main(String[] args) {
 		String filename = "";
@@ -30,6 +31,9 @@ public class Main  {
 				arg = arg.replace("-generator=", "");
 				generator = Generators.valueOf(arg);
 			}
+			if (arg.contains("-debug")) {
+				debug = true;
+			}
 
 		}
 		if (filename.equals("")) {
@@ -40,9 +44,6 @@ public class Main  {
 			System.out.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
 			return;
 		}
-		/*if (!System.getProperty("os.name").equals("Mac OS X")) {
-			filename = "C:\\Users\\Kateřina\\Documents\\GitHub\\Label-printer\\Lamda-import.xlsx";
-		}*/
 
 		List<Product> products = ExcelReader.importFile(filename, generator);
 		if (limit) {
