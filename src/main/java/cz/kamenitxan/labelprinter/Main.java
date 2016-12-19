@@ -4,6 +4,7 @@ import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
 import cz.kamenitxan.labelprinter.models.Product;
 
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,8 +14,12 @@ import java.util.List;
 public class Main  {
     private static final double startTime = System.nanoTime();
     public static boolean debug = false;
+	public static String workDir;
 
     public static void main(String[] args) {
+		workDir = Paths.get(".").toAbsolutePath().normalize().toString();
+
+
 		String filename = "";
 		Boolean limit = false;
 		Generators generator = null;

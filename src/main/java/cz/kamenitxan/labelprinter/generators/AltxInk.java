@@ -31,7 +31,7 @@ public class AltxInk extends PdfGenerator {
 	public void generatePdf(Product product) {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
-
+		context.put("path", Main.workDir);
 		if (product.name.length() > 20) {
 			context.put("fs", "16px");
 		}

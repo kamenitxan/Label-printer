@@ -30,7 +30,7 @@ public class TeslaToner extends PdfGenerator {
 	public void generatePdf(Product product) {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
-
+		context.put("path", Main.workDir);
 		try {
 			compiledTemplate.evaluate(writer, context);
 		} catch (PebbleException | IOException e) {

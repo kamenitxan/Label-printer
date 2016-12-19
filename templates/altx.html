@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/textFit.min.js"></script>
     <style>
         @font-face {
             font-family: 'ean';
-            src: url('/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/ean13.woff') format('woff'),
-            url('/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/ean13.ttf') format('truetype'); /* Safari, Android, iOS */
+            src: url('{{path}}/img/ean13.woff') format('woff'),
+            url('{{path}}/img/ean13.ttf') format('truetype'); /* Safari, Android, iOS */
         }
 
         body {
@@ -88,7 +87,7 @@
         }
 
         .space {
-            height: 9px;
+            height: 10px;
             width: 100%;
         }
         .small {
@@ -707,8 +706,6 @@
             {% endif %}
         </div>
     </div>
-<script>
-    //textFit(document.getElementsByClassName('jmeno'));
-</script>
+
 </body>
 </html>
