@@ -1,6 +1,7 @@
 package cz.kamenitxan.labelprinter.generators;
 
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.page.PageType;
+import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
 import com.mitchellbosecke.pebble.error.PebbleException;
 import cz.kamenitxan.labelprinter.Main;
 import cz.kamenitxan.labelprinter.PdfWrapper;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class TeslaToner extends PdfGenerator {
 	public TeslaToner() {
 		super("templates/teslaToner.html");
+		super.topBorder = 14;
+		super.bottomBorder = 14;
 	}
 
 	@Override
@@ -31,6 +34,7 @@ public class TeslaToner extends PdfGenerator {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
 		context.put("path", Main.workDir);
+		context.put("height", 120);
 		try {
 			compiledTemplate.evaluate(writer, context);
 		} catch (PebbleException | IOException e) {
@@ -46,6 +50,7 @@ public class TeslaToner extends PdfGenerator {
 		}
 
 		PdfWrapper pdf = new PdfWrapper(); //--zoom 1.33 --dpi 130
+		pdf.addParam(new Param("--orientation", "Landscape"));
 		pdf.addPage(writer.toString(), PageType.htmlAsString);
 		savePdf(pdf, product.invNum);
 	}

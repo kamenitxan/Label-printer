@@ -5,8 +5,8 @@
     <style>
         @font-face {
             font-family: 'ean';
-            src: url('/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/ean13.woff') format('woff'),
-            url('/home/tomaspavel/Dokumenty/projekty/labelprinter/Label-printer/img/ean13.ttf') format('truetype'); /* Safari, Android, iOS */
+            src: url('{{path}}/img/ean13.woff') format('woff'),
+            url('{{path}}/img/ean13.ttf') format('truetype'); /* Safari, Android, iOS */
         }
 
         body {
@@ -16,38 +16,34 @@
 
         .polepka {
             width: 50%;
-            height: 144px;
+            height: {{height}}px;
             position: relative;
             display: inline-block;
             font-size: 20px;
             text-align: center;
             overflow: hidden;
+            box-sizing: border-box;
+            border: 1px solid black;
         }
 
         .ean {
             font-family: 'ean';
-            -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
             display: block;
             font-size: 54px;
-            position: absolute;
-            left: -36px;
-            top: 46px;
             height: 61px;
             overflow: hidden;
-            line-height: 46px;
+            line-height: 28px;
+            position: relative;
+            width: 33%;
+            margin-left: 45px;
         }
         .pn {
-            -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
             position: relative;
             display: block;
-            top: 60px;
-            left: 13px;
             color: gray;
             font-size: 25px;
-            float: left;
-            width: 150px;
+            margin-left: 45px;
+            width: 33%;
         }
         .popis {
             width: 53%;
@@ -56,11 +52,19 @@
             font-size: 16px;
             line-height: 16px;
             position: relative;
-            top: -15px;
+            top: -167px;
         }
 
         .barva {
-            font-weight: bold;
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            position: relative;
+            display: block;
+            top: -303px;
+            left: -60px;
+            background-color: black;
+            color: white;
+            width: {{height}}px;
         }
 
         .strany {
@@ -69,20 +73,42 @@
 
 
         .space {
-            height: 9px;
+            height: 16px;
             width: 100%;
         }
         .small {
             height: 6px;
         }
+
+        .madein {
+            font-size: 8px;
+            width: 33%;
+            margin: 0 0 0 45px;
+            position: relative;
+        }
+        .vyrobce {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            position: relative;
+            display: block;
+            top: -344px;
+            left: -38px;
+            background-color: gray;
+            color: white;
+            width: 144px;
+            font-size: 14px;
+        }
+        .second {
+            float: right;
+        }
     </style>
 </head>
 <body>
+{% for i in 0..5 %}
 <div class="row">
     <div class="polepka">
-        <p class="barva">{{colorName}}</p>
-        <p class="vyrobce">{{manufacturer}}</p>
-        <p>Contents: 1 Cartrige. Made in Czech Republic. <br />
+
+        <p class="madein">Contents: 1 Cartrige. Made in Czech Republic. <br />
             Složení: 1 kazeta. Vyrobeno v České republice. <br />
             Zloženie: 1 kazeta. Vyrobené v Českej republike. <br />
             Tartalom: 1 kazetta. Made in Czech Republic. <br />
@@ -93,12 +119,36 @@
 
         <div class="popis">
             <p class="oem">{{productCode}}</p>
-            <p class="invnum">{{invNum}}</p>k
+            <p class="invnum">{{invNum}}</p>
             <p class="jmeno">{{name}}</p>
             <p class="invnum">{{invNum}}</p>
         </div>
+        <p class="barva">{{colorName}}</p>
+        <p class="vyrobce">{{manufacturer}}</p>
+    </div>
+    <div class="polepka second">
+
+        <p class="madein">Contents: 1 Cartrige. Made in Czech Republic. <br />
+            Složení: 1 kazeta. Vyrobeno v České republice. <br />
+            Zloženie: 1 kazeta. Vyrobené v Českej republike. <br />
+            Tartalom: 1 kazetta. Made in Czech Republic. <br />
+            Zawiera: 1 kasetę. Wyprodukowane w Czechach. <br />
+            Conṭinut: 1 cartuş. Prudus in Republica Ceha.</p>
+        <span class="pn">{{invNum}}</span>
+        <span class="ean">2AAKKAK*aafcih+</span>
+
+        <div class="popis">
+            <p class="oem">{{productCode}}</p>
+            <p class="invnum">{{invNum}}</p>
+            <p class="jmeno">{{name}}</p>
+            <p class="invnum">{{invNum}}</p>
+        </div>
+        <p class="barva">{{colorName}}</p>
+        <p class="vyrobce">{{manufacturer}}</p>
     </div>
 </div>
+<div class="space"></div>
+{% endfor%}
 
 
 </body>

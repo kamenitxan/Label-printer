@@ -58,7 +58,7 @@ public abstract class PdfGenerator {
 		if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
 			pdf.addParam(new Param("--zoom", "0.78125"));
 		}
-		pdf.addParam(new Param("--disable-smart-shrinking"), new Param("--javascript-delay", "500"),
+		pdf.addParam(new Param("--disable-smart-shrinking"),
 				new Param("-B", bottomBorder + "mm"),
 				new Param("-L", leftBorder + "mm"),
 				new Param("-R", rightBorder + "mm"),
