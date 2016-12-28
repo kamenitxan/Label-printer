@@ -15,7 +15,7 @@
         }
 
         .polepka {
-            width: 50%;
+            width: 47.5%;
             height: {{height}}px;
             position: relative;
             display: inline-block;
@@ -23,7 +23,12 @@
             text-align: center;
             overflow: hidden;
             box-sizing: border-box;
-            border: 1px solid black;
+            //border: 1px solid black;
+        }
+
+        .second {
+            float: right;
+
         }
 
         .ean {
@@ -60,8 +65,8 @@
             transform: rotate(90deg);
             position: relative;
             display: block;
-            top: -303px;
-            left: -60px;
+            top: -250px;
+            left: -54px;
             background-color: black;
             color: white;
             width: {{height}}px;
@@ -73,7 +78,7 @@
 
 
         .space {
-            height: 16px;
+            height: 18px;
             width: 100%;
         }
         .small {
@@ -82,6 +87,7 @@
 
         .madein {
             font-size: 8px;
+            line-height: 8px;
             width: 33%;
             margin: 0 0 0 45px;
             position: relative;
@@ -98,16 +104,13 @@
             width: 144px;
             font-size: 14px;
         }
-        .second {
-            float: right;
-        }
+
     </style>
 </head>
 <body>
 {% for i in 0..5 %}
 <div class="row">
     <div class="polepka">
-
         <p class="madein">Contents: 1 Cartrige. Made in Czech Republic. <br />
             Složení: 1 kazeta. Vyrobeno v České republice. <br />
             Zloženie: 1 kazeta. Vyrobené v Českej republike. <br />
@@ -115,7 +118,7 @@
             Zawiera: 1 kasetę. Wyprodukowane w Czechach. <br />
             Conṭinut: 1 cartuş. Prudus in Republica Ceha.</p>
         <span class="pn">{{invNum}}</span>
-        <span class="ean">2AAKKAK*aafcih+</span>
+        <span class="ean">{{eanCode}}</span>
 
         <div class="popis">
             <p class="oem">{{productCode}}</p>
@@ -135,7 +138,7 @@
             Zawiera: 1 kasetę. Wyprodukowane w Czechach. <br />
             Conṭinut: 1 cartuş. Prudus in Republica Ceha.</p>
         <span class="pn">{{invNum}}</span>
-        <span class="ean">2AAKKAK*aafcih+</span>
+        <span class="ean">{{eanCode}}</span>
 
         <div class="popis">
             <p class="oem">{{productCode}}</p>

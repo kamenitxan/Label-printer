@@ -8,6 +8,7 @@ import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Params;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.*;
@@ -22,6 +23,7 @@ public class PdfWrapper implements PdfService {
 	private List<Page> pages;
 	private boolean hasToc;
 	private String path;
+	static Logger logger = Logger.getLogger(PdfWrapper.class);
 
 	public PdfWrapper(WrapperConfig wrapperConfig) {
 		this.hasToc = false;
@@ -75,7 +77,7 @@ public class PdfWrapper implements PdfService {
 	public byte[] getPDF() throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		Process process = runtime.exec(this.getCommandAsArray());
-		System.out.println(Arrays.toString(this.getCommandAsArray()));
+		logger.trace(Arrays.toString(this.getCommandAsArray()));
 		StreamEater outputStreamEater = new StreamEater(process.getInputStream());
 		outputStreamEater.start();
 		StreamEater errorStreamEater = new StreamEater(process.getErrorStream());

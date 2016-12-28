@@ -20,8 +20,9 @@ import java.util.Map;
 public class TeslaToner extends PdfGenerator {
 	public TeslaToner() {
 		super("templates/teslaToner.html");
-		super.topBorder = 14;
-		super.bottomBorder = 14;
+		super.topBorder = 15;
+		super.bottomBorder = 6;
+		super.leftBorder = 7;
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class TeslaToner extends PdfGenerator {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
 		context.put("path", Main.workDir);
-		context.put("height", 120);
+		context.put("height", 132);
 		try {
 			compiledTemplate.evaluate(writer, context);
 		} catch (PebbleException | IOException e) {

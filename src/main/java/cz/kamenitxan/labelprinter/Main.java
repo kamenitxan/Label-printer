@@ -3,6 +3,8 @@ package cz.kamenitxan.labelprinter;
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
 import cz.kamenitxan.labelprinter.models.Product;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -12,11 +14,14 @@ import java.util.Date;
 import java.util.List;
 
 public class Main  {
+	static Logger logger = Logger.getLogger(Main.class);
     private static final double startTime = System.nanoTime();
     public static boolean debug = false;
 	public static String workDir;
 
     public static void main(String[] args) {
+		PropertyConfigurator.configure("log4j.properties");
+
 		workDir = Paths.get(".").toAbsolutePath().normalize().toString();
 
 
@@ -42,17 +47,19 @@ public class Main  {
 
 		}
 		if (filename.equals("")) {
+        	logger.fatal("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
 			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
 			return;
 		}
 		if (generator == null) {
+        	logger.fatal("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
 			System.out.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
 			return;
 		}
 
 		List<Product> products = ExcelReader.importFile(filename, generator);
 		if (limit) {
-			products = products.subList(0, 50);
+			products = products.subList(0, 5);
 		}
 
 		switch (generator) {
@@ -72,9 +79,8 @@ public class Main  {
 			}
 		}
 
-
-        System.out.println(getTime());
-		//System.out.println("Uloženo " + (products.size() * manufacturers.size()) + " PDF");
+		logger.info(getTime());
+		logger.info("Uloženo " + (products.size() * products.size()) + " PDF");
 		System.exit(0);
     }
 
