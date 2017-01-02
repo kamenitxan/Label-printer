@@ -51,21 +51,31 @@
             width: 33%;
         }
         .popis {
-            width: 53%;
-            margin-left: 43%;
+            width: 23%;
+            margin-left: 40%;
             display: block;
-            font-size: 16px;
-            line-height: 16px;
-            position: relative;
-            top: -167px;
+            line-height: 14px;
+            position: absolute;
+            font-size: 14px;
+            top: 12px;
         }
+
+        .druhypopis {
+            right: 67px;
+        }
+
+        .popis p {
+            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+
 
         .barva {
             -webkit-transform: rotate(90deg);
             transform: rotate(90deg);
-            position: relative;
+            position: absolute;
             display: block;
-            top: -250px;
+            top: 32px;
             left: -54px;
             background-color: black;
             color: white;
@@ -95,14 +105,24 @@
         .vyrobce {
             -webkit-transform: rotate(90deg);
             transform: rotate(90deg);
-            position: relative;
+            position: absolute;
             display: block;
-            top: -344px;
-            left: -38px;
+            top: 37px;
+            left: -40px;
             background-color: gray;
             color: white;
             width: 144px;
             font-size: 14px;
+        }
+
+        .druhabarva {
+            right: 0px;
+            left: unset;
+        }
+        .druhyvyrobce {
+            left: unset;
+            top: 37px;
+            right: -39px;
         }
 
     </style>
@@ -124,13 +144,18 @@
             <p class="oem">{{productCode}}</p>
             <p class="invnum">{{invNum}}</p>
             <p class="jmeno">{{name}}</p>
-            <p class="invnum">{{invNum}}</p>
         </div>
-        <p class="barva">{{colorName}}</p>
+        <div class="popis druhypopis">
+            <p class="oem">{{productCode}}</p>
+            <p class="invnum">{{invNum}}</p>
+            <p class="jmeno">{{name}}</p>
+        </div>
+        <p class="barva" style="background-color: {{hexColor}}">{{colorName}}</p>
         <p class="vyrobce">{{manufacturer}}</p>
+        <p class="barva druhabarva" style="background-color: {{hexColor}}">{{colorName}}</p>
+        <p class="vyrobce druhyvyrobce">{{manufacturer}}</p>
     </div>
     <div class="polepka second">
-
         <p class="madein">Contents: 1 Cartrige. Made in Czech Republic. <br />
             Složení: 1 kazeta. Vyrobeno v České republice. <br />
             Zloženie: 1 kazeta. Vyrobené v Českej republike. <br />
@@ -144,10 +169,16 @@
             <p class="oem">{{productCode}}</p>
             <p class="invnum">{{invNum}}</p>
             <p class="jmeno">{{name}}</p>
-            <p class="invnum">{{invNum}}</p>
         </div>
-        <p class="barva">{{colorName}}</p>
+        <div class="popis druhypopis">
+            <p class="oem">{{productCode}}</p>
+            <p class="invnum">{{invNum}}</p>
+            <p class="jmeno">{{name}}</p>
+        </div>
+        <p class="barva" style="background-color: {{hexColor}}">{{colorName}}</p>
         <p class="vyrobce">{{manufacturer}}</p>
+        <p class="barva druhabarva" style="background-color: {{hexColor}}">{{colorName}}</p>
+        <p class="vyrobce druhyvyrobce">{{manufacturer}}</p>
     </div>
 </div>
 <div class="space"></div>

@@ -80,7 +80,7 @@ public class Main  {
 		}
 
 		logger.info(getTime());
-		logger.info("Uloženo " + (products.size() * products.size()) + " PDF");
+		logger.info("Uloženo " + (products.size()) + " PDF");
 		System.exit(0);
     }
 
