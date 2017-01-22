@@ -18,6 +18,14 @@ public class Main  {
     private static final double startTime = System.nanoTime();
     public static boolean debug = false;
 	public static String workDir;
+	public static String cmd;
+	public static String separator = "\\";
+
+	static {
+		if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
+			separator = "/";
+		}
+	}
 
     public static void main(String[] args) {
 		PropertyConfigurator.configure("log4j.properties");
@@ -44,6 +52,10 @@ public class Main  {
 			if (arg.contains("-debug")) {
 				debug = true;
 			}
+			if (arg.contains("-cmd")) {
+				arg = arg.replace("-cmd=", "");
+				cmd = arg;
+			}
 
 		}
 		if (filename.equals("")) {
@@ -63,11 +75,6 @@ public class Main  {
 		}
 
 		switch (generator) {
-			case INK_ALTX:
-			case TONER_TESLA: {
-				generator.generator.generate(products);
-				break;
-			}
 			case TONER_LAMDA: {
 				//products.forEach(System.out::println);
 				LamdaInk.manufacturers = ExcelReader.importManufacturers(filename);
@@ -77,6 +84,11 @@ public class Main  {
 				});
 				break;
 			}
+			default: {
+				generator.generator.generate(products);
+				break;
+			}
+
 		}
 
 		logger.info(getTime());

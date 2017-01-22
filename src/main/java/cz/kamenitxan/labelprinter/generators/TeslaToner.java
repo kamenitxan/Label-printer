@@ -7,6 +7,7 @@ import cz.kamenitxan.labelprinter.Main;
 import cz.kamenitxan.labelprinter.PdfWrapper;
 import cz.kamenitxan.labelprinter.models.Product;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -35,6 +36,7 @@ public class TeslaToner extends PdfGenerator {
 		Writer writer = new StringWriter();
 		Map<String, Object> context = product.getContext();
 		context.put("path", Main.workDir);
+		context.put("separator", File.separator);
 		context.put("height", 132);
 		try {
 			compiledTemplate.evaluate(writer, context);

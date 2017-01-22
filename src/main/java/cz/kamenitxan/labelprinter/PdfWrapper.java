@@ -17,23 +17,23 @@ import java.util.*;
  * Created by tomaspavel on 30.11.16.
  */
 public class PdfWrapper implements PdfService {
-	private static final String STDINOUT = "-";
 	private WrapperConfig wrapperConfig;
 	private Params params;
 	private List<Page> pages;
 	private boolean hasToc;
 	private String path;
 	static Logger logger = Logger.getLogger(PdfWrapper.class);
+	private static WrapperConfig wc = Main.cmd != null ? new WrapperConfig(Main.cmd) : new WrapperConfig();
 
 	public PdfWrapper(WrapperConfig wrapperConfig) {
 		this.hasToc = false;
 		this.wrapperConfig = wrapperConfig;
 		this.params = new Params();
-		this.pages = new ArrayList();
+		this.pages = new ArrayList<>();
 	}
 
 	public PdfWrapper() {
-		this(new WrapperConfig());
+		this(wc);
 	}
 
 	public void addPage(String source, PageType type) {
@@ -53,7 +53,7 @@ public class PdfWrapper implements PdfService {
 		int var3 = params.length;
 
 		for(int var4 = 0; var4 < var3; ++var4) {
-			Param param = var2[var4];
+			Param param = params[var4];
 			this.addParam(param);
 		}
 
@@ -97,7 +97,7 @@ public class PdfWrapper implements PdfService {
 	}
 
 	private String[] getCommandAsArray() throws IOException {
-		ArrayList commandLine = new ArrayList();
+		ArrayList<String> commandLine = new ArrayList<>();
 		if(this.wrapperConfig.isXvfbEnabled()) {
 			commandLine.addAll(this.wrapperConfig.getXvfbConfig().getCommandLine());
 		}
@@ -119,7 +119,7 @@ public class PdfWrapper implements PdfService {
 		}
 
 		commandLine.add("" + path);
-		return (String[])commandLine.toArray(new String[commandLine.size()]);
+		return commandLine.toArray(new String[commandLine.size()]);
 	}
 
 	public String getCommand() throws IOException {

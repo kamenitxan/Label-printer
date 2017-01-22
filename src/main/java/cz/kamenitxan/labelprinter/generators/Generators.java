@@ -8,6 +8,7 @@ public enum Generators {
 	INK_LAMDA(null),
 	TONER_ALTX(null),
 	INK_ALTX(new AltxInk()),
+	INK_TESLA(new TeslaInk()),
 	TONER_TESLA(new TeslaToner());
 
 	public PdfGenerator generator;
