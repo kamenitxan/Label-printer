@@ -54,6 +54,7 @@ public class Product {
 
 		if (this.name != null) {
 			this.name = this.name.replace("+", "+ ");
+			this.name = this.name.replace("/", "/ ");
 		}
 		this.validator = validator;
 	}
