@@ -2,6 +2,7 @@ package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
+import cz.kamenitxan.labelprinter.generatorsNG.AltxInk;
 import cz.kamenitxan.labelprinter.models.Product;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -80,12 +81,13 @@ public class Main  {
 			return;
 		}
 
-		staticFiles.externalLocation(workDir + "/img");
+		/*staticFiles.externalLocation(workDir + "/img");
         port(9400);
 		before((request, response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
 		});
 		get("/", (req, res) -> "Hello World");
+*/
 
 		List<Product> products = ExcelReader.importFile(filename, generator);
 		if (limit) {
@@ -103,7 +105,17 @@ public class Main  {
 				break;
 			}
 			default: {
-				generator.generator.generate(products);
+				//generator.generator.generate(products);
+				final Generators generatorF = generator;
+				products.stream().filter(Product::isValid).forEach(p -> {
+					try {
+						generatorF.genNG.newInstance().generate(p);
+					} catch (InstantiationException | IllegalAccessException e) {
+						e.printStackTrace();
+					}
+				});
+
+
 				break;
 			}
 

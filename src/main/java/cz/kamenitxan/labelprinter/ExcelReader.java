@@ -80,7 +80,7 @@ public class ExcelReader {
 		final String name = getCellValue(row.getCell(5), evaluator);
 		final String capacity = getCellValue(row.getCell(7), evaluator);
 		final String colorName = getCellValue(row.getCell(6), evaluator);
-		final String ean = getCellValue(row.getCell(8), evaluator);
+		final String ean = getCellValue(row.getCell(9), evaluator);
 		final String eanCode = getCellValue(row.getCell(10), evaluator);
 		final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
 		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator);
