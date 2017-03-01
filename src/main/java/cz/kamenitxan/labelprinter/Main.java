@@ -13,6 +13,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static spark.Spark.*;
+
+/*
+C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALTX -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
+ */
+
 public class Main  {
 	static Logger logger = Logger.getLogger(Main.class);
     private static final double startTime = System.nanoTime();
@@ -20,6 +26,7 @@ public class Main  {
 	public static String workDir;
 	public static String cmd;
 	public static String separator = "\\";
+	public static String zoom = "0.78125";
 
 	static {
 		if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
@@ -56,18 +63,29 @@ public class Main  {
 				arg = arg.replace("-cmd=", "");
 				cmd = arg;
 			}
+			if (arg.contains("-zoom")) {
+				arg = arg.replace("-zoom=", "");
+				zoom = arg;
+			}
 
 		}
 		if (filename.equals("")) {
         	logger.fatal("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
-			System.out.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
+			System.err.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
 			return;
 		}
 		if (generator == null) {
         	logger.fatal("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
-			System.out.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
+			System.err.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
 			return;
 		}
+
+		staticFiles.externalLocation(workDir + "/img");
+        port(9400);
+		before((request, response) -> {
+			response.header("Access-Control-Allow-Origin", "*");
+		});
+		get("/", (req, res) -> "Hello World");
 
 		List<Product> products = ExcelReader.importFile(filename, generator);
 		if (limit) {

@@ -4,6 +4,7 @@ import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.error.PebbleException;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
+import cz.kamenitxan.labelprinter.Main;
 import cz.kamenitxan.labelprinter.PdfWrapper;
 import cz.kamenitxan.labelprinter.models.Product;
 
@@ -55,9 +56,9 @@ public abstract class PdfGenerator {
 	}
 
 	public void savePdf(final PdfWrapper pdf, final String name) {
-		if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
-			pdf.addParam(new Param("--zoom", "0.78125"));
-		}
+		//if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
+			pdf.addParam(new Param("--zoom", Main.zoom));
+		//}
 		pdf.addParam(new Param("--disable-smart-shrinking"),
 				new Param("-B", bottomBorder + "mm"),
 				new Param("-L", leftBorder + "mm"),
