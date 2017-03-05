@@ -25,17 +25,14 @@ class AltxInk extends PdfGenerator {
 	private val singleWidth = 134
 	private val singleHeight = 84
 	private val fontSize = 8
-	private var font: PDType0Font = _
-	private var boldFont: PDType0Font = _
+
 
 	override def getFolderName: String = Generators.INK_ALTX.folder
 
 	override def generatePdf(): Unit = {
-
 		val document: PDDocument = new PDDocument
 		val page: PDPage = new PDPage(PAGE_SIZE_A4)
 		document.addPage(page)
-
 
 		var eanRaw = Ean13Test.createEan(product.ean)
 		val transform = new AffineTransform()

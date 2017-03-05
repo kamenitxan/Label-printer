@@ -2,8 +2,12 @@ package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.generators.LamdaInk;
-import cz.kamenitxan.labelprinter.generatorsNG.AltxInk;
 import cz.kamenitxan.labelprinter.models.Product;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -14,13 +18,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static spark.Spark.*;
-
 /*
 C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALTX -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
  */
 
-public class Main  {
+public class Main extends Application {
 	static Logger logger = Logger.getLogger(Main.class);
     private static final double startTime = System.nanoTime();
     public static boolean debug = false;
@@ -28,6 +30,7 @@ public class Main  {
 	public static String cmd;
 	public static String separator = "\\";
 	public static String zoom = "0.78125";
+	public static boolean gui = false;
 
 	static {
 		if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
@@ -68,6 +71,9 @@ public class Main  {
 				arg = arg.replace("-zoom=", "");
 				zoom = arg;
 			}
+			if (arg.contains("-gui")) {
+				gui = true;
+			}
 
 		}
 		if (filename.equals("")) {
@@ -88,42 +94,45 @@ public class Main  {
 		});
 		get("/", (req, res) -> "Hello World");
 */
-
-		List<Product> products = ExcelReader.importFile(filename, generator);
-		if (limit) {
-			products = products.subList(0, 5);
-		}
-
-		switch (generator) {
-			case TONER_LAMDA: {
-				//products.forEach(System.out::println);
-				LamdaInk.manufacturers = ExcelReader.importManufacturers(filename);
-				products.parallelStream().forEach(a -> {
-					LamdaInk g = new LamdaInk();
-					g.generatePdf(a);
-				});
-				break;
-			}
-			default: {
-				//generator.generator.generate(products);
-				final Generators generatorF = generator;
-				products.stream().filter(Product::isValid).forEach(p -> {
-					try {
-						generatorF.genNG.newInstance().generate(p);
-					} catch (InstantiationException | IllegalAccessException e) {
-						e.printStackTrace();
-					}
-				});
-
-
-				break;
+		if (!gui) {
+			List<Product> products = ExcelReader.importFile(filename, generator);
+			if (limit) {
+				products = products.subList(0, 5);
 			}
 
-		}
+			switch (generator) {
+				case TONER_LAMDA: {
+					//products.forEach(System.out::println);
+					LamdaInk.manufacturers = ExcelReader.importManufacturers(filename);
+					products.parallelStream().forEach(a -> {
+						LamdaInk g = new LamdaInk();
+						g.generatePdf(a);
+					});
+					break;
+				}
+				default: {
+					//generator.generator.generate(products);
+					final Generators generatorF = generator;
+					products.stream().filter(Product::isValid).forEach(p -> {
+						try {
+							generatorF.genNG.newInstance().generate(p);
+						} catch (InstantiationException | IllegalAccessException e) {
+							e.printStackTrace();
+						}
+					});
 
-		logger.info(getTime());
-		logger.info("Uloženo " + (products.size()) + " PDF");
-		System.exit(0);
+
+					break;
+				}
+
+			}
+
+			logger.info(getTime());
+			logger.info("Uloženo " + products.stream().filter(Product::isValid).count() + " PDF");
+			System.exit(0);
+		} else {
+			launch(args);
+		}
     }
 
 	/**
@@ -137,6 +146,15 @@ public class Main  {
 
 		return "Generováno " + reportDate + ". Export trval " + cas + " s";
 	}
-    
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		Parent root = FXMLLoader.load(Main.class.getResource("/main.fxml"));
+
+		Scene scene = new Scene(root);
+
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 }
 

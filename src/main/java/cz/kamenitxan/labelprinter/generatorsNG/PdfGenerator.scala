@@ -1,5 +1,6 @@
 package cz.kamenitxan.labelprinter.generatorsNG
 
+import java.awt.Color
 import java.io.{File, FileNotFoundException, IOException}
 
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param
@@ -9,6 +10,7 @@ import cz.kamenitxan.labelprinter.models.Product
 import scala.collection.JavaConverters._
 import java.util
 
+import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPageContentStream}
 
 /**
@@ -20,6 +22,8 @@ abstract class PdfGenerator {
 
 	var product: Product = _
 	var cs: PDPageContentStream = _
+	var font: PDType0Font = _
+	var boldFont: PDType0Font = _
 
 	def getFolderName: String
 
@@ -44,6 +48,11 @@ abstract class PdfGenerator {
 		catch {
 			case ex: IOException =>System.out.println("Nelze uzavřít soubor.")
 		}
+	}
+
+	def setColor(color: Color): Unit = {
+		cs.setStrokingColor(color)
+		cs.setNonStrokingColor(color)
 	}
 
 }
