@@ -59,14 +59,15 @@ class AltxInk extends PdfGenerator {
 	}
 
 	private def drawSingle(pos: (Float, Float)) = {
-		cs.addRect(pos._1, pos._2, singleWidth, singleHeight)
-		cs.setStrokingColor(Color.BLACK)
-		cs.stroke()
+		//cs.addRect(pos._1, pos._2, singleWidth, singleHeight)
+		//cs.setStrokingColor(Color.BLACK)
+		//cs.stroke()
 
 		cs.drawImage(eanImage, pos._1+2, pos._2+3, eanImage.getWidth*0.35 toFloat, eanImage.getHeight*0.35 toFloat)
 
 		//desc
 		desc(pos)
+		color(pos)
 
 		cs.beginText()
 		//color
@@ -86,6 +87,32 @@ class AltxInk extends PdfGenerator {
 		cs.showText(product.invNum)
 		cs.setFont(font, fontSize)
 		cs.endText()
+	}
+
+	private def color(posB: (Float, Float)) = {
+		val pos = (posB._1+53, posB._2+8)
+		product.color match {
+			case Color.WHITE =>
+				cs.setStrokingColor(Color.CYAN)
+				cs.setNonStrokingColor(Color.CYAN)
+				cs.addRect(pos._1, pos._2, 5, 6)
+				cs.fillAndStroke()
+				cs.setStrokingColor(Color.MAGENTA)
+				cs.setNonStrokingColor(Color.MAGENTA)
+				cs.addRect(pos._1, pos._2+6, 5, 6)
+				cs.fillAndStroke()
+				cs.setStrokingColor(Color.YELLOW)
+				cs.setNonStrokingColor(Color.YELLOW)
+				cs.addRect(pos._1, pos._2+12, 5, 6)
+				cs.fillAndStroke()
+			case _ =>
+				cs.setStrokingColor(product.color)
+				cs.setNonStrokingColor(product.color)
+				cs.addRect(pos._1, pos._2, 5, 18)
+				cs.fillAndStroke()
+		}
+		cs.setStrokingColor(Color.BLACK)
+		cs.setNonStrokingColor(Color.BLACK)
 	}
 
 	private def desc(pos: (Float, Float)) = {
@@ -130,8 +157,8 @@ class AltxInk extends PdfGenerator {
 	}
 
 	private def getPosition(line: Int, row: Int) = {
-		var x = 25 + singleWidth*row + 4*row
-		var y = 24 + singleHeight*line + 5*line
+		val x = 28 + singleWidth*row + 4*row
+		val y = 24 + singleHeight*line + 5*line
 		(x toFloat, y toFloat)
 	}
 }
