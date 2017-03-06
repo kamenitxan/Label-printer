@@ -154,7 +154,7 @@ class AltxInk extends PdfGenerator {
 	}
 
 	private def getPosition(line: Int, row: Int) = {
-		val x = 28 + singleWidth*row + 4*row
+		val x = 30 + singleWidth*row + 4*row
 		val y = 24 + singleHeight*line + 5*line
 		(x toFloat, y toFloat)
 	}

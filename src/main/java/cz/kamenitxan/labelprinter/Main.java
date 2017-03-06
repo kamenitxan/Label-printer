@@ -34,7 +34,7 @@ public class Main extends Application {
 	public static String cmd;
 	public static String separator = "\\";
 	public static String zoom = "0.78125";
-	public static boolean gui = false;
+	public static boolean gui = true;
 	public static Stage primaryStage = null;
 
 	static {
@@ -76,8 +76,8 @@ public class Main extends Application {
 				arg = arg.replace("-zoom=", "");
 				zoom = arg;
 			}
-			if (arg.contains("-gui")) {
-				gui = true;
+			if (arg.contains("-nogui")) {
+				gui = false;
 			}
 
 		}
