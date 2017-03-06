@@ -50,20 +50,20 @@ class TeslaToner extends Toner6x2 {
 			case Color.WHITE =>
 			//TODO
 			case _ =>
-				setColor(product.color)
+				cs.setColor(product.color)
 				cs.addRect(pos.x, pos.y, 15, singleHeight)
 				cs.fillAndStroke()
 		}
 
-		setColor(Color.BLACK)
+		cs.setColor(Color.BLACK)
 
 		product.color match {
 			case Color.WHITE | Color.CYAN | Color.YELLOW =>
 				colorText(pos)
 			case _ =>
-				setColor(Color.WHITE)
+				cs.setColor(Color.WHITE)
 				colorText(pos)
-				setColor(Color.BLACK)
+				cs.setColor(Color.BLACK)
 		}
 
 	}
@@ -81,32 +81,12 @@ class TeslaToner extends Toner6x2 {
 		val lh = 5
 
 		cs.setFont(font, fontSize - 3)
-
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + leftPadding, top)
-		cs.showText("Contents: 1 Cartrige. Made in Czech Republic.")
-		cs.endText()
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + leftPadding, top - lh * 1)
-		cs.showText("Složení: 1 kazeta. Vyrobeno v České republice.")
-		cs.endText()
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + leftPadding, top - lh * 2)
-		cs.showText("Zloženie: 1 kazeta. Vyrobené v Českej republike.")
-		cs.endText()
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + leftPadding, top - lh * 3)
-		cs.showText("Tartalom: 1 kazetta. Made in Czech Republic.")
-		cs.endText()
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + leftPadding, top - lh * 4)
-		cs.showText("Zawiera: 1 kasete. Wyprodukowane w Czechach.")
-		cs.endText()
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + leftPadding, top - lh * 5)
-		cs.showText("Continut: 1 cartus. Prudus in Republica Ceha.")
-		cs.endText()
-
+		cs.print("Contents: 1 Cartrige. Made in Czech Republic.", pos.x + leftPadding, top)
+		cs.print("Složení: 1 kazeta. Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1)
+		cs.print("Zloženie: 1 kazeta. Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2)
+		cs.print("Tartalom: 1 kazetta. Made in Czech Republic.", pos.x + leftPadding, top - lh * 3)
+		cs.print("Zawiera: 1 kasete. Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4)
+		cs.print("Continut: 1 cartus. Prudus in Republica Ceha.", pos.x + leftPadding, top - lh * 5)
 		cs.setFont(font, fontSize)
 	}
 

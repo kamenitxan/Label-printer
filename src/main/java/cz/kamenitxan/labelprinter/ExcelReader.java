@@ -23,6 +23,10 @@ import java.util.function.Function;
 public class ExcelReader {
 
 	public static List<Product> importFile(String filename, Generators generator) {
+		return importFile(new File(filename), generator);
+	}
+
+	public static List<Product> importFile(File FileR, Generators generator) {
 		final List<Product> products = new ArrayList<>();
 
 		System.setProperty("org.apache.poi.util.POILogger", "org.apache.poi.util.SystemOutLogger");
@@ -32,7 +36,7 @@ public class ExcelReader {
 		XSSFWorkbook workbook;
 
 		try {
-			file = new FileInputStream(new File(filename));
+			file = new FileInputStream(FileR);
 			workbook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("Soubor nenalezen!!!");

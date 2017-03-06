@@ -18,6 +18,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static spark.Spark.*;
+import static spark.Spark.port;
+import static spark.Spark.staticFiles;
+
 /*
 C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALTX -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
  */
@@ -31,6 +35,7 @@ public class Main extends Application {
 	public static String separator = "\\";
 	public static String zoom = "0.78125";
 	public static boolean gui = false;
+	public static Stage primaryStage = null;
 
 	static {
 		if ("linux".equals(System.getProperty("os.name").toLowerCase())) {
@@ -76,24 +81,26 @@ public class Main extends Application {
 			}
 
 		}
-		if (filename.equals("")) {
-        	logger.fatal("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
-			System.err.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
-			return;
-		}
-		if (generator == null) {
-        	logger.fatal("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
-			System.err.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
-			return;
+		if (!gui) {
+			if (filename.equals("")) {
+				logger.fatal("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
+				System.err.println("Nezadáno jméno souboru jako parametr (-file=cesta k souboru)");
+				return;
+			}
+			if (generator == null) {
+				logger.fatal("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
+				System.err.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
+				return;
+			}
 		}
 
-		/*staticFiles.externalLocation(workDir + "/img");
+		staticFiles.externalLocation(workDir + "/img");
         port(9400);
 		before((request, response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
 		});
 		get("/", (req, res) -> "Hello World");
-*/
+
 		if (!gui) {
 			List<Product> products = ExcelReader.importFile(filename, generator);
 			if (limit) {
@@ -111,7 +118,7 @@ public class Main extends Application {
 					break;
 				}
 				default: {
-					//generator.generator.generate(products);
+					generator.generator.generate(products);
 					final Generators generatorF = generator;
 					products.stream().filter(Product::isValid).forEach(p -> {
 						try {
@@ -149,6 +156,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		Main.primaryStage = primaryStage;
 		Parent root = FXMLLoader.load(Main.class.getResource("/main.fxml"));
 
 		Scene scene = new Scene(root);

@@ -17,8 +17,8 @@
       <ChoiceBox fx:id="type" layoutX="75.0" layoutY="48.0" prefWidth="150.0" />
       <Label layoutX="21.0" layoutY="53.0" text="Typ:" />
       <Label layoutX="21.0" layoutY="95.0" text="Zdroj:" />
-      <Button fx:id="generateBtn" layoutX="189.0" layoutY="129.0" mnemonicParsing="false" text="Generovat" />
-      <TextField fx:id="file" layoutX="75.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
-      <Button fx:id="fileBtn" layoutX="381.0" layoutY="90.0" mnemonicParsing="false" text="Vybrat" />
+      <Button fx:id="generateBtn" layoutX="189.0" layoutY="129.0" mnemonicParsing="false" onAction="#generateAction" text="Generovat" />
+      <TextField fx:id="file" editable="false" layoutX="75.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
+      <Button fx:id="fileBtn" layoutX="381.0" layoutY="90.0" mnemonicParsing="false" onAction="#sourceFileChooseAction" text="Vybrat" />
    </children>
 </Pane>
