@@ -38,17 +38,53 @@ class TeslaToner extends Toner6x2 {
 	}
 
 	private def drawSingle(pos: Position) = {
-		debugRect(pos)
+		//debugRect(pos)
 
+		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 		madein(pos)
 		color(pos)
-		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
+		pn(pos)
+		desc(pos)
+		desc(pos + (100, 0))
+	}
+
+	private def desc(pos: Position) = {
+		val top = pos.y + singleHeight - 10
+		val paddingLeft = pos.x + 180
+		cs.print(product.invNum, paddingLeft, top)
+		cs.printLines(product.name, pos + (120, 55), 8, 100)
+
+	}
+
+	private def pn(pos: Position) = {
+		val leftPadding = 20
+		val bottomPadding = 32
+
+		cs.setColor(Color.WHITE)
+		cs.addRect(pos.x + leftPadding, pos.y + bottomPadding - 2, 100, 12)
+		cs.fillAndStroke()
+		cs.setColor(Color.GRAY)
+		cs.setFont(font, fontSize + 7)
+		cs.print(product.invNum, pos.x + leftPadding, pos.y + bottomPadding)
+		cs.setFont(font, fontSize)
+		cs.setColor(Color.BLACK)
 	}
 
 	private def color(pos: Position) = {
+		product.color = Color.WHITE
 		product.color match {
 			case Color.WHITE =>
-			//TODO
+				val third = singleHeight / 3
+				cs.setColor(Color.YELLOW)
+				cs.addRect(pos.x, pos.y, 15, third)
+				cs.fillAndStroke()
+				cs.setColor(Color.MAGENTA)
+				cs.addRect(pos.x, pos.y + third, 15, third)
+				cs.fillAndStroke()
+				cs.setColor(Color.CYAN)
+				cs.addRect(pos.x, pos.y + 2 * third, 15, third)
+				cs.fillAndStroke()
+				cs.setColor(Color.BLACK)
 			case _ =>
 				cs.setColor(product.color)
 				cs.addRect(pos.x, pos.y, 15, singleHeight)
@@ -70,14 +106,14 @@ class TeslaToner extends Toner6x2 {
 
 	private def colorText(pos: Position) = {
 		cs.beginText()
-		cs.setTextRotation(Math.toRadians(270), pos.x+5, pos.y+50)
+		cs.setTextRotation(Math.toRadians(270), pos.x + 5, pos.y + 50)
 		cs.showText(product.colorName)
 		cs.endText()
 	}
 
 	private def madein(pos: Position): Unit = {
 		val leftPadding = 20
-		val top = pos.y + singleHeight - 10
+		val top = pos.y + singleHeight - 5
 		val lh = 5
 
 		cs.setFont(font, fontSize - 3)

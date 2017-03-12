@@ -15,15 +15,15 @@ abstract class Toner6x2 extends PdfGenerator {
 
 	val singleWidth = 390
 	val singleHeight = 78
-	val fontSize = 8
+	override val fontSize = 8
 
-	def getPosition(line: Int, row: Int): Position = {
-		val x = 20 + singleWidth*row + 10*row
-		val y = 37 + singleHeight*line + 10*line
+	override def getPosition(line: Int, row: Int): Position = {
+		val x = 20 + singleWidth * row + 10 * row
+		val y = 37 + singleHeight * line + 10 * line
 		new Position(x, y)
 	}
 
-	def debugRect(pos: Position): Unit = {
+	protected def debugRect(pos: Position): Unit = {
 		cs.addRect(pos.x, pos.y, singleWidth, singleHeight)
 		cs.setStrokingColor(Color.BLACK)
 		cs.stroke()

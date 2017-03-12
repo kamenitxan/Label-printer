@@ -19,8 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import static spark.Spark.*;
-import static spark.Spark.port;
-import static spark.Spark.staticFiles;
 
 /*
 C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALTX -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
@@ -28,8 +26,8 @@ C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESL
 
 public class Main extends Application {
 	static Logger logger = Logger.getLogger(Main.class);
-    private static final double startTime = System.nanoTime();
-    public static boolean debug = false;
+	private static final double startTime = System.nanoTime();
+	public static boolean debug = false;
 	public static String workDir;
 	public static String cmd;
 	public static String separator = "\\";
@@ -43,7 +41,7 @@ public class Main extends Application {
 		}
 	}
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		PropertyConfigurator.configure("log4j.properties");
 
 		workDir = Paths.get(".").toAbsolutePath().normalize().toString();
@@ -52,8 +50,8 @@ public class Main extends Application {
 		String filename = "";
 		Boolean limit = false;
 		Generators generator = null;
-        //launch(args);
-        for (String arg : args) {
+		//launch(args);
+		for (String arg : args) {
 			if (arg.contains("-file=")) {
 				arg = arg.replace("-file=", "");
 				filename = arg;
@@ -92,14 +90,15 @@ public class Main extends Application {
 				System.err.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
 				return;
 			}
+
+			staticFiles.externalLocation(workDir + "/img");
+			port(9400);
+			before((request, response) -> {
+				response.header("Access-Control-Allow-Origin", "*");
+			});
+			get("/", (req, res) -> "Hello World");
 		}
 
-		staticFiles.externalLocation(workDir + "/img");
-        port(9400);
-		before((request, response) -> {
-			response.header("Access-Control-Allow-Origin", "*");
-		});
-		get("/", (req, res) -> "Hello World");
 
 		if (!gui) {
 			List<Product> products = ExcelReader.importFile(filename, generator);
@@ -140,12 +139,12 @@ public class Main extends Application {
 		} else {
 			launch(args);
 		}
-    }
+	}
 
 	/**
 	 * @return elapsed time of generation
 	 */
-	private static String getTime(){
+	private static String getTime() {
 		final DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		final Date today = Calendar.getInstance().getTime();
 		final String reportDate = df.format(today);

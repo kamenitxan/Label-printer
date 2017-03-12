@@ -1,15 +1,11 @@
 package cz.kamenitxan.labelprinter.gui;
 
-import cz.kamenitxan.labelprinter.Director;
 import cz.kamenitxan.labelprinter.Main;
 import cz.kamenitxan.labelprinter.generators.Generators;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Logger;
 
@@ -18,6 +14,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
 public class Controller implements Initializable {
@@ -37,11 +34,35 @@ public class Controller implements Initializable {
 
 	private File selectedFile;
 	DirectorService ds = new DirectorService();
+	private Preferences prefs;
+	private static final String LAST_TYPE = "LAST_TYPE";
+	private static final String LAST_FILE = "LAST_FILE";
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		prefs = Preferences.userNodeForPackage(this.getClass());
+		String lastTypeName = prefs.get(LAST_TYPE, null);
+		Generators lastGenerator = null;
+		try {
+			lastGenerator = Generators.valueOf(lastTypeName);
+		} catch (IllegalArgumentException ex) {
+			logger.error("Could not load saved type: " + lastTypeName, ex);
+		}
+		String lastFilePath = prefs.get(LAST_FILE, null);
+		if (lastFilePath != null) {
+			File lastFile = new File(lastFilePath);
+			if (lastFile.exists()) {
+				selectedFile = lastFile;
+				file.setText(selectedFile.getName());
+			}
+		}
+
 		List<Generators> items = Arrays.stream(Generators.values()).filter(g -> g.genNG != null).collect(Collectors.toList());
 		type.setItems(FXCollections.observableList(items));
+		if (lastGenerator != null) {
+			type.getSelectionModel().select(lastGenerator);
+		}
+
 		progressIndicator.setVisible(false);
 
 		ds.setOnSucceeded(e -> {
@@ -59,19 +80,32 @@ public class Controller implements Initializable {
 		selectedFile = directoryChooser.showOpenDialog(Main.primaryStage);
 		if (selectedFile != null) {
 			file.setText(selectedFile.getName());
+			prefs.put(LAST_FILE, selectedFile.getAbsolutePath());
 		}
 	}
 
 	@FXML
 	private void generateAction() {
 		Generators generator = type.getValue();
+		prefs.put(LAST_TYPE, generator.name());
 		logger.info("Starting export");
-		progressIndicator.setVisible(true);
 
+		if (selectedFile == null || !selectedFile.exists()) {
+			String fileName = selectedFile != null ? selectedFile.getAbsolutePath() : "";
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.setTitle("Nebyl vybran zdrojový soubor");
+			alert.setHeaderText(null);
+			alert.setContentText("Zdrojový soubor nebyl vybrán nebo nebyl nalezen. Zkontrolujte správnost výběru.\n" + fileName);
+
+			alert.showAndWait();
+			return;
+		}
+
+		progressIndicator.setVisible(true);
 		ds.file = selectedFile;
 		ds.generator = generator;
 
-		if(!ds.isRunning()) {
+		if (!ds.isRunning()) {
 			ds.start();
 		}
 
