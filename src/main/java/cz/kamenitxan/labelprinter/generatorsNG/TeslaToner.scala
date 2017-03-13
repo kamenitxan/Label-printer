@@ -71,7 +71,6 @@ class TeslaToner extends Toner6x2 {
 	}
 
 	private def color(pos: Position) = {
-		product.color = Color.WHITE
 		product.color match {
 			case Color.WHITE =>
 				val third = singleHeight / 3
@@ -122,7 +121,7 @@ class TeslaToner extends Toner6x2 {
 		cs.print("Zloženie: 1 kazeta. Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2)
 		cs.print("Tartalom: 1 kazetta. Made in Czech Republic.", pos.x + leftPadding, top - lh * 3)
 		cs.print("Zawiera: 1 kasete. Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4)
-		cs.print("Continut: 1 cartus. Prudus in Republica Ceha.", pos.x + leftPadding, top - lh * 5)
+		cs.print("Continut: 1 cartus. Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5)
 		cs.setFont(font, fontSize)
 	}
 

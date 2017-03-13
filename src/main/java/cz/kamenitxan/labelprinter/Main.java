@@ -14,6 +14,7 @@ import org.apache.log4j.PropertyConfigurator;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		logger.info("Labelprinter started");
 		PropertyConfigurator.configure("log4j.properties");
 
 		workDir = Paths.get(".").toAbsolutePath().normalize().toString();
@@ -117,9 +119,9 @@ public class Main extends Application {
 					break;
 				}
 				default: {
-					generator.generator.generate(products);
+					//generator.generator.generate(products);
 					final Generators generatorF = generator;
-					products.stream().filter(Product::isValid).forEach(p -> {
+					products.parallelStream().filter(Product::isValid).forEach(p -> {
 						try {
 							generatorF.genNG.newInstance().generate(p);
 						} catch (InstantiationException | IllegalAccessException e) {
@@ -137,6 +139,8 @@ public class Main extends Application {
 			logger.info("Uloženo " + products.stream().filter(Product::isValid).count() + " PDF");
 			System.exit(0);
 		} else {
+			logger.info("Gui started");
+			logger.info("Params: " + Arrays.toString(args));
 			launch(args);
 		}
 	}

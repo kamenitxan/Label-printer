@@ -6,7 +6,7 @@ package cz.kamenitxan.labelprinter.generators;
 public enum Generators {
 	TONER_LAMDA(null, null, null),
 	INK_LAMDA(null, null, null),
-	TONER_ALTX(null, null, null),
+	TONER_ALTX(null, "toner_altx", cz.kamenitxan.labelprinter.generatorsNG.AltxToner.class),
 	INK_ALTX(new AltxInk(), "ink_altx", cz.kamenitxan.labelprinter.generatorsNG.AltxInk.class),
 	INK_TESLA(new TeslaInk(), "ink_tesla", cz.kamenitxan.labelprinter.generatorsNG.TeslaInk.class),
 	TONER_TESLA(new TeslaToner(), "toner_tesla", cz.kamenitxan.labelprinter.generatorsNG.TeslaToner.class);
