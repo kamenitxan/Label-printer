@@ -112,7 +112,7 @@ class AltxInk extends Ink9x4 {
 
 		val lines = splitByWidth(product.name, allowedWidth)
 
-		cs.printLines(lines, pos + (0, singleHeight), lineHeight)
+		cs.printLines(lines, pos + (0, 70), lineHeight)
 
 	}
 

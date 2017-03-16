@@ -42,7 +42,8 @@ abstract class PdfGenerator {
 		// get all words from the text
 		// keep in mind that words are separated by spaces -> "Lorem ipsum!!!!:)" -> words are "Lorem" and "ipsum!!!!:)"
 		val words: Array[String] = text.split(" ")
-		for (word <- words) {
+		for (w <- words) {
+			val word = w + " "
 			if (!myLine.isEmpty) {
 				myLine += ""
 			}
@@ -97,7 +98,7 @@ abstract class PdfGenerator {
 			for (line <- lines) {
 				cs.beginText()
 				cs.newLineAtOffset(pos.x + 60, pos.y - lh * i)
-				cs.showText(line)
+				cs.showText(line + "")
 				//cs.moveTextPositionByAmount(60, y)
 				//cs.drawString(line)
 				cs.endText()

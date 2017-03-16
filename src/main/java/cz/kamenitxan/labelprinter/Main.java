@@ -93,12 +93,12 @@ public class Main extends Application {
 				return;
 			}
 
-			staticFiles.externalLocation(workDir + "/img");
+			/*staticFiles.externalLocation(workDir + "/img");
 			port(9400);
 			before((request, response) -> {
 				response.header("Access-Control-Allow-Origin", "*");
 			});
-			get("/", (req, res) -> "Hello World");
+			get("/", (req, res) -> "Hello World");*/
 		}
 
 
@@ -119,7 +119,7 @@ public class Main extends Application {
 					break;
 				}
 				default: {
-					//generator.generator.generate(products);
+					generator.generator.generate(products);
 					final Generators generatorF = generator;
 					products.parallelStream().filter(Product::isValid).forEach(p -> {
 						try {
@@ -160,6 +160,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
+		primaryStage.setTitle("LabelPrinter");
 		Parent root = FXMLLoader.load(Main.class.getResource("/main.fxml"));
 
 		Scene scene = new Scene(root);
