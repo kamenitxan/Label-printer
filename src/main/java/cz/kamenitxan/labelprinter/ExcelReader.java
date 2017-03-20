@@ -60,7 +60,8 @@ public class ExcelReader {
 				switch (generator) {
 					case INK_TESLA:
 					case TONER_TESLA:
-					case INK_ALTX: {
+					case INK_ALTX:
+					case TONER_ALTX: {
 						products.add(createAltXInk(row, evaluator));
 						break;
 					}

@@ -37,23 +37,26 @@ public class Controller implements Initializable {
 	private Preferences prefs;
 	private static final String LAST_TYPE = "LAST_TYPE";
 	private static final String LAST_FILE = "LAST_FILE";
+	private static boolean usePrefs = false;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		prefs = Preferences.userNodeForPackage(this.getClass());
-		String lastTypeName = prefs.get(LAST_TYPE, null);
 		Generators lastGenerator = null;
-		try {
-			lastGenerator = Generators.valueOf(lastTypeName);
-		} catch (IllegalArgumentException ex) {
-			logger.error("Could not load saved type: " + lastTypeName, ex);
-		}
-		String lastFilePath = prefs.get(LAST_FILE, null);
-		if (lastFilePath != null) {
-			File lastFile = new File(lastFilePath);
-			if (lastFile.exists()) {
-				selectedFile = lastFile;
-				file.setText(selectedFile.getName());
+		if (usePrefs) {
+			prefs = Preferences.userNodeForPackage(this.getClass());
+			String lastTypeName = prefs.get(LAST_TYPE, null);
+			try {
+				lastGenerator = Generators.valueOf(lastTypeName);
+			} catch (IllegalArgumentException ex) {
+				logger.error("Could not load saved type: " + lastTypeName, ex);
+			}
+			String lastFilePath = prefs.get(LAST_FILE, null);
+			if (lastFilePath != null) {
+				File lastFile = new File(lastFilePath);
+				if (lastFile.exists()) {
+					selectedFile = lastFile;
+					file.setText(selectedFile.getName());
+				}
 			}
 		}
 
@@ -80,14 +83,18 @@ public class Controller implements Initializable {
 		selectedFile = directoryChooser.showOpenDialog(Main.primaryStage);
 		if (selectedFile != null) {
 			file.setText(selectedFile.getName());
-			prefs.put(LAST_FILE, selectedFile.getAbsolutePath());
+			if (usePrefs) {
+				prefs.put(LAST_FILE, selectedFile.getAbsolutePath());
+			}
 		}
 	}
 
 	@FXML
 	private void generateAction() {
 		Generators generator = type.getValue();
-		prefs.put(LAST_TYPE, generator.name());
+		if (usePrefs) {
+			prefs.put(LAST_TYPE, generator.name());
+		}
 		logger.info("Starting export");
 
 		if (selectedFile == null || !selectedFile.exists()) {
