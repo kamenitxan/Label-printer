@@ -58,15 +58,12 @@ public class ExcelReader {
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
 				switch (generator) {
-					case INK_TESLA:
-					case TONER_TESLA:
-					case INK_ALTX:
-					case TONER_ALTX: {
-						products.add(createAltXInk(row, evaluator));
+					case INK_LAMDA: {
+						products.add(createLamdaToner(row, evaluator));
 						break;
 					}
-					case TONER_LAMDA: {
-						products.add(createLamdaToner(row, evaluator));
+					default: {
+						products.add(createAltXInk(row, evaluator));
 						break;
 					}
 				}

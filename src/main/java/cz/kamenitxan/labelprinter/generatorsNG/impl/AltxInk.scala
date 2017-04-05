@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter.generatorsNG
+package cz.kamenitxan.labelprinter.generatorsNG.impl
 
 import java.awt.Color
 import java.awt.geom.AffineTransform
@@ -7,6 +7,7 @@ import java.io.File
 
 import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.generators.Generators
+import cz.kamenitxan.labelprinter.generatorsNG.Ink9x4
 import cz.kamenitxan.labelprinter.models.{Ean13Test, Position}
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.font.PDType0Font

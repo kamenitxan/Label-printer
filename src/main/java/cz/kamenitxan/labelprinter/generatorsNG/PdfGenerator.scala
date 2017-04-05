@@ -93,6 +93,12 @@ abstract class PdfGenerator {
 			cs.endText()
 		}
 
+		def printBold(text: String, x: Float, y: Float): Unit = {
+			cs.setFont(boldFont, fontSize)
+			print(text: String, x: Float, y: Float)
+			cs.setFont(font, fontSize)
+		}
+
 		def printLines(lines: List[String], pos: Position, lh: Int): Unit = {
 			var i = 0
 			for (line <- lines) {

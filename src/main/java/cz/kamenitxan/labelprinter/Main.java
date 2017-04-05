@@ -109,7 +109,7 @@ public class Main extends Application {
 			}
 
 			switch (generator) {
-				case TONER_LAMDA: {
+				case INK_LAMDA: {
 					//products.forEach(System.out::println);
 					LamdaInk.manufacturers = ExcelReader.importManufacturers(filename);
 					products.parallelStream().forEach(a -> {

@@ -14,7 +14,7 @@ object Director {
 	def generate(file: File, generator: Generators): Unit = {
 		val products = ExcelReader.importFile(file, generator).asScala
 		generator match {
-			case Generators.TONER_LAMDA =>
+			case Generators.INK_LAMDA =>
 			//products.forEach(System.out::println);
 			/*LamdaInk.manufacturers = ExcelReader.importManufacturers()
 			products.parallelStream.forEach(a -> {

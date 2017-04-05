@@ -1,0 +1,48 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Java template
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+.gitignore
+.idea/
+1T4C2P1244.html
+Allprint-create.xlsm
+Allprint-create.xlsx
+Allprint_inkjet_uprava.xlsm
+Labelprinter.one-jar.jar
+TESLA_code_creator_INK.xlsm
+TESLA_code_creator_toner.xlsm
+Tesla_toner_import_objednane.xlsm
+allprint_code_creator.xlsm
+allprint_ink_vse_bak.xlsx
+allprint_inkjet_nove.xlsx
+export/
+html/
+import (kopie).xlsx
+import.xls
+labelprinter.iml
+labelprinter.log
+pdf/
+target/
+tesla_import.xls
+tesla_import.xlsx
