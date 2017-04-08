@@ -4,6 +4,7 @@ import java.awt.Color
 import java.io.{File, FileNotFoundException, IOException}
 
 import cz.kamenitxan.labelprinter.models.{Position, Product}
+import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPageContentStream}
 
@@ -16,6 +17,7 @@ abstract class PdfGenerator {
 	val wholePageWidth = 843
 	val wholePageHeight = 596
 	val fontSize: Int
+	val PAGE_SIZE_A4: PDRectangle
 
 	var product: Product = _
 	protected var cs: PDPageContentStream = _

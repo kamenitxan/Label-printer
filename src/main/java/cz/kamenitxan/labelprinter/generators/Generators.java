@@ -10,8 +10,8 @@ public enum Generators {
 	TONER_LAMDA(null, "toner_lamda", LamdaToner.class),
 	INK_LAMDA(null, null, null),
 	TONER_ALTX(null, "toner_altx", AltxToner.class),
-	INK_ALTX(new AltxInk(), "ink_altx", cz.kamenitxan.labelprinter.generatorsNG.impl.AltxInk.class),
-	INK_TESLA(new TeslaInk(), "ink_tesla", cz.kamenitxan.labelprinter.generatorsNG.impl.TeslaInk.class),
+	INK_ALTX(null, "ink_altx", cz.kamenitxan.labelprinter.generatorsNG.impl.AltxInk.class),
+	INK_TESLA(null, "ink_tesla", cz.kamenitxan.labelprinter.generatorsNG.impl.TeslaInk.class),
 	TONER_TESLA(new TeslaToner(), "toner_tesla", cz.kamenitxan.labelprinter.generatorsNG.impl.TeslaToner.class);
 
 	public PdfGenerator generator;

@@ -64,6 +64,47 @@ class LamdaToner extends Toner3x1 {
 		cs.print(product.capacity, pos.x + 720, pos.y + 55)
 		cs.print(product.productCode, pos.x+720, pos.y + 40)
 
+		colorRect(pos + (400, 140))
+		colorRect(pos + (720, 140))
+	}
 
+	private def colorRect(pos: Position) = {
+		val height = 25
+		val width = 60
+		product.color = Color.WHITE
+		product.color match {
+			case Color.WHITE =>
+				cs.setStrokingColor(Color.CYAN)
+				cs.setNonStrokingColor(Color.CYAN)
+				cs.addRect(pos.x, pos.y, width/3, height)
+				cs.fillAndStroke()
+				cs.setStrokingColor(Color.MAGENTA)
+				cs.setNonStrokingColor(Color.MAGENTA)
+				cs.addRect(pos.x + width/3, pos.y, width/3, height)
+				cs.fillAndStroke()
+				cs.setStrokingColor(Color.YELLOW)
+				cs.setNonStrokingColor(Color.YELLOW)
+				cs.addRect(pos.x + 2*(width/3), pos.y, width/3, height)
+				cs.fillAndStroke()
+
+			case _ =>
+				cs.setStrokingColor(product.color)
+				cs.setNonStrokingColor(product.color)
+				cs.addRect(pos.x, pos.y, width, height)
+				cs.fillAndStroke()
+				cs.print(product.colorName, pos.x, pos.y)
+		}
+		cs.setStrokingColor(Color.BLACK)
+		cs.setNonStrokingColor(Color.BLACK)
+		product.color match {
+			case Color.BLACK =>
+				cs.setColor(Color.WHITE)
+				cs.print(product.colorName, pos.x+5, pos.y+7)
+			case _ =>
+				cs.setColor(Color.BLACK)
+				cs.print(product.colorName, pos.x+5, pos.y+7)
+		}
+		cs.setStrokingColor(Color.BLACK)
+		cs.setNonStrokingColor(Color.BLACK)
 	}
 }

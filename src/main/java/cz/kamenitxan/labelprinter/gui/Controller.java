@@ -37,7 +37,7 @@ public class Controller implements Initializable {
 	private Preferences prefs;
 	private static final String LAST_TYPE = "LAST_TYPE";
 	private static final String LAST_FILE = "LAST_FILE";
-	private static boolean usePrefs = false;
+	private static boolean usePrefs = !System.getProperty("os.name").startsWith("Windows");
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

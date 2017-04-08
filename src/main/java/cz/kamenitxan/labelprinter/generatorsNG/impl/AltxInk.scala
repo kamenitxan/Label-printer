@@ -18,9 +18,7 @@ import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
   * Created by tomaspavel on 1.3.17.
   */
 class AltxInk extends Ink9x4 {
-	private val PAGE_SIZE_A4 = new PDRectangle(wholePageHeight, wholePageWidth)
 	private var eanImage: PDImageXObject = _
-
 
 	override def getFolderName: String = Generators.INK_ALTX.folder
 
