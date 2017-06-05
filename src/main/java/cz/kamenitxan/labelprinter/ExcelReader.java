@@ -59,7 +59,8 @@ public class ExcelReader {
 				}*/
 				switch (generator) {
 					case INK_LAMDA: {
-						products.add(createLamdaToner(row, evaluator));
+						ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
+						manufacturers.forEach(m -> products.add(createLamdaToner(row, evaluator, m.code)));
 						break;
 					}
 					default: {
@@ -88,13 +89,17 @@ public class ExcelReader {
 		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator);
 	}
 
-	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator) {
+	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator, String manu) {
+		final Function<Product, Boolean> val = p -> p.invNum != null && !p.invNum.equals("");
 		return new Product() {{
 			invNum = getCellValue(row.getCell(0), evaluator);
 			name = getCellValue(row.getCell(1), evaluator);
 			capacity = getCellValue(row.getCell(7), evaluator);
 			colorName = getCellValue(row.getCell(2), evaluator);
+			color = Product.getProductColor(colorName);
 			productCode = getCellValue(row.getCell(4), evaluator);
+			manufacturer = manu;
+			validator = val;
 		}};
 	}
 
@@ -118,14 +123,14 @@ public class ExcelReader {
 		return "";
 	}
 
-	public static ArrayList<Manufacturer> importManufacturers(String filename) {
+	public static ArrayList<Manufacturer> importManufacturers(File fileR) {
 		ArrayList<Manufacturer> manufacturers = new ArrayList<>();
 
 		FileInputStream file;
 		XSSFWorkbook workbook;
 
 		try {
-			file = new FileInputStream(new File(filename));
+			file = new FileInputStream(fileR);
 			workbook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("Soubor nenalezen!!!");

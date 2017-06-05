@@ -1,4 +1,3 @@
-import cz.kamenitxan.labelprinter.generators.AltxInk
 import cz.kamenitxan.labelprinter.models.Product
 import org.scalatest.FunSuite
 
@@ -10,8 +9,7 @@ class Tests extends FunSuite{
 	test("generatePdf") {
 		val p = new Product("236475", "ALLPRINT HP CZ101AE (No 650)", "200ml", "Black", null, "2000000005256", "2AAKKAK*aafcih+")
 
-		val generator = new AltxInk
-		generator.generatePdf(p)
+
 	}
 
 }

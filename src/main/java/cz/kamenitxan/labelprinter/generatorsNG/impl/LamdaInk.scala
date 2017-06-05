@@ -1,15 +1,14 @@
 package cz.kamenitxan.labelprinter.generatorsNG.impl
 
-import java.awt.geom.AffineTransform
-import java.awt.image.AffineTransformOp
+import java.awt.Color
 import java.io.File
+import javax.imageio.ImageIO
 
-import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Ink9x4
-import cz.kamenitxan.labelprinter.models.{Ean13Test, Position}
+import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
-import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
+import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
 /**
@@ -18,24 +17,22 @@ import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 class LamdaInk extends Ink9x4 {
 	override def getFolderName: String = Generators.INK_LAMDA.folder
 
+	var logo: PDImageXObject = _
+	var icons: PDImageXObject = _
+
 	override def generatePdf(): Unit = {
 		val document: PDDocument = new PDDocument
 		val page: PDPage = new PDPage(PAGE_SIZE_A4)
 		document.addPage(page)
 
-		var eanRaw = Ean13Test.createEan(product.ean)
-		val transform = new AffineTransform()
-		transform.rotate(Math.PI / 2, eanRaw.getWidth() / 2, eanRaw.getHeight() / 2)
-		transform.translate(eanRaw.getWidth() / 2, eanRaw.getHeight() / 2)
-		val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
-		eanRaw = op.filter(eanRaw, null)
-		eanRaw = Utils.trimImage(eanRaw)
-		eanImage = LosslessFactory.createFromImage(document, eanRaw)
-
 		cs = new PDPageContentStream(document, page)
 		font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"))
 		boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
+
+		val img = ImageIO.read(new File("img/lamda2.jpg"))
+		logo = LosslessFactory.createFromImage(document, img)
+		icons = LosslessFactory.createFromImage(document, ImageIO.read(new File("img/label2.jpg")))
 
 		for (line <- 0 to 8; row <- 0 to 3) {
 			drawSingle(getPosition(line, row))
@@ -45,6 +42,64 @@ class LamdaInk extends Ink9x4 {
 	}
 
 	private def drawSingle(pos: Position) = {
+		//debugRect(pos)
+		cs.setColor(Color.BLACK)
 
+		cs.drawImage(logo, pos.x + 15, pos.y +5, logo.getWidth * 0.1 toFloat, logo.getHeight * 0.1 toFloat)
+		cs.drawImage(icons, pos.x + 70, pos.y +5, logo.getWidth * 0.18 toFloat, logo.getHeight * 0.08 toFloat)
+		cs.print(product.name, pos.x+15, pos.y+singleHeight-10)
+		cs.print("Kat. č. " + product.invNum, pos.x + 15, pos.y + 40)
+		cs.print(product.capacity, pos.x + 15, pos.y + 25)
+		color(pos)
+
+		cs.beginText()
+		cs.setColor(product.getColorRectTextColor)
+		cs.newLineAtOffset(pos.x + 0, pos.y + 10)
+		cs.setTextRotation(Math.toRadians(270), pos.x + 4, pos.y + 60)
+		cs.showText(product.colorName)
+		cs.setFont(font, fontSize)
+		cs.endText()
+		cs.setColor(Color.BLACK)
+
+		manufaturer(pos)
+	}
+
+	private def color(pos: Position) = {
+		val width = 12
+		val height = singleHeight
+		product.color match {
+			case Color.WHITE =>
+				cs.setStrokingColor(Color.CYAN)
+				cs.setNonStrokingColor(Color.CYAN)
+				cs.addRect(pos.x, pos.y, width, height)
+				cs.fillAndStroke()
+				cs.setStrokingColor(Color.MAGENTA)
+				cs.setNonStrokingColor(Color.MAGENTA)
+				cs.addRect(pos.x, pos.y + 6, width, height)
+				cs.fillAndStroke()
+				cs.setStrokingColor(Color.YELLOW)
+				cs.setNonStrokingColor(Color.YELLOW)
+				cs.addRect(pos.x, pos.y + 12, width, height)
+				cs.fillAndStroke()
+			case _ =>
+				cs.setStrokingColor(product.color)
+				cs.setNonStrokingColor(product.color)
+				cs.addRect(pos.x, pos.y, width, height)
+				cs.fillAndStroke()
+		}
+		cs.setStrokingColor(Color.BLACK)
+		cs.setNonStrokingColor(Color.BLACK)
+
+
+
+	}
+
+	private def manufaturer(pos: Position) = {
+		cs.setNonStrokingColor(Color.WHITE)
+		cs.setStrokingColor(Color.BLACK)
+		cs.addRect(pos.x + singleWidth - 22, pos.y + 23, 15, 10)
+		cs.fillAndStroke()
+		cs.setColor(Color.BLACK)
+		cs.print(product.manufacturer, pos.x + singleWidth - 20, pos.y + 25)
 	}
 }

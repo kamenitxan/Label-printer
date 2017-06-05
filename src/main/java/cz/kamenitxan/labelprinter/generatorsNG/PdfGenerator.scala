@@ -67,7 +67,13 @@ abstract class PdfGenerator {
 	}
 
 	protected def savePdf(document: PDDocument) {
-		val file = new File("pdf/" + getFolderName + "/" + product.invNum + ".pdf")
+		var filename: String = null
+		if (product.manufacturer != null) {
+			filename = "pdf/" + getFolderName + "/" + product.manufacturer +"/" + product.invNum + ".pdf"
+		} else {
+			filename = "pdf/" + getFolderName + "/" + product.invNum + ".pdf"
+		}
+		val file = new File(filename)
 		try {
 			file.getParentFile.mkdirs
 			document.save(file)

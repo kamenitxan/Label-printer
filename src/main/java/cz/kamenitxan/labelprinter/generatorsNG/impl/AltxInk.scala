@@ -20,7 +20,7 @@ import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 class AltxInk extends Ink9x4 {
 	private var eanImage: PDImageXObject = _
 
-	override def getFolderName: String = Generators.INK_ALTX.folder
+	override def getFolderName: String = Generators.INK_ALLPRINT.folder
 
 	override def generatePdf(): Unit = {
 		val document: PDDocument = new PDDocument

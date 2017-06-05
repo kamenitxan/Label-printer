@@ -1,5 +1,7 @@
 package cz.kamenitxan.labelprinter.generatorsNG
 
+import java.awt.Color
+
 import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 
@@ -17,4 +19,11 @@ abstract class Ink9x4 extends PdfGenerator {
 		val y = 24 + singleHeight * line + 5 * line
 		new Position(x, y)
 	}
+
+	protected def debugRect(pos: Position): Unit = {
+		cs.addRect(pos.x, pos.y, singleWidth, singleHeight)
+		cs.setStrokingColor(Color.BLACK)
+		cs.stroke()
+	}
+
 }

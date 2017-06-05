@@ -20,7 +20,7 @@ public class Product {
 	public String eanCode = "";
 	public String manufacturer = "";
 
-	Function<Product, Boolean> validator;
+	public Function<Product, Boolean> validator;
 
 	public Product() {
 	}
@@ -150,5 +150,46 @@ public class Product {
 				break;
 		}
 		return currentColor;
+	}
+
+	public Color getColorRectTextColor() {
+		switch (colorName) {
+			case "Black":
+				return Color.WHITE;
+			case "Yellow":
+				return Color.BLACK;
+			case "Cyan":
+				return Color.BLACK;
+			case "Magenta":
+				return Color.BLACK;
+			case "Black/Rot":
+				return Color.WHITE;
+			case "CMYK":
+				return Color.BLACK;
+			case "Color":
+				return Color.BLACK;
+			case "Grey":
+				return Color.BLACK;
+			case "Light Cyan":
+				return Color.BLACK;
+			case "Light Magenta":
+				return Color.BLACK;
+			case "Matte black":
+				return Color.WHITE;
+			case "Photo":
+				return Color.BLACK;
+			case "Photo Black":
+				return Color.WHITE;
+			case "Photo Cyan":
+				return Color.BLACK;
+			case "Photo Magenta":
+				return Color.BLACK;
+			case "Red/Black":
+				return Color.BLACK;
+			case "Violett":
+				return Color.BLACK;
+			default:
+				return Color.BLACK;
+		}
 	}
 }

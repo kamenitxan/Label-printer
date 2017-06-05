@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -22,7 +23,7 @@ import java.util.List;
 import static spark.Spark.*;
 
 /*
-C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALTX -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
+C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALLPRINT -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
  */
 
 public class Main extends Application {
@@ -88,8 +89,8 @@ public class Main extends Application {
 				return;
 			}
 			if (generator == null) {
-				logger.fatal("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
-				System.err.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALTX})");
+				logger.fatal("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALLPRINT})");
+				System.err.println("Nezadán typ jako parametr (-generator={TONER_LAMDA|INK_ALLPRINT})");
 				return;
 			}
 
@@ -109,7 +110,7 @@ public class Main extends Application {
 			}
 
 			switch (generator) {
-				case INK_LAMDA: {
+				/*case INK_LAMDA: {
 					//products.forEach(System.out::println);
 					LamdaInk.manufacturers = ExcelReader.importManufacturers(filename);
 					products.parallelStream().forEach(a -> {
@@ -117,7 +118,7 @@ public class Main extends Application {
 						g.generatePdf(a);
 					});
 					break;
-				}
+				}*/
 				default: {
 					generator.generator.generate(products);
 					final Generators generatorF = generator;
@@ -128,8 +129,6 @@ public class Main extends Application {
 							e.printStackTrace();
 						}
 					});
-
-
 					break;
 				}
 
@@ -161,6 +160,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
 		primaryStage.setTitle("LabelPrinter");
+		primaryStage.getIcons().add(new Image("/printer.png"));
 		Parent root = FXMLLoader.load(Main.class.getResource("/main.fxml"));
 
 		Scene scene = new Scene(root);

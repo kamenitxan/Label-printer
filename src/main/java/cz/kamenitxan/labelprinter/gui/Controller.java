@@ -74,6 +74,13 @@ public class Controller implements Initializable {
 			ds.reset();
 			logger.info("Export done");
 		});
+		ds.setOnFailed(e -> {
+			progressIndicator.setVisible(false);
+			//reset service
+			ds.getException().printStackTrace();
+			ds.reset();
+			logger.info("Export failed");
+		});
 
 	}
 
