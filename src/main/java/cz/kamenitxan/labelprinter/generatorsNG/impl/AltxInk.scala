@@ -73,7 +73,7 @@ class AltxInk extends Ink9x4 {
 		cs.beginText()
 		cs.newLineAtOffset(pos.x + 60, pos.y + 10)
 		cs.setFont(font, fontSize + 6)
-		cs.setTextRotation(Math.toRadians(270), pos.x + 40, pos.y + 80)
+		cs.setTextRotation(Math.toRadians(90), pos.x + 51, pos.y + 2)
 		cs.showText(product.invNum)
 		cs.setFont(font, fontSize)
 		cs.endText()
