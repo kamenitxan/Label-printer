@@ -10,6 +10,7 @@ import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
+import org.apache.poi.hssf.util.HSSFColor.BLACK
 
 /**
   * Created by tomaspavel on 8.4.17.
@@ -55,13 +56,14 @@ class LamdaInk extends Ink9x4 {
 		cs.beginText()
 		cs.setColor(product.getColorRectTextColor)
 		cs.newLineAtOffset(pos.x + 0, pos.y + 10)
-		cs.setTextRotation(Math.toRadians(270), pos.x + 4, pos.y + 60)
+		cs.setTextRotation(Math.toRadians(270), pos.x + 3, pos.y + 60)
 		cs.showText(product.colorName)
 		cs.setFont(font, fontSize)
 		cs.endText()
 		cs.setColor(Color.BLACK)
 
 		manufaturer(pos)
+		lamda(pos)
 	}
 
 	private def color(pos: Position) = {
@@ -97,9 +99,15 @@ class LamdaInk extends Ink9x4 {
 	private def manufaturer(pos: Position) = {
 		cs.setNonStrokingColor(Color.WHITE)
 		cs.setStrokingColor(Color.BLACK)
-		cs.addRect(pos.x + singleWidth - 22, pos.y + 23, 15, 10)
+		cs.addRect(pos.x + singleWidth - 22, pos.y + 28, 15, 10)
 		cs.fillAndStroke()
 		cs.setColor(Color.BLACK)
-		cs.print(product.manufacturer, pos.x + singleWidth - 20, pos.y + 25)
+		cs.print(product.manufacturer, pos.x + singleWidth - 20, pos.y + 30)
+	}
+
+	private def lamda(pos: Position) = {
+		cs.setFont(font, 6)
+		cs.print("Lamdaprint s.r.o.", pos.x + 80, pos.y + 20)
+		cs.setFont(font, fontSize)
 	}
 }
