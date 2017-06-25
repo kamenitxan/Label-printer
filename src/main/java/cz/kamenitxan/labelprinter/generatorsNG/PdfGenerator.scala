@@ -36,9 +36,9 @@ abstract class PdfGenerator {
 	}
 
 	protected def splitByWidth(text: String, width: Int): List[String] = {
+		// TODO: width se asi nepouziva
 		var myLine: String = ""
 		val allowedWidth = 60
-		val lineHeight = 10
 		var lines: mutable.MutableList[String] = mutable.MutableList()
 
 		// get all words from the text
@@ -78,13 +78,13 @@ abstract class PdfGenerator {
 			file.getParentFile.mkdirs
 			document.save(file)
 		} catch {
-			case ex: FileNotFoundException => System.out.println("Nenalezena složka pro výstup!!!")
-			case ex: IOException => System.out.println("IO Exception - nelze uložit.")
+			case _: FileNotFoundException => System.out.println("Nenalezena složka pro výstup!!!")
+			case _: IOException => System.out.println("IO Exception - nelze uložit.")
 		}
 		try
 			document.close()
 		catch {
-			case ex: IOException => System.out.println("Nelze uzavřít soubor.")
+			case _: IOException => System.out.println("Nelze uzavřít soubor.")
 		}
 	}
 
@@ -129,6 +129,16 @@ abstract class PdfGenerator {
 			cs.moveTo(from.x, from.y)
 			cs.lineTo(to.x, to.y)
 			cs.stroke()
+		}
+
+		def drawCircle(cx: Float, cy: Float, r: Float): Unit = {
+			val k = 0.552284749831f
+			cs.moveTo(cx - r, cy)
+			cs.curveTo(cx - r, cy + k * r, cx - k * r, cy + r, cx, cy + r)
+			cs.curveTo(cx + k * r, cy + r, cx + r, cy + k * r, cx + r, cy)
+			cs.curveTo(cx + r, cy - k * r, cx + k * r, cy - r, cx, cy - r)
+			cs.curveTo(cx - k * r, cy - r, cx - r, cy - k * r, cx - r, cy)
+			cs.fill()
 		}
 	}
 

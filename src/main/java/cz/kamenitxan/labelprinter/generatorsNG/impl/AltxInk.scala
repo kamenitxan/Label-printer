@@ -18,7 +18,7 @@ import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
   * Created by tomaspavel on 1.3.17.
   */
 class AltxInk extends Ink9x4 {
-	private var eanImage: PDImageXObject = _
+	var eanImage: PDImageXObject = _
 
 	override def getFolderName: String = Generators.INK_ALLPRINT.folder
 
@@ -48,10 +48,8 @@ class AltxInk extends Ink9x4 {
 		savePdf(document)
 	}
 
-	private def drawSingle(pos: Position) = {
-		//cs.addRect(pos.x, pos.y, singleWidth, singleHeight)
-		//cs.setStrokingColor(Color.BLACK)
-		//cs.stroke()
+	def drawSingle(pos: Position): Unit = {
+		//debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 2, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 
@@ -80,26 +78,22 @@ class AltxInk extends Ink9x4 {
 	}
 
 	private def color(posB: Position) = {
-		val pos = new Position(posB.x + 53, posB.y + 8)
+		val pos = new Position(posB.x + 56, posB.y + 13)
+
 		product.color match {
 			case Color.WHITE =>
-				cs.setStrokingColor(Color.CYAN)
 				cs.setNonStrokingColor(Color.CYAN)
-				cs.addRect(pos.x, pos.y, 5, 6)
-				cs.fillAndStroke()
-				cs.setStrokingColor(Color.MAGENTA)
+				cs.drawCircle(pos.x, pos.y, 3)
+
 				cs.setNonStrokingColor(Color.MAGENTA)
-				cs.addRect(pos.x, pos.y + 6, 5, 6)
-				cs.fillAndStroke()
-				cs.setStrokingColor(Color.YELLOW)
+				cs.drawCircle(pos.x, pos.y + 10, 3)
+
 				cs.setNonStrokingColor(Color.YELLOW)
-				cs.addRect(pos.x, pos.y + 12, 5, 6)
-				cs.fillAndStroke()
+				cs.drawCircle(pos.x, pos.y + 20, 3)
+
 			case _ =>
-				cs.setStrokingColor(product.color)
 				cs.setNonStrokingColor(product.color)
-				cs.addRect(pos.x, pos.y, 5, 18)
-				cs.fillAndStroke()
+				cs.drawCircle(pos.x, pos.y + 10, 3)
 		}
 		cs.setStrokingColor(Color.BLACK)
 		cs.setNonStrokingColor(Color.BLACK)
