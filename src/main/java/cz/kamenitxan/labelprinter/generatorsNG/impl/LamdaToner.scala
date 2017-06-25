@@ -46,10 +46,12 @@ class LamdaToner extends Toner3x1 {
 	private def drawSingle(pos: Position) = {
 		debugRect(pos)
 
-		cs.drawImage(logo, pos.x + 2, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
+		divider(pos)
+
+		cs.drawImage(logo, pos.x + 20, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
 		cs.drawImage(logo, pos.x + 480, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
-		cs.drawImage(icons, pos.x + 200, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
-		cs.drawImage(icons, pos.x + 600, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
+		cs.drawImage(icons, pos.x + 375, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
+		cs.drawImage(icons, pos.x + 695, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
 		cs.print("Výrobce: Lamdaprint cz a.s.", pos.x + 20, pos.y + 40)
 		cs.print("Katalogové číslo: ", pos.x + 20, pos.y + 55)
 		cs.printBold(product.invNum, pos.x + 115, pos.y + 55)
@@ -66,6 +68,7 @@ class LamdaToner extends Toner3x1 {
 
 		colorRect(pos + (400, 140))
 		colorRect(pos + (720, 140))
+
 	}
 
 	private def colorRect(pos: Position) = {
@@ -96,6 +99,7 @@ class LamdaToner extends Toner3x1 {
 		}
 		cs.setStrokingColor(Color.BLACK)
 		cs.setNonStrokingColor(Color.BLACK)
+		// TODO: centrovat text
 		product.color match {
 			case Color.BLACK =>
 				cs.setColor(Color.WHITE)
@@ -106,5 +110,15 @@ class LamdaToner extends Toner3x1 {
 		}
 		cs.setStrokingColor(Color.BLACK)
 		cs.setNonStrokingColor(Color.BLACK)
+	}
+
+	private def divider(pos: Position) = {
+		cs.setColor(Color.BLACK)
+		cs.moveTo(pos.x + 470, pos.y)
+		cs.lineTo(pos.x + 470, pos.y + 10)
+	  	cs.stroke()
+		cs.moveTo(pos.x + 470, pos.y + singleHeight)
+		cs.lineTo(pos.x + 470, pos.y + singleHeight - 10)
+	  	cs.stroke()
 	}
 }
