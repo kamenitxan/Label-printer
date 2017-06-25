@@ -39,7 +39,7 @@ class TeslaToner extends Toner6x2 {
 	}
 
 	private def drawSingle(pos: Position) = {
-		debugRect(pos)
+		//debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 		madein(pos)

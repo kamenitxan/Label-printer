@@ -60,6 +60,7 @@ public class ExcelReader {
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
 				switch (generator) {
+					case TONER_LAMDA:
 					case INK_LAMDA: {
 						ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
 						manufacturers.forEach(m -> products.add(createLamdaToner(row, evaluator, m.code)));

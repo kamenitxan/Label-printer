@@ -56,17 +56,27 @@ class LamdaToner extends Toner3x1 {
 		cs.printBold(product.invNum, pos.x + 115, pos.y + 55)
 		cs.printBold(product.name, pos.x + 20, pos.y + 80)
 		cs.print(product.capacity, pos.x + 400, pos.y + 55)
-		cs.print(product.productCode, pos.x+400, pos.y + 40)
+		val size: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]
+		cs.beginText()
+		cs.newLineAtOffset(pos.x+460 - size, pos.y + 40)
+		cs.showText(product.productCode)
+		cs.endText()
 
 		cs.print("Výrobce: Lamdaprint cz a.s.", pos.x + 480, pos.y + 40)
 		cs.print("Katalogové číslo: ", pos.x + 480, pos.y + 55)
 		cs.printBold(product.invNum, pos.x + 575, pos.y + 55)
 		cs.printBold(product.name, pos.x + 480, pos.y + 80)
 		cs.print(product.capacity, pos.x + 720, pos.y + 55)
-		cs.print(product.productCode, pos.x+720, pos.y + 40)
+
+		val size2: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]
+		cs.beginText()
+		cs.newLineAtOffset(pos.x+780 - size2, pos.y + 40)
+		cs.showText(product.productCode)
+		cs.endText()
 
 		colorRect(pos + (400, 140))
 		colorRect(pos + (720, 140))
+
 
 	}
 
