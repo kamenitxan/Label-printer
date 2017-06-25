@@ -1,7 +1,6 @@
 package cz.kamenitxan.labelprinter;
 
 import cz.kamenitxan.labelprinter.generators.Generators;
-import cz.kamenitxan.labelprinter.generators.LamdaInk;
 import cz.kamenitxan.labelprinter.models.Product;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static spark.Spark.*;
 
 /*
 C:\Users\IEUser\Desktop\lb>java -jar Labelprinter.one-jar.jar -zoom=1 -file=TESLA_code_creator_INK.xlsm -generator=INK_ALLPRINT -cmd="C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe" -debug
@@ -120,7 +118,6 @@ public class Main extends Application {
 					break;
 				}*/
 				default: {
-					generator.generator.generate(products);
 					final Generators generatorF = generator;
 					products.parallelStream().filter(Product::isValid).forEach(p -> {
 						try {
