@@ -26,8 +26,8 @@ class TeslaToner extends Toner6x2 {
 		eanImage = LosslessFactory.createFromImage(document, eanRaw)
 
 		cs = new PDPageContentStream(document, page)
-		font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"))
-		boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"))
+		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
+		boldFont = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
 		cs.setStrokingColor(Color.BLACK)
 

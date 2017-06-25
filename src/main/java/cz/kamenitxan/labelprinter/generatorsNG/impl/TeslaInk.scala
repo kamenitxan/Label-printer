@@ -11,6 +11,8 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
+import scala.io.Source
+
 /**
   * Created by tomaspavel on 5.3.17.
   */
@@ -32,8 +34,8 @@ class TeslaInk extends AltxInk {
 		eanImage = LosslessFactory.createFromImage(document, eanRaw)
 
 		cs = new PDPageContentStream(document, page)
-		font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"))
-		boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"))
+		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
+		boldFont = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
 
 		for (line <- 0 to 8; row <- 0 to 3) {

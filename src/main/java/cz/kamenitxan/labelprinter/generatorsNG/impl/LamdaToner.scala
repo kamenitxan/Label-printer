@@ -27,14 +27,13 @@ class LamdaToner extends Toner3x1 {
 
 
 		cs = new PDPageContentStream(document, page)
-		font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"))
-		boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"))
+		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
+		boldFont = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
 		cs.setStrokingColor(Color.BLACK)
 
-		val img = ImageIO.read(new File("img/lamda2.jpg"))
-		logo = LosslessFactory.createFromImage(document, img)
-		icons = LosslessFactory.createFromImage(document, ImageIO.read(new File("img/label2.jpg")))
+		logo = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/lamda2.jpg")))
+		icons = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/label2.jpg")))
 
 		for (line <- 0 to 2; row <- 0 to 0) {
 			drawSingle(getPosition(line, row))

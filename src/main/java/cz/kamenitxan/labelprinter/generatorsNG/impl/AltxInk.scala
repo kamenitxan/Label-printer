@@ -37,8 +37,8 @@ class AltxInk extends Ink9x4 {
 		eanImage = LosslessFactory.createFromImage(document, eanRaw)
 
 		cs = new PDPageContentStream(document, page)
-		font = PDType0Font.load(document, new File("img/OpenSans-Regular.ttf"))
-		boldFont = PDType0Font.load(document, new File("img/OpenSans-Bold.ttf"))
+		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
+		boldFont = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
 
 		for (line <- 0 to 8; row <- 0 to 3) {
