@@ -89,6 +89,13 @@ public class Controller implements Initializable {
 		final FileChooser directoryChooser = new FileChooser();
 		selectedFile = directoryChooser.showOpenDialog(Main.primaryStage);
 		if (selectedFile != null) {
+			if (!selectedFile.getName().contains(".xlsx") && !selectedFile.getName().contains(".xlsm")) {
+				Alert alert = new Alert(Alert.AlertType.WARNING);
+				alert.setTitle("Varování");
+				alert.setHeaderText("Špatný formát souboru");
+				alert.setContentText("Vybraný soubor pravděpodobně není podporovaný. Podporované jsou formáty xlsx a xlsm");
+				alert.showAndWait();
+			}
 			file.setText(selectedFile.getName());
 			if (usePrefs) {
 				prefs.put(LAST_FILE, selectedFile.getAbsolutePath());

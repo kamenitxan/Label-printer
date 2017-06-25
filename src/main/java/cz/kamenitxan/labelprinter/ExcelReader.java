@@ -40,9 +40,11 @@ public class ExcelReader {
 			workbook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("Soubor nenalezen!!!");
+			Utils.showException(e, "Soubor nenalezen");
 			return products;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			Utils.showException(e, "Neočekávaná chyba při čtení souboru");
 			return products;
 		}
 		FormulaEvaluator evaluator = new XSSFFormulaEvaluator(workbook);
