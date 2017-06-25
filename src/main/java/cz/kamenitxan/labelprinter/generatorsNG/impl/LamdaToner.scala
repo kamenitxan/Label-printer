@@ -44,7 +44,7 @@ class LamdaToner extends Toner3x1 {
 	}
 
 	private def drawSingle(pos: Position) = {
-		debugRect(pos)
+		//debugRect(pos)
 
 		divider(pos)
 
@@ -113,12 +113,7 @@ class LamdaToner extends Toner3x1 {
 	}
 
 	private def divider(pos: Position) = {
-		cs.setColor(Color.BLACK)
-		cs.moveTo(pos.x + 470, pos.y)
-		cs.lineTo(pos.x + 470, pos.y + 10)
-	  	cs.stroke()
-		cs.moveTo(pos.x + 470, pos.y + singleHeight)
-		cs.lineTo(pos.x + 470, pos.y + singleHeight - 10)
-	  	cs.stroke()
+		cs.drawLine(pos + (470, 0), pos + (470, 10))
+		cs.drawLine(pos + (470, singleHeight), pos + (470, singleHeight - 10))
 	}
 }

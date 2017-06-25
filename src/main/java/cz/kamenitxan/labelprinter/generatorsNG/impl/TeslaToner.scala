@@ -39,21 +39,23 @@ class TeslaToner extends Toner6x2 {
 	}
 
 	private def drawSingle(pos: Position) = {
-		//debugRect(pos)
+		debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 		madein(pos)
 		color(pos)
 		pn(pos)
 		desc(pos)
-		desc(pos + (100, 0))
+		desc(pos + (140, 0))
+
+		divider(pos)
 	}
 
 	private def desc(pos: Position) = {
-		val top = pos.y + singleHeight - 10
-		val paddingLeft = pos.x + 180
+		val top = pos.y + singleHeight - 15
+		val paddingLeft = pos.x + 150
 		cs.print(product.invNum, paddingLeft, top)
-		cs.printLines(product.name, pos + (120, 55), 8, 100)
+		cs.printLines(product.name, pos + (90, 55), 8, 100)
 
 	}
 
@@ -113,17 +115,22 @@ class TeslaToner extends Toner6x2 {
 
 	private def madein(pos: Position): Unit = {
 		val leftPadding = 20
-		val top = pos.y + singleHeight - 5
-		val lh = 5
+		val top = pos.y + singleHeight - 10
+		val lh = 4.5
 
 		cs.setFont(font, fontSize - 3)
 		cs.print("Contents: 1 Cartrige. Made in Czech Republic.", pos.x + leftPadding, top)
-		cs.print("Složení: 1 kazeta. Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1)
-		cs.print("Zloženie: 1 kazeta. Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2)
-		cs.print("Tartalom: 1 kazetta. Made in Czech Republic.", pos.x + leftPadding, top - lh * 3)
-		cs.print("Zawiera: 1 kasete. Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4)
-		cs.print("Continut: 1 cartus. Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5)
+		cs.print("Složení: 1 kazeta. Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat)
+		cs.print("Zloženie: 1 kazeta. Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat)
+		cs.print("Tartalom: 1 kazetta. Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat)
+		cs.print("Zawiera: 1 kasete. Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat)
+		cs.print("Continut: 1 cartus. Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat)
 		cs.setFont(font, fontSize)
+	}
+
+	private def divider(pos: Position) = {
+		cs.drawLine(pos + (270, 0), pos + (270, 10))
+		cs.drawLine(pos + (270, singleHeight), pos + (270, singleHeight - 10))
 	}
 
 }

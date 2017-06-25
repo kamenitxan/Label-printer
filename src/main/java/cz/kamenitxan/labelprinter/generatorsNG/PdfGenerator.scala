@@ -123,6 +123,13 @@ abstract class PdfGenerator {
 		def printLines(text: String, pos: Position, lh: Int, width: Int): Unit = {
 			printLines(splitByWidth(text, width), pos, lh)
 		}
+
+		def drawLine(from: Position, to: Position): Unit = {
+			cs.setColor(Color.BLACK)
+			cs.moveTo(from.x, from.y)
+			cs.lineTo(to.x, to.y)
+			cs.stroke()
+		}
 	}
 
 }
