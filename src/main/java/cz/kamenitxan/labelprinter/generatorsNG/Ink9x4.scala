@@ -16,7 +16,7 @@ abstract class Ink9x4 extends PdfGenerator {
 
 	override def getPosition(line: Int, row: Int): Position = {
 		val x = 30 + singleWidth * row + 4 * row
-		val y = 24 + singleHeight * line + 5 * line
+		val y = 22 + singleHeight * line + 5 * line
 		new Position(x, y)
 	}
 

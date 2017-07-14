@@ -53,7 +53,7 @@ class TeslaInk extends AltxInk {
 		cs.newLineAtOffset(pos.x + 60, pos.y + 10)
 		cs.setFont(font, fontSize + 6)
 		cs.setTextRotation(Math.toRadians(90), pos.x + 128, pos.y + 2)
-		cs.showText(product.invNum)
+		cs.showText(product.productCode)
 		cs.setFont(font, fontSize)
 		cs.endText()
 
