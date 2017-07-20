@@ -47,6 +47,7 @@ class TeslaToner extends Toner6x2 {
 		pn(pos)
 		desc(pos)
 		desc(pos + (140, 0))
+		manufacturer(pos)
 
 		divider(pos)
 	}
@@ -131,6 +132,10 @@ class TeslaToner extends Toner6x2 {
 	private def divider(pos: Position) = {
 		cs.drawLine(pos + (270, 0), pos + (270, 10))
 		cs.drawLine(pos + (270, singleHeight), pos + (270, singleHeight - 10))
+	}
+
+	private def manufacturer(pos: Position): Unit = {
+		cs.print(product.manufacturer, pos.x + 105, pos.y + 10)
 	}
 
 }
