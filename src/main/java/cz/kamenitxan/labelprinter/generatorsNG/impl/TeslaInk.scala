@@ -49,10 +49,13 @@ class TeslaInk extends AltxInk {
 		drawSingle(pos)
 
 		//pn2
+		val size: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]
+		val center = 45 - size toFloat
+
 		cs.beginText()
 		cs.newLineAtOffset(pos.x + 60, pos.y + 10)
 		cs.setFont(font, fontSize + 6)
-		cs.setTextRotation(Math.toRadians(90), pos.x + 128, pos.y + 2)
+		cs.setTextRotation(Math.toRadians(90), pos.x + 128, pos.y + 2 + center)
 		cs.showText(product.productCode)
 		cs.setFont(font, fontSize)
 		cs.endText()

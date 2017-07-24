@@ -52,13 +52,14 @@ public class ExcelReader {
 		final XSSFSheet sheet = workbook.getSheetAt(0);
 		sheet.removeRow(sheet.getRow(0));
 
-
+		long start = System.nanoTime();
 		for (Row row : sheet) {
 			try {
 				/*if (Objects.equals(getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator), "200853")) {
 					System.out.println("stuj");
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
+				long startTime = System.nanoTime();
 				ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
 				switch (generator) {
 					case TONER_LAMDA:
@@ -71,11 +72,15 @@ public class ExcelReader {
 						break;
 					}
 				}
+				long stopTime = System.nanoTime();
+				System.out.println(row.getRowNum() + " - "+ (stopTime - startTime) / 1000000000.0);
 
 			} catch (NullPointerException ex) {
 				System.out.println("NULL na radce " + row.getRowNum());
 			}
 		}
+		long stop = System.nanoTime();
+		System.out.println("imported total - "+ (stop - start) / 1000000000.0 + "s");
 
 		return products;
 	}

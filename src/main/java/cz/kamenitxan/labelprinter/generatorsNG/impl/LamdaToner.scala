@@ -77,13 +77,14 @@ class LamdaToner extends Toner3x1 {
 		colorRect(pos + (400, 140))
 		colorRect(pos + (720, 140))
 
-
+		cs.print(product.manufacturer, pos.x + 420, pos.y + 120)
+		cs.print(product.manufacturer, pos.x + 740, pos.y + 120)
 	}
 
 	private def colorRect(pos: Position) = {
 		val height = 25
 		val width = 60
-		product.color = Color.WHITE
+
 		product.color match {
 			case Color.WHITE =>
 				cs.setStrokingColor(Color.CYAN)
@@ -104,18 +105,19 @@ class LamdaToner extends Toner3x1 {
 				cs.setNonStrokingColor(product.color)
 				cs.addRect(pos.x, pos.y, width, height)
 				cs.fillAndStroke()
-				cs.print(product.colorName, pos.x, pos.y)
 		}
 		cs.setStrokingColor(Color.BLACK)
 		cs.setNonStrokingColor(Color.BLACK)
-		// TODO: centrovat text
+
+		val size: Int = (fontSize * font.getStringWidth(product.colorName) / 1000).asInstanceOf[Int]
+		val center = ((50 - size) / 2).toFloat
 		product.color match {
 			case Color.BLACK =>
 				cs.setColor(Color.WHITE)
-				cs.print(product.colorName, pos.x+5, pos.y+7)
+				cs.print(product.colorName, pos.x+center+5, pos.y+7)
 			case _ =>
 				cs.setColor(Color.BLACK)
-				cs.print(product.colorName, pos.x+5, pos.y+7)
+				cs.print(product.colorName, pos.x+center+5, pos.y+7)
 		}
 		cs.setStrokingColor(Color.BLACK)
 		cs.setNonStrokingColor(Color.BLACK)
