@@ -14,6 +14,10 @@ object Director {
 	def generate(file: File, generator: Generators): Unit = {
 		val products = ExcelReader.importFile(file, generator).asScala
 		val generatorF = generator
-		products.filter(p => p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p))
+		if (Main.debug) {
+			products.filter(p => p.isValid).slice(0, 50).par.foreach(p => generatorF.genNG.newInstance().generate(p))
+		} else {
+			products.filter(p => p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p))
+		}
 	}
 }

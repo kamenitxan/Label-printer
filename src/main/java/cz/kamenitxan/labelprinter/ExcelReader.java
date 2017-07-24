@@ -59,15 +59,15 @@ public class ExcelReader {
 					System.out.println("stuj");
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
+				ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
 				switch (generator) {
 					case TONER_LAMDA:
 					case INK_LAMDA: {
-						ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
 						manufacturers.forEach(m -> products.add(createLamdaToner(row, evaluator, m.code)));
 						break;
 					}
 					default: {
-						products.add(createAltXInk(row, evaluator));
+						manufacturers.forEach(m -> products.add(createAltXInk(row, evaluator, m.code)));
 						break;
 					}
 				}
@@ -80,7 +80,7 @@ public class ExcelReader {
 		return products;
 	}
 
-	private static Product createAltXInk(Row row, FormulaEvaluator evaluator) {
+	private static Product createAltXInk(Row row, FormulaEvaluator evaluator, String manu) {
 		final String invNum = getCellValue(row.getCell(0), evaluator);
 		final String productCode = getCellValue(row.getCell(1), evaluator);
 		final String name = getCellValue(row.getCell(5), evaluator);
@@ -89,7 +89,7 @@ public class ExcelReader {
 		final String ean = getCellValue(row.getCell(9), evaluator);
 		final String eanCode = getCellValue(row.getCell(10), evaluator);
 		final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
-		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator);
+		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator, manu);
 	}
 
 	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator, String manu) {

@@ -76,7 +76,7 @@ class AltxInk extends Ink9x4 {
 		cs.setFont(font, fontSize)
 		cs.endText()
 
-		cs.print(product.manufacturer, pos.x + 100, pos.y + 10)
+		cs.print(product.manufacturer, pos.x + 105, pos.y + 10)
 	}
 
 	private def color(posB: Position) = {

@@ -41,7 +41,7 @@ public class Product {
 		}
 	}
 
-	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String eanCode, Function<Product, Boolean> validator) {
+	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String eanCode, Function<Product, Boolean> validator, String manufacturer) {
 		this.invNum = invNum;
 		this.name = name;
 		this.capacity = capacity;
@@ -57,6 +57,7 @@ public class Product {
 			this.name = this.name.replace("/", "/ ");
 		}
 		this.validator = validator;
+		this.manufacturer = manufacturer;
 	}
 
 	public boolean isValid() {

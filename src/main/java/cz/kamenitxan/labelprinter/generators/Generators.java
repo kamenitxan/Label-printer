@@ -6,18 +6,25 @@ import cz.kamenitxan.labelprinter.generatorsNG.impl.*;
  * Created by tomaspavel on 30.11.16.
  */
 public enum Generators {
-	TONER_LAMDA("toner_lamda", LamdaToner.class),
-	INK_LAMDA("ink_lamda", cz.kamenitxan.labelprinter.generatorsNG.impl.LamdaInk.class),
-	TONER_ALLPRINT("toner_allprint", AltxToner.class),
-	INK_ALLPRINT("ink_allprint", AltxInk.class),
-	INK_TESLA("ink_tesla", TeslaInk.class),
-	TONER_TESLA("toner_tesla", cz.kamenitxan.labelprinter.generatorsNG.impl.TeslaToner.class);
+	TONER_LAMDA("toner_lamda", LamdaToner.class, "Lamda toner"),
+	INK_LAMDA("ink_lamda", cz.kamenitxan.labelprinter.generatorsNG.impl.LamdaInk.class, "Lamda ink"),
+	TONER_ALLPRINT("toner_allprint", AltxToner.class, "Allprint toner"),
+	INK_ALLPRINT("ink_allprint", AltxInk.class, "Allprint ink"),
+	TONER_TESLA("toner_tesla", cz.kamenitxan.labelprinter.generatorsNG.impl.TeslaToner.class, "Tesla toner"),
+	INK_TESLA("ink_tesla", TeslaInk.class, "Tesla ink");
 
 	public String folder;
 	public Class<cz.kamenitxan.labelprinter.generatorsNG.PdfGenerator> genNG;
+	public String title;
 
-	Generators(String folder, Class genNG) {
+	Generators(String folder, Class genNG, String title) {
 		this.folder = folder;
 		this.genNG = genNG;
+		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return title;
 	}
 }
