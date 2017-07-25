@@ -15,7 +15,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.function.Function;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 27.06.15.
@@ -52,15 +54,21 @@ public class ExcelReader {
 		final XSSFSheet sheet = workbook.getSheetAt(0);
 		sheet.removeRow(sheet.getRow(0));
 
+		final ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
+
 		long start = System.nanoTime();
-		for (Row row : sheet) {
+		Iterable<Row> iterable = sheet::rowIterator;
+
+		Spliterator<Row> spliterator = new RowSpliterator(iterable, sheet.getPhysicalNumberOfRows());
+
+		StreamSupport.stream(spliterator, true).forEach(row -> {
 			try {
 				/*if (Objects.equals(getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator), "200853")) {
 					System.out.println("stuj");
 					evaluator.setDebugEvaluationOutputForNextEval(true);
 				}*/
-				long startTime = System.nanoTime();
-				ArrayList<Manufacturer> manufacturers = importManufacturers(FileR);
+				//long startTime = System.nanoTime();
+
 				switch (generator) {
 					case TONER_LAMDA:
 					case INK_LAMDA: {
@@ -72,13 +80,13 @@ public class ExcelReader {
 						break;
 					}
 				}
-				long stopTime = System.nanoTime();
-				System.out.println(row.getRowNum() + " - "+ (stopTime - startTime) / 1000000000.0);
+				//long stopTime = System.nanoTime();
+				//System.out.println(row.getRowNum() + " - "+ (stopTime - startTime) / 1000000000.0);
 
 			} catch (NullPointerException ex) {
 				System.out.println("NULL na radce " + row.getRowNum());
 			}
-		}
+		});
 		long stop = System.nanoTime();
 		System.out.println("imported total - "+ (stop - start) / 1000000000.0 + "s");
 
@@ -93,6 +101,7 @@ public class ExcelReader {
 		final String colorName = getCellValue(row.getCell(6), evaluator);
 		final String ean = getCellValue(row.getCell(9), evaluator);
 		final String eanCode = getCellValue(row.getCell(10), evaluator);
+		// todo: musi se tu vzdy vytvaret novy objekt?
 		final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
 		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator, manu);
 	}

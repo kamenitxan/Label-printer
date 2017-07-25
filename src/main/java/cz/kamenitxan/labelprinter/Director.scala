@@ -16,9 +16,10 @@ object Director {
 		print("File imported")
 		val generatorF = generator
 		if (Main.debug) {
-			products.filter(p => p.isValid).slice(0, 50).par.foreach(p => generatorF.genNG.newInstance().generate(p))
+			products.filter(p => p != null && p.isValid).slice(0, 50).par.foreach(p => generatorF.genNG.newInstance().generate(p))
 		} else {
-			products.filter(p => p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p))
+			products.filter(p => p != null && p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p))
 		}
+		System.gc()
 	}
 }
