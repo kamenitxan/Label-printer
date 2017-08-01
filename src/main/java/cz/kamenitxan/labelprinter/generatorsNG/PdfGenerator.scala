@@ -36,7 +36,6 @@ abstract class PdfGenerator {
 	}
 
 	protected def splitByWidth(text: String, allowedWidth: Int): List[String] = {
-		// TODO: width se asi nepouziva
 		var myLine: String = ""
 		var lines: mutable.MutableList[String] = mutable.MutableList()
 
