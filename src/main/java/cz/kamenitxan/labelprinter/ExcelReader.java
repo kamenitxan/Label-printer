@@ -61,6 +61,7 @@ public class ExcelReader {
 
 		Spliterator<Row> spliterator = new RowSpliterator(iterable, sheet.getPhysicalNumberOfRows());
 
+		//TODO: jednovlaknove pri malem poctu radku
 		StreamSupport.stream(spliterator, true).forEach(row -> {
 			try {
 				/*if (Objects.equals(getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator), "200853")) {

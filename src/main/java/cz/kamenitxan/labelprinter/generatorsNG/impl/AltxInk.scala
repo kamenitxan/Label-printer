@@ -76,7 +76,7 @@ class AltxInk extends Ink9x4 {
 		cs.setFont(font, fontSize)
 		cs.endText()
 
-		cs.print(product.manufacturer, pos.x + 105, pos.y + 10)
+		cs.print(product.manufacturer, pos.x + 101, pos.y + 20)
 	}
 
 	private def color(posB: Position) = {
@@ -102,12 +102,12 @@ class AltxInk extends Ink9x4 {
 	}
 
 	private def desc(pos: Position) = {
-		val allowedWidth = 60
+		val allowedWidth = 55
 		val lineHeight = 10
 
 		val lines = splitByWidth(product.name, allowedWidth)
 
-		cs.printLines(lines, pos + (0, 70), lineHeight)
+		cs.printCenteredLines(lines, pos + (0, 70), lineHeight, allowedWidth)
 
 	}
 

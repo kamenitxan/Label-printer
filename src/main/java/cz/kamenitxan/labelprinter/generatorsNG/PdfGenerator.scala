@@ -35,10 +35,9 @@ abstract class PdfGenerator {
 		generatePdf()
 	}
 
-	protected def splitByWidth(text: String, width: Int): List[String] = {
+	protected def splitByWidth(text: String, allowedWidth: Int): List[String] = {
 		// TODO: width se asi nepouziva
 		var myLine: String = ""
-		val allowedWidth = 60
 		var lines: mutable.MutableList[String] = mutable.MutableList()
 
 		// get all words from the text
@@ -50,7 +49,7 @@ abstract class PdfGenerator {
 				myLine += ""
 			}
 			// test the width of the current line + the current word
-			val size: Int = (fontSize * font.getStringWidth(myLine + word) / 1000).asInstanceOf[Int]
+			val size: Int = getStringWidth(myLine + word)
 			if (size > allowedWidth) {
 				// if the line would be too long with the current word, add the line without the current word
 				lines += myLine
@@ -64,6 +63,10 @@ abstract class PdfGenerator {
 		// add the rest to lines
 		lines += myLine
 		lines.toList
+	}
+
+	private def getStringWidth(s: String): Int = {
+		(fontSize * font.getStringWidth(s) / 1000).asInstanceOf[Int]
 	}
 
 	protected def savePdf(document: PDDocument) {
@@ -112,6 +115,22 @@ abstract class PdfGenerator {
 			for (line <- lines) {
 				cs.beginText()
 				cs.newLineAtOffset(pos.x + 60, pos.y - lh * i)
+				cs.showText(line + "")
+				//cs.moveTextPositionByAmount(60, y)
+				//cs.drawString(line)
+				cs.endText()
+				i += 1
+			}
+		}
+
+		def printCenteredLines(lines: List[String], pos: Position, lh: Int, lineWidth: Int): Unit = {
+			var i = 0
+			for (line <- lines) {
+				val width:Int = getStringWidth(line)
+				val center:Float = (lineWidth - width) toFloat
+
+				cs.beginText()
+				cs.newLineAtOffset(pos.x + 60 + center/2, pos.y - lh * i)
 				cs.showText(line + "")
 				//cs.moveTextPositionByAmount(60, y)
 				//cs.drawString(line)
