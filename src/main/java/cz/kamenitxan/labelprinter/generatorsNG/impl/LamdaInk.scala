@@ -70,17 +70,17 @@ class LamdaInk extends Ink9x4 {
 		val height = singleHeight
 		product.color match {
 			case Color.WHITE =>
-				cs.setStrokingColor(Color.CYAN)
-				cs.setNonStrokingColor(Color.CYAN)
-				cs.addRect(pos.x, pos.y, width, height)
+				cs.setStrokingColor(Color.YELLOW)
+				cs.setNonStrokingColor(Color.YELLOW)
+				cs.addRect(pos.x, pos.y, width, height/3)
 				cs.fillAndStroke()
 				cs.setStrokingColor(Color.MAGENTA)
 				cs.setNonStrokingColor(Color.MAGENTA)
-				cs.addRect(pos.x, pos.y + 6, width, height)
+				cs.addRect(pos.x, pos.y + height/3, width, height/3)
 				cs.fillAndStroke()
-				cs.setStrokingColor(Color.YELLOW)
-				cs.setNonStrokingColor(Color.YELLOW)
-				cs.addRect(pos.x, pos.y + 12, width, height)
+				cs.setStrokingColor(Color.CYAN)
+				cs.setNonStrokingColor(Color.CYAN)
+				cs.addRect(pos.x, pos.y + (height/3)*2, width, height/3)
 				cs.fillAndStroke()
 			case _ =>
 				cs.setStrokingColor(product.color)
