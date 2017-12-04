@@ -6,11 +6,11 @@ import cz.kamenitxan.labelprinter.generatorsNG.impl.*;
  * Created by tomaspavel on 30.11.16.
  */
 public enum Generators {
-	TONER_LAMDA("toner_lamda", LamdaToner.class, "Lamda toner"),
-	INK_LAMDA("ink_lamda", cz.kamenitxan.labelprinter.generatorsNG.impl.LamdaInk.class, "Lamda ink"),
+	TONER_LAMDA("toner_lamda", LamdaToner2.class, "Lamda toner"),
+	INK_LAMDA("ink_lamda", LamdaInk.class, "Lamda ink"),
 	TONER_ALLPRINT("toner_allprint", AltxToner.class, "Allprint toner"),
 	INK_ALLPRINT("ink_allprint", AltxInk.class, "Allprint ink"),
-	TONER_TESLA("toner_tesla", cz.kamenitxan.labelprinter.generatorsNG.impl.TeslaToner.class, "Tesla toner"),
+	TONER_TESLA("toner_tesla", TeslaToner.class, "Tesla toner"),
 	INK_TESLA("ink_tesla", TeslaInk.class, "Tesla ink");
 
 	public String folder;

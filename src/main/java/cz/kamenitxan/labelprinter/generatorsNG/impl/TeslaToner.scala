@@ -5,7 +5,7 @@ import java.io.File
 
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Toner6x2
-import cz.kamenitxan.labelprinter.models.{Ean13Test, Position}
+import cz.kamenitxan.labelprinter.models.{Ean13, Position}
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
@@ -22,7 +22,7 @@ class TeslaToner extends Toner6x2 {
 		document.addPage(page)
 
 
-		val eanRaw = Ean13Test.createEan(product.ean)
+		val eanRaw = Ean13.createEan(product.ean)
 		eanImage = LosslessFactory.createFromImage(document, eanRaw)
 
 		cs = new PDPageContentStream(document, page)
@@ -48,6 +48,8 @@ class TeslaToner extends Toner6x2 {
 		desc(pos)
 		desc(pos + (100, 0))
 		manufacturer(pos)
+		capacity(pos)
+		capacity(pos + (100, 0))
 
 		divider(pos)
 	}
@@ -77,7 +79,7 @@ class TeslaToner extends Toner6x2 {
 		cs.setColor(Color.BLACK)
 	}
 
-	private def color(pos: Position) = {
+	def color(pos: Position) = {
 		product.color match {
 			case Color.WHITE =>
 				val third = singleHeight / 3
@@ -132,14 +134,18 @@ class TeslaToner extends Toner6x2 {
 		cs.setFont(font, fontSize)
 	}
 
-	private def divider(pos: Position) = {
+	def divider(pos: Position) = {
 		val left = 240
 		cs.drawLine(pos + (left, 0), pos + (left, 10))
 		cs.drawLine(pos + (left, singleHeight), pos + (left, singleHeight - 10))
 	}
 
-	private def manufacturer(pos: Position): Unit = {
+	def manufacturer(pos: Position): Unit = {
 		cs.print(product.manufacturer, pos.x + 105, pos.y + 10)
+	}
+
+	private def capacity(pos: Position): Unit = {
+		cs.print(product.capacity, pos.x + 150, pos.y + 5)
 	}
 
 }

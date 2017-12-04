@@ -8,7 +8,7 @@ import java.io.File
 import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Ink9x4
-import cz.kamenitxan.labelprinter.models.{Ean13Test, Position}
+import cz.kamenitxan.labelprinter.models.{Ean13, Position}
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
@@ -27,7 +27,7 @@ class AltxInk extends Ink9x4 {
 		val page: PDPage = new PDPage(PAGE_SIZE_A4)
 		document.addPage(page)
 
-		var eanRaw = Ean13Test.createEan(product.ean)
+		var eanRaw = Ean13.createEan(product.ean)
 		val transform = new AffineTransform()
 		transform.rotate(Math.PI / 2, eanRaw.getWidth() / 2, eanRaw.getHeight() / 2)
 		transform.translate(eanRaw.getWidth() / 2, eanRaw.getHeight() / 2)

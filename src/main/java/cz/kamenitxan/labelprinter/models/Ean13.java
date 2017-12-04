@@ -12,7 +12,7 @@ import java.io.OutputStream;
 /**
  * Created by tomaspavel on 1.3.17.
  */
-public class Ean13Test {
+public class Ean13 {
 	public static void main(String[] args) throws Exception {
 		//Create the barcode bean
 		EAN13Bean bean = new EAN13Bean();

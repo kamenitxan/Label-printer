@@ -71,7 +71,6 @@ public class ExcelReader {
 				//long startTime = System.nanoTime();
 
 				switch (generator) {
-					case TONER_LAMDA:
 					case INK_LAMDA: {
 						manufacturers.forEach(m -> products.add(createLamdaToner(row, evaluator, m.code)));
 						break;
