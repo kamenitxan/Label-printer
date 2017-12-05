@@ -13,5 +13,9 @@ class Position(val x: Float, val y: Float) {
 		new Position(this.x + pos._1, this.y + pos._2)
 	}
 
+	def -(pos: (Float, Float)): Position = {
+		new Position(this.x - pos._1, this.y - pos._2)
+	}
+
 	override def toString = s"Position($x, $y)"
 }
