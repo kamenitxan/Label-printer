@@ -63,7 +63,7 @@ class LamdaToner2 extends TeslaToner {
 		val lines = splitByWidth(product.name, lineWidth)
 		cs.printCenteredLines(lines, pos + (90, 65), lineHeight, lineWidth)
 
-		cs.printBold(product.invNum, pos.x + 130, pos.y + 21)
+		cs.printCentered(product.invNum, pos + (80, 21), 100, bold = true)
 		//cs.print("Productcode:" + product.productCode, pos.x + 130, pos.y + 29)
 		cs.print(product.capacity, pos.x + 130, pos.y + 13)
 		cs.print("Lamdaprint cz", pos.x + 130, pos.y + 5)

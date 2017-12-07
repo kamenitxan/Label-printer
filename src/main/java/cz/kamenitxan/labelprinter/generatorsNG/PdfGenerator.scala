@@ -122,6 +122,20 @@ abstract class PdfGenerator {
 			}
 		}
 
+		def printCentered(text: String, pos: Position, lw: Int, bold: Boolean = false): Unit = {
+			val width:Int = getStringWidth(text)
+			val center:Float = (lw - width) toFloat
+
+			if (bold) {
+				cs.setFont(boldFont, fontSize)
+			}
+			cs.beginText()
+			cs.newLineAtOffset(pos.x + 60 + center/2, pos.y)
+			cs.showText(text)
+			cs.endText()
+			cs.setFont(font, fontSize)
+		}
+
 		def printCenteredLines(lines: List[String], pos: Position, lh: Int, lineWidth: Int): Unit = {
 			var i = 0
 			for (line <- lines) {
