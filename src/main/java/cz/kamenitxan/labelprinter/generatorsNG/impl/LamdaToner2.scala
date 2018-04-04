@@ -1,13 +1,15 @@
 package cz.kamenitxan.labelprinter.generatorsNG.impl
 
 import java.awt.Color
-import javax.imageio.ImageIO
 
+import javax.imageio.ImageIO
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.models.{Ean13, Position}
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
+
+import scala.language.postfixOps
 
 /**
   * Created by tomaspavel on 23.3.17.

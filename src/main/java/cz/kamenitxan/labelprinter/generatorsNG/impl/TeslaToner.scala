@@ -10,6 +10,8 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
+import scala.language.postfixOps
+
 /**
   * Created by tomaspavel on 5.3.17.
   */
@@ -38,7 +40,7 @@ class TeslaToner extends Toner6x2 {
 		savePdf(document)
 	}
 
-	private def drawSingle(pos: Position) = {
+	private def drawSingle(pos: Position): Unit = {
 		//debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
@@ -54,7 +56,7 @@ class TeslaToner extends Toner6x2 {
 		divider(pos)
 	}
 
-	private def desc(pos: Position) = {
+	private def desc(pos: Position): Unit = {
 		val top = pos.y + singleHeight - 15
 		val paddingLeft = pos.x + 90
 		val lineWidth = 80
@@ -65,7 +67,7 @@ class TeslaToner extends Toner6x2 {
 
 	}
 
-	private def pn(pos: Position) = {
+	private def pn(pos: Position): Unit = {
 		val leftPadding = 20
 		val bottomPadding = 32
 
@@ -79,7 +81,7 @@ class TeslaToner extends Toner6x2 {
 		cs.setColor(Color.BLACK)
 	}
 
-	def color(pos: Position) = {
+	def color(pos: Position): Unit = {
 		product.color match {
 			case Color.WHITE =>
 				val third = singleHeight / 3
@@ -112,7 +114,7 @@ class TeslaToner extends Toner6x2 {
 
 	}
 
-	private def colorText(pos: Position) = {
+	private def colorText(pos: Position): Unit = {
 		cs.beginText()
 		cs.setTextRotation(Math.toRadians(270), pos.x + 5, pos.y + 50)
 		cs.showText(product.colorName)
@@ -134,7 +136,7 @@ class TeslaToner extends Toner6x2 {
 		cs.setFont(font, fontSize)
 	}
 
-	def divider(pos: Position) = {
+	def divider(pos: Position): Unit = {
 		val left = 240
 		cs.drawLine(pos + (left, 0), pos + (left, 10))
 		cs.drawLine(pos + (left, singleHeight), pos + (left, singleHeight - 10))
