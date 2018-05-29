@@ -20,6 +20,7 @@ abstract class PdfGenerator {
 	val PAGE_SIZE_A4: PDRectangle
 
 	var product: Product = _
+	var borders: Boolean = _
 	protected var cs: PDPageContentStream = _
 	protected var font: PDType0Font = _
 	protected var boldFont: PDType0Font = _
@@ -30,8 +31,9 @@ abstract class PdfGenerator {
 
 	protected def getPosition(line: Int, row: Int): Position
 
-	def generate(product: Product) {
+	def generate(product: Product, borders: Boolean) {
 		this.product = product
+		this.borders = borders
 		generatePdf()
 	}
 

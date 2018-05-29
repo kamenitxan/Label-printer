@@ -49,7 +49,7 @@ class AltxInk extends Ink9x4 {
 	}
 
 	def drawSingle(pos: Position): Unit = {
-		//debugRect(pos)
+		if(borders) debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 2, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 

@@ -121,7 +121,7 @@ public class Main extends Application {
 					final Generators generatorF = generator;
 					products.parallelStream().filter(Product::isValid).forEach(p -> {
 						try {
-							generatorF.genNG.newInstance().generate(p);
+							generatorF.genNG.newInstance().generate(p, debug);
 						} catch (InstantiationException | IllegalAccessException e) {
 							e.printStackTrace();
 						}

@@ -42,7 +42,8 @@ class LamdaInk extends Ink9x4 {
 	}
 
 	private def drawSingle(pos: Position) = {
-		//debugRect(pos)
+		if(borders) debugRect(pos)
+
 		cs.setColor(Color.BLACK)
 
 		cs.drawImage(logo, pos.x + 15, pos.y +5, logo.getWidth * 0.1 toFloat, logo.getHeight * 0.1 toFloat)

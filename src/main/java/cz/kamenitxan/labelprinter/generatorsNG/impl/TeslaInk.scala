@@ -46,7 +46,7 @@ class TeslaInk extends AltxInk {
 	}
 
 	private def drawTeslaSingle(pos: Position) = {
-		drawSingle(pos)
+		if(borders) drawSingle(pos)
 
 		//pn2
 		val size: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]

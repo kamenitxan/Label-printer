@@ -43,7 +43,7 @@ class LamdaToner extends Toner3x1 {
 	}
 
 	private def drawSingle(pos: Position) = {
-		//debugRect(pos)
+		if(borders) debugRect(pos)
 
 		divider(pos)
 

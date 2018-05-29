@@ -21,7 +21,7 @@ abstract class Toner6x2 extends PdfGenerator {
 
 	override def getPosition(line: Int, row: Int): Position = {
 		val x = 20 + singleWidth * row + 26 * row
-		val y = 20 + singleHeight * line + 17.3 * line
+		val y = 21 + singleHeight * line + 17.3 * line
 		new Position(x, y toFloat)
 	}
 

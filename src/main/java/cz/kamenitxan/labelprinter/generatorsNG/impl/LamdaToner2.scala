@@ -45,7 +45,7 @@ class LamdaToner2 extends TeslaToner {
 	}
 
 	private def drawSingle(pos: Position): Unit = {
-		//debugRect(pos)
+		if(borders) debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 		cs.drawImage(logo, pos.x + 19, pos.y + 30, logo.getWidth * 0.30 toFloat, logo.getHeight * 0.30 toFloat)

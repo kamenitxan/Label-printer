@@ -13,7 +13,7 @@ import java.io.File;
 public class DirectorService extends Service<Void> {
 	public  File file;
 	public  Generators generator;
-
+	public boolean borders = false;
 
 
 	@Override
@@ -21,7 +21,7 @@ public class DirectorService extends Service<Void> {
 		return new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				Director.generate(file, generator);
+				Director.generate(file, generator, borders);
 				return null;
 			}
 		};

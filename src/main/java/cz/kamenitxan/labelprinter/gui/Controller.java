@@ -31,6 +31,8 @@ public class Controller implements Initializable {
 	private TextField file;
 	@FXML
 	ProgressIndicator progressIndicator;
+	@FXML
+	public CheckBox borders;
 
 	private File selectedFile;
 	DirectorService ds = new DirectorService();
@@ -125,6 +127,7 @@ public class Controller implements Initializable {
 		progressIndicator.setVisible(true);
 		ds.file = selectedFile;
 		ds.generator = generator;
+		ds.borders = borders.isSelected();
 
 		if (!ds.isRunning()) {
 			ds.start();
