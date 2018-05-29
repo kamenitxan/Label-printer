@@ -6,6 +6,8 @@ import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 
+import scala.language.postfixOps
+
 /**
   * Created by tomaspavel on 5.3.17.
   */
@@ -18,9 +20,9 @@ abstract class Toner6x2 extends PdfGenerator {
 	override val fontSize = 8
 
 	override def getPosition(line: Int, row: Int): Position = {
-		val x = 20 + singleWidth * row + 10 * row
-		val y = 35 + singleHeight * line + 11 * line
-		new Position(x, y)
+		val x = 20 + singleWidth * row + 26 * row
+		val y = 20 + singleHeight * line + 17.3 * line
+		new Position(x, y toFloat)
 	}
 
 	protected def debugRect(pos: Position): Unit = {

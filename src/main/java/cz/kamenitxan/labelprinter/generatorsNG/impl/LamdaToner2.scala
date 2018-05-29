@@ -44,7 +44,7 @@ class LamdaToner2 extends TeslaToner {
 		savePdf(document)
 	}
 
-	private def drawSingle(pos: Position) = {
+	private def drawSingle(pos: Position): Unit = {
 		//debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
@@ -59,7 +59,7 @@ class LamdaToner2 extends TeslaToner {
 		divider(pos)
 	}
 
-	private def desc(pos: Position) = {
+	private def desc(pos: Position): Unit = {
 		val lineWidth = 80
 		val lineHeight = 8
 		val lines = splitByWidth(product.name, lineWidth)
