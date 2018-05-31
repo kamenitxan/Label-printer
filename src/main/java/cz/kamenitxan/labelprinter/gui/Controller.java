@@ -21,6 +21,7 @@ public class Controller implements Initializable {
 	static Logger logger = Logger.getLogger(Controller.class);
 
 
+
 	@FXML
 	private Button generateBtn;
 	@FXML
@@ -33,6 +34,9 @@ public class Controller implements Initializable {
 	ProgressIndicator progressIndicator;
 	@FXML
 	public CheckBox borders;
+	@FXML
+	public CheckBox onlyBorders;
+
 
 	private File selectedFile;
 	DirectorService ds = new DirectorService();
@@ -84,6 +88,15 @@ public class Controller implements Initializable {
 			logger.info("Export failed");
 		});
 
+		borders.setOnAction(e -> {
+			if (borders.isSelected()) {
+				onlyBorders.setVisible(true);
+			} else {
+				onlyBorders.setVisible(false);
+				onlyBorders.setSelected(false);
+			}
+		});
+
 	}
 
 	@FXML
@@ -128,6 +141,7 @@ public class Controller implements Initializable {
 		ds.file = selectedFile;
 		ds.generator = generator;
 		ds.borders = borders.isSelected();
+		ds.onlyBorders = onlyBorders.isSelected();
 
 		if (!ds.isRunning()) {
 			ds.start();

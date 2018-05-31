@@ -121,7 +121,7 @@ public class Main extends Application {
 					final Generators generatorF = generator;
 					products.parallelStream().filter(Product::isValid).forEach(p -> {
 						try {
-							generatorF.genNG.newInstance().generate(p, debug);
+							generatorF.genNG.newInstance().generate(p, debug, false);
 						} catch (InstantiationException | IllegalAccessException e) {
 							e.printStackTrace();
 						}
@@ -157,7 +157,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
 		primaryStage.setTitle("LabelPrinter");
-		primaryStage.getIcons().add(new Image("/printer.png"));
+		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/printer.png")));
 		Parent root = FXMLLoader.load(Main.class.getResource("/main.fxml"));
 
 		Scene scene = new Scene(root);

@@ -2,7 +2,6 @@ package cz.kamenitxan.labelprinter.generatorsNG.impl
 
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
-import java.io.File
 
 import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.generators.Generators
@@ -11,7 +10,6 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
-import scala.io.Source
 
 /**
   * Created by tomaspavel on 5.3.17.
@@ -45,23 +43,24 @@ class TeslaInk extends AltxInk {
 		savePdf(document)
 	}
 
-	private def drawTeslaSingle(pos: Position) = {
+	private def drawTeslaSingle(pos: Position): Unit = {
 		if(borders) drawSingle(pos)
+		if(!onlyBorders) {
+			//pn2
+			val size: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]
+			val center = 45 - size toFloat
 
-		//pn2
-		val size: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]
-		val center = 45 - size toFloat
-
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + 60, pos.y + 10)
-		cs.setFont(font, fontSize + 6)
-		cs.setTextRotation(Math.toRadians(90), pos.x + 128, pos.y + 2 + center)
-		cs.showText(product.productCode)
-		cs.setFont(font, fontSize)
-		cs.endText()
+			cs.beginText()
+			cs.newLineAtOffset(pos.x + 60, pos.y + 10)
+			cs.setFont(font, fontSize + 6)
+			cs.setTextRotation(Math.toRadians(90), pos.x + 128, pos.y + 2 + center)
+			cs.showText(product.productCode)
+			cs.setFont(font, fontSize)
+			cs.endText()
 
 
-		cs.drawLine(pos + (115, 0), pos + (115, 5))
-		cs.drawLine(pos + (115, singleHeight), pos + (115, singleHeight - 5))
+			cs.drawLine(pos + (115, 0), pos + (115, 5))
+			cs.drawLine(pos + (115, singleHeight), pos + (115, singleHeight - 5))
+		}
 	}
 }

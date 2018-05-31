@@ -3,16 +3,16 @@ package cz.kamenitxan.labelprinter.generatorsNG.impl
 import java.awt.Color
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
-import java.io.File
 
 import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Ink9x4
 import cz.kamenitxan.labelprinter.models.{Ean13, Position}
-import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
+
+import scala.language.postfixOps
 
 /**
   * Created by tomaspavel on 1.3.17.
@@ -50,36 +50,37 @@ class AltxInk extends Ink9x4 {
 
 	def drawSingle(pos: Position): Unit = {
 		if(borders) debugRect(pos)
+		if(!onlyBorders) {
+			cs.drawImage(eanImage, pos.x + 2, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 
-		cs.drawImage(eanImage, pos.x + 2, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
+			//desc
+			desc(pos)
+			color(pos)
 
-		//desc
-		desc(pos)
-		color(pos)
+			cs.beginText()
+			//color
+			cs.newLineAtOffset(pos.x + 60, pos.y + 20)
+			cs.showText(product.colorName)
+			cs.endText()
+			// capacity
+			cs.beginText()
+			cs.newLineAtOffset(pos.x + 60, pos.y + 10)
+			cs.showText(product.capacity)
+			cs.endText()
+			//pn
+			cs.beginText()
+			cs.newLineAtOffset(pos.x + 60, pos.y + 10)
+			cs.setFont(font, fontSize + 6)
+			cs.setTextRotation(Math.toRadians(90), pos.x + 51, pos.y + 2)
+			cs.showText(product.invNum)
+			cs.setFont(font, fontSize)
+			cs.endText()
 
-		cs.beginText()
-		//color
-		cs.newLineAtOffset(pos.x + 60, pos.y + 20)
-		cs.showText(product.colorName)
-		cs.endText()
-		// capacity
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + 60, pos.y + 10)
-		cs.showText(product.capacity)
-		cs.endText()
-		//pn
-		cs.beginText()
-		cs.newLineAtOffset(pos.x + 60, pos.y + 10)
-		cs.setFont(font, fontSize + 6)
-		cs.setTextRotation(Math.toRadians(90), pos.x + 51, pos.y + 2)
-		cs.showText(product.invNum)
-		cs.setFont(font, fontSize)
-		cs.endText()
-
-		cs.print(product.manufacturer, pos.x + 60, pos.y + 3)
+			cs.print(product.manufacturer, pos.x + 60, pos.y + 3)
+		}
 	}
 
-	private def color(posB: Position) = {
+	private def color(posB: Position): Unit = {
 		val pos = new Position(posB.x + 56, posB.y + 13)
 
 		product.color match {
@@ -101,7 +102,7 @@ class AltxInk extends Ink9x4 {
 		cs.setNonStrokingColor(Color.BLACK)
 	}
 
-	private def desc(pos: Position) = {
+	private def desc(pos: Position): Unit = {
 		val allowedWidth = 55
 		val lineHeight = 10
 

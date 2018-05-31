@@ -11,14 +11,14 @@ import scala.collection.JavaConverters._
   */
 object Director {
 
-	def generate(file: File, generator: Generators, borders: Boolean): Unit = {
+	def generate(file: File, generator: Generators, borders: Boolean, onlyBorders: Boolean): Unit = {
 		val products = ExcelReader.importFile(file, generator).asScala
 		print("File imported")
 		val generatorF = generator
 		if (Main.debug) {
-			products.filter(p => p != null && p.isValid).slice(0, 50).par.foreach(p => generatorF.genNG.newInstance().generate(p, borders))
+			products.filter(p => p != null && p.isValid).slice(0, 50).par.foreach(p => generatorF.genNG.newInstance().generate(p, borders, onlyBorders))
 		} else {
-			products.filter(p => p != null && p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p, borders))
+			products.filter(p => p != null && p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p, borders, onlyBorders))
 		}
 		System.gc()
 	}

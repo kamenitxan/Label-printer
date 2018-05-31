@@ -1,7 +1,6 @@
 package cz.kamenitxan.labelprinter.generatorsNG.impl
 
 import java.awt.Color
-import java.io.File
 
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Toner6x2
@@ -42,18 +41,19 @@ class TeslaToner extends Toner6x2 {
 
 	private def drawSingle(pos: Position): Unit = {
 		if(borders) debugRect(pos)
+		if(!onlyBorders) {
+			cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
+			madein(pos)
+			color(pos)
+			pn(pos)
+			desc(pos)
+			desc(pos + (100, 0))
+			manufacturer(pos)
+			capacity(pos)
+			capacity(pos + (100, 0))
 
-		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
-		madein(pos)
-		color(pos)
-		pn(pos)
-		desc(pos)
-		desc(pos + (100, 0))
-		manufacturer(pos)
-		capacity(pos)
-		capacity(pos + (100, 0))
-
-		divider(pos)
+			divider(pos)
+		}
 	}
 
 	private def desc(pos: Position): Unit = {

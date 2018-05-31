@@ -1,16 +1,16 @@
 package cz.kamenitxan.labelprinter.generatorsNG.impl
 
 import java.awt.Color
-import java.io.File
-import javax.imageio.ImageIO
 
+import javax.imageio.ImageIO
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Ink9x4
 import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
-import org.apache.poi.hssf.util.HSSFColor.BLACK
+
+import scala.language.postfixOps
 
 /**
   * Created by tomaspavel on 8.4.17.
@@ -41,32 +41,33 @@ class LamdaInk extends Ink9x4 {
 		savePdf(document)
 	}
 
-	private def drawSingle(pos: Position) = {
+	private def drawSingle(pos: Position): Unit = {
 		if(borders) debugRect(pos)
+		if(!onlyBorders) {
+			cs.setColor(Color.BLACK)
 
-		cs.setColor(Color.BLACK)
+			cs.drawImage(logo, pos.x + 15, pos.y + 5, logo.getWidth * 0.1 toFloat, logo.getHeight * 0.1 toFloat)
+			cs.drawImage(icons, pos.x + 70, pos.y + 5, logo.getWidth * 0.18 toFloat, logo.getHeight * 0.08 toFloat)
+			cs.print(product.name, pos.x + 15, pos.y + singleHeight - 10)
+			cs.print("Kat. č. " + product.invNum, pos.x + 15, pos.y + 40)
+			cs.print(product.capacity, pos.x + 15, pos.y + 25)
+			color(pos)
 
-		cs.drawImage(logo, pos.x + 15, pos.y +5, logo.getWidth * 0.1 toFloat, logo.getHeight * 0.1 toFloat)
-		cs.drawImage(icons, pos.x + 70, pos.y +5, logo.getWidth * 0.18 toFloat, logo.getHeight * 0.08 toFloat)
-		cs.print(product.name, pos.x+15, pos.y+singleHeight-10)
-		cs.print("Kat. č. " + product.invNum, pos.x + 15, pos.y + 40)
-		cs.print(product.capacity, pos.x + 15, pos.y + 25)
-		color(pos)
+			cs.beginText()
+			cs.setColor(product.getColorRectTextColor)
+			cs.newLineAtOffset(pos.x + 0, pos.y + 10)
+			cs.setTextRotation(Math.toRadians(270), pos.x + 3, pos.y + 60)
+			cs.showText(product.colorName)
+			cs.setFont(font, fontSize)
+			cs.endText()
+			cs.setColor(Color.BLACK)
 
-		cs.beginText()
-		cs.setColor(product.getColorRectTextColor)
-		cs.newLineAtOffset(pos.x + 0, pos.y + 10)
-		cs.setTextRotation(Math.toRadians(270), pos.x + 3, pos.y + 60)
-		cs.showText(product.colorName)
-		cs.setFont(font, fontSize)
-		cs.endText()
-		cs.setColor(Color.BLACK)
-
-		manufaturer(pos)
-		lamda(pos)
+			manufaturer(pos)
+			lamda(pos)
+		}
 	}
 
-	private def color(pos: Position) = {
+	private def color(pos: Position): Unit = {
 		val width = 12
 		val height = singleHeight
 		product.color match {
@@ -96,7 +97,7 @@ class LamdaInk extends Ink9x4 {
 
 	}
 
-	private def manufaturer(pos: Position) = {
+	private def manufaturer(pos: Position): Unit = {
 		cs.setNonStrokingColor(Color.WHITE)
 		cs.setStrokingColor(Color.BLACK)
 		cs.addRect(pos.x + singleWidth - 22, pos.y + 28, 15, 10)
@@ -105,7 +106,7 @@ class LamdaInk extends Ink9x4 {
 		cs.print(product.manufacturer, pos.x + singleWidth - 20, pos.y + 30)
 	}
 
-	private def lamda(pos: Position) = {
+	private def lamda(pos: Position): Unit = {
 		cs.setFont(font, 6)
 		cs.print("Lamdaprint s.r.o.", pos.x + 80, pos.y + 20)
 		cs.setFont(font, fontSize)

@@ -46,17 +46,18 @@ class LamdaToner2 extends TeslaToner {
 
 	private def drawSingle(pos: Position): Unit = {
 		if(borders) debugRect(pos)
+		if(!onlyBorders) {
+			cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
+			cs.drawImage(logo, pos.x + 19, pos.y + 30, logo.getWidth * 0.30 toFloat, logo.getHeight * 0.30 toFloat)
+			cs.drawImage(icons, pos.x + 177, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
+			cs.drawImage(icons, pos.x + 325, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
 
-		cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
-		cs.drawImage(logo, pos.x + 19, pos.y + 30, logo.getWidth * 0.30 toFloat, logo.getHeight * 0.30 toFloat)
-		cs.drawImage(icons, pos.x + 177, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
-		cs.drawImage(icons, pos.x + 325, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
-
-		color(pos)
-		desc(pos - (10, 0))
-		desc(pos + (120, 0))
-		manufacturer(pos)
-		divider(pos)
+			color(pos)
+			desc(pos - (10, 0))
+			desc(pos + (120, 0))
+			manufacturer(pos)
+			divider(pos)
+		}
 	}
 
 	private def desc(pos: Position): Unit = {

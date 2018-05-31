@@ -21,6 +21,7 @@ abstract class PdfGenerator {
 
 	var product: Product = _
 	var borders: Boolean = _
+	var onlyBorders: Boolean = _
 	protected var cs: PDPageContentStream = _
 	protected var font: PDType0Font = _
 	protected var boldFont: PDType0Font = _
@@ -31,9 +32,10 @@ abstract class PdfGenerator {
 
 	protected def getPosition(line: Int, row: Int): Position
 
-	def generate(product: Product, borders: Boolean) {
+	def generate(product: Product, borders: Boolean, onlyBorders: Boolean) {
 		this.product = product
 		this.borders = borders
+		this.onlyBorders = onlyBorders
 		generatePdf()
 	}
 
