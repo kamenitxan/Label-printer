@@ -137,7 +137,7 @@ class TeslaToner extends Toner6x2 {
 	}
 
 	def divider(pos: Position): Unit = {
-		val left = 240
+		val left = 244
 		cs.drawLine(pos + (left, 0), pos + (left, 10))
 		cs.drawLine(pos + (left, singleHeight), pos + (left, singleHeight - 10))
 	}
