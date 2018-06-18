@@ -15,13 +15,15 @@ abstract class Toner6x2 extends PdfGenerator {
 	val PAGE_SIZE_A4 = new PDRectangle(wholePageWidth, wholePageHeight)
 	var eanImage: PDImageXObject = _
 
-	val singleWidth = 390
-	val singleHeight = 78
+	val singleWidth: Float = cmToPoints(14)
+	val singleHeight: Float = cmToPoints(3)
+	val verticalSpace: Float = (wholePageHeight - (6 * singleHeight)) / 7
+	val horizontalSpace: Float = (wholePageWidth - (2 * singleWidth)) / 3
 	override val fontSize = 8
 
 	override def getPosition(line: Int, row: Int): Position = {
-		val x = 20 + singleWidth * row + 26 * row
-		val y = 21 + singleHeight * line + 17.3 * line
+		val x = horizontalSpace + singleWidth * row + horizontalSpace * row
+		val y = verticalSpace + singleHeight * line + verticalSpace * line
 		new Position(x, y toFloat)
 	}
 

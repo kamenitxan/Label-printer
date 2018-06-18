@@ -127,12 +127,12 @@ class TeslaToner extends Toner6x2 {
 		val lh = 4.5
 
 		cs.setFont(font, fontSize - 3)
-		cs.print("Contents: 1 Cartrige. Made in Czech Republic.", pos.x + leftPadding, top)
-		cs.print("Složení: 1 kazeta. Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat)
-		cs.print("Zloženie: 1 kazeta. Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat)
-		cs.print("Tartalom: 1 kazetta. Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat)
-		cs.print("Zawiera: 1 kasete. Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat)
-		cs.print("Continut: 1 cartus. Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat)
+		cs.print("Made in Czech Republic.", pos.x + leftPadding, top)
+		cs.print("Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat)
+		cs.print("Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat)
+		cs.print("Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat)
+		cs.print("Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat)
+		cs.print("Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat)
 		cs.setFont(font, fontSize)
 	}
 

@@ -94,6 +94,22 @@ abstract class PdfGenerator {
 		}
 	}
 
+	/**
+	  * @param mm millimeters
+	  * @return size in points used by Pdfbox
+	  */
+	protected def mmToPoints(mm: Float): Float = {
+		(1 / (10 * 2.54f) * 72) * mm
+	}
+
+	/**
+	  * @param cm centimeters
+	  * @return size in points used by Pdfbox
+	  */
+	protected def cmToPoints(cm: Float): Float = {
+		mmToPoints(cm * 10)
+	}
+
 	implicit class PDPageContentStreamExtensions(val cs: PDPageContentStream) {
 		def setColor(color: Color): Unit = {
 			cs.setStrokingColor(color)

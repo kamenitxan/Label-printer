@@ -7,6 +7,7 @@ import cz.kamenitxan.labelprinter.generatorsNG.impl.*;
  */
 public enum Generators {
 	TONER_LAMDA("toner_lamda", LamdaToner2.class, "Lamda toner"),
+	TONER_LAMDA_OLD("toner_lamda_old", LamdaToner.class, "Lamda toner - starý"),
 	INK_LAMDA("ink_lamda", LamdaInk.class, "Lamda ink"),
 	TONER_ALLPRINT("toner_allprint", AltxToner.class, "Allprint toner"),
 	INK_ALLPRINT("ink_allprint", AltxInk.class, "Allprint ink"),

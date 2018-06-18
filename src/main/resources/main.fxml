@@ -9,21 +9,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kamenitxan.labelprinter.gui.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="179.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kamenitxan.labelprinter.gui.Controller">
    <children>
       <Label layoutX="178.0" layoutY="14.0" text="LabelPrinter">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="type" layoutX="75.0" layoutY="48.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="type" layoutX="75.0" layoutY="48.0" prefHeight="26.0" prefWidth="169.0" />
       <Label layoutX="21.0" layoutY="53.0" text="Typ:" />
       <Label layoutX="21.0" layoutY="95.0" text="Zdroj:" />
-      <Button fx:id="generateBtn" layoutX="189.0" layoutY="129.0" mnemonicParsing="false" onAction="#generateAction" text="Generovat" />
-      <TextField fx:id="file" editable="false" layoutX="75.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
-      <Button fx:id="fileBtn" layoutX="381.0" layoutY="90.0" mnemonicParsing="false" onAction="#sourceFileChooseAction" text="Vybrat" />
-      <ProgressIndicator fx:id="progressIndicator" layoutX="287.0" layoutY="123.0" prefHeight="38.0" prefWidth="38.0" />
-      <CheckBox fx:id="borders" layoutX="240.0" layoutY="52.0" mnemonicParsing="false" text="S ramecky" />
-      <CheckBox fx:id="onlyBorders" layoutX="343.0" layoutY="52.0" mnemonicParsing="false" text="Jen ramecky" visible="false" />
+      <Button fx:id="generateBtn" layoutX="210.0" layoutY="129.0" mnemonicParsing="false" onAction="#generateAction" text="Generovat" />
+      <TextField fx:id="file" editable="false" layoutX="75.0" layoutY="90.0" prefHeight="26.0" prefWidth="320.0" />
+      <Button fx:id="fileBtn" layoutX="401.0" layoutY="90.0" mnemonicParsing="false" onAction="#sourceFileChooseAction" text="Vybrat" />
+      <ProgressIndicator fx:id="progressIndicator" layoutX="308.0" layoutY="123.0" prefHeight="38.0" prefWidth="38.0" />
+      <CheckBox fx:id="borders" layoutX="253.0" layoutY="52.0" mnemonicParsing="false" text="S ramecky" />
+      <CheckBox fx:id="onlyBorders" layoutX="356.0" layoutY="52.0" mnemonicParsing="false" text="Jen ramecky" visible="false" />
    </children>
 </Pane>

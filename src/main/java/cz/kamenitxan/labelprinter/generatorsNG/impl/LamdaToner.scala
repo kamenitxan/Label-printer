@@ -1,15 +1,16 @@
 package cz.kamenitxan.labelprinter.generatorsNG.impl
 
 import java.awt.Color
-import java.io.File
-import javax.imageio.ImageIO
 
+import javax.imageio.ImageIO
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Toner3x1
 import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
+
+import scala.language.postfixOps
 
 /**
   * Created by tomaspavel on 23.3.17.
@@ -18,7 +19,7 @@ class LamdaToner extends Toner3x1 {
 	var logo: PDImageXObject = _
 	var icons: PDImageXObject = _
 
-	def getFolderName: String = Generators.TONER_LAMDA.folder
+	def getFolderName: String = Generators.TONER_LAMDA_OLD.folder
 
 	def generatePdf(): Unit = {
 		val document: PDDocument = new PDDocument
@@ -42,7 +43,7 @@ class LamdaToner extends Toner3x1 {
 		savePdf(document)
 	}
 
-	private def drawSingle(pos: Position) = {
+	private def drawSingle(pos: Position): Unit = {
 		if(borders) debugRect(pos)
 
 		divider(pos)
@@ -81,7 +82,7 @@ class LamdaToner extends Toner3x1 {
 		cs.print(product.manufacturer, pos.x + 740, pos.y + 120)
 	}
 
-	private def colorRect(pos: Position) = {
+	private def colorRect(pos: Position): Unit = {
 		val height = 25
 		val width = 60
 
@@ -123,7 +124,7 @@ class LamdaToner extends Toner3x1 {
 		cs.setNonStrokingColor(Color.BLACK)
 	}
 
-	private def divider(pos: Position) = {
+	private def divider(pos: Position): Unit = {
 		cs.drawLine(pos + (470, 0), pos + (470, 10))
 		cs.drawLine(pos + (470, singleHeight), pos + (470, singleHeight - 10))
 	}
