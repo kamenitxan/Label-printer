@@ -1,10 +1,10 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl
+package cz.kamenitxan.labelprinter.generatorsNG.impl.t6x1
 
 import java.awt.Color
 
-import javax.imageio.ImageIO
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.models.{Ean13, Position}
+import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
@@ -18,7 +18,7 @@ class LamdaToner2 extends TeslaToner {
 	var logo: PDImageXObject = _
 	var icons: PDImageXObject = _
 
-	override def getFolderName: String = Generators.TONER_LAMDA.folder
+	override def getFolderName: String = Generators.TONER_LAMDA_BIG.folder
 
 	override def generatePdf(): Unit = {
 		val document: PDDocument = new PDDocument
@@ -37,7 +37,7 @@ class LamdaToner2 extends TeslaToner {
 		logo = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/lamda2.jpg")))
 		icons = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/label2.jpg")))
 
-		for (line <- 0 to 5; row <- 0 to 1) {
+		for (line <- 0 to 5; row <- 0 to 0) {
 			drawSingle(getPosition(line, row))
 		}
 		cs.close()

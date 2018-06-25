@@ -14,8 +14,8 @@ import scala.collection.mutable
   * Created by tomaspavel on 1.3.17.
   */
 abstract class PdfGenerator {
-	val wholePageWidth = 843
-	val wholePageHeight = 596
+	val wholePageWidth: Float = 843
+	val wholePageHeight: Float = 596
 	val fontSize: Int
 	val PAGE_SIZE_A4: PDRectangle
 

@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl
+package cz.kamenitxan.labelprinter.generatorsNG.impl.i9x4
 
 import java.awt.Color
 import java.awt.geom.AffineTransform

@@ -1,11 +1,11 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl
+package cz.kamenitxan.labelprinter.generatorsNG.impl.t3x1
 
 import java.awt.Color
 
-import javax.imageio.ImageIO
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.generatorsNG.Toner3x1
 import cz.kamenitxan.labelprinter.models.Position
+import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
