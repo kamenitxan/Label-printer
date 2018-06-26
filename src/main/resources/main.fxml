@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -23,7 +24,13 @@
       <TextField fx:id="file" editable="false" layoutX="75.0" layoutY="90.0" prefHeight="26.0" prefWidth="320.0" />
       <Button fx:id="fileBtn" layoutX="401.0" layoutY="90.0" mnemonicParsing="false" onAction="#sourceFileChooseAction" text="Vybrat" />
       <ProgressIndicator fx:id="progressIndicator" layoutX="308.0" layoutY="123.0" prefHeight="38.0" prefWidth="38.0" />
-      <CheckBox fx:id="borders" layoutX="253.0" layoutY="52.0" mnemonicParsing="false" text="S ramecky" />
-      <CheckBox fx:id="onlyBorders" layoutX="356.0" layoutY="52.0" mnemonicParsing="false" text="Jen ramecky" visible="false" />
+      <CheckBox fx:id="borders" layoutX="253.0" layoutY="52.0" mnemonicParsing="false" text="S rámečky">
+         <tooltip>
+            <Tooltip text="Polepky budou vygenerovány s ohraničujícími rámečky" />
+         </tooltip></CheckBox>
+      <CheckBox fx:id="onlyBorders" layoutX="356.0" layoutY="52.0" mnemonicParsing="false" text="Jen rámečky" visible="false">
+         <tooltip>
+            <Tooltip text="Budou vygenerovány pouze rámečky bez obsahu" />
+         </tooltip></CheckBox>
    </children>
 </Pane>
