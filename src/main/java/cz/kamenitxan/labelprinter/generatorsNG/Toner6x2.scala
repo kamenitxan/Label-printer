@@ -16,7 +16,7 @@ abstract class Toner6x2 extends PdfGenerator {
 	var eanImage: PDImageXObject = _
 
 	val singleWidth: Float = cmToPoints(14)
-	val singleHeight: Float = cmToPoints(3)
+	val singleHeight: Float = cmToPoints(2.8f)
 	val verticalSpace: Float = (wholePageHeight - (6 * singleHeight)) / 7
 	val horizontalSpace: Float = (wholePageWidth - (2 * singleWidth)) / 3
 	override val fontSize = 8
