@@ -50,7 +50,7 @@ public class Controller implements Initializable {
 		Generators lastGenerator = null;
 		if (usePrefs) {
 			prefs = Preferences.userNodeForPackage(this.getClass());
-			String lastTypeName = prefs.get(LAST_TYPE, null);
+			String lastTypeName = prefs.get(LAST_TYPE, "TONER_LAMDA");
 			try {
 				lastGenerator = Generators.valueOf(lastTypeName);
 			} catch (IllegalArgumentException ex) {
