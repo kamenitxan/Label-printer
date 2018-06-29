@@ -18,8 +18,8 @@ abstract class Toner6x1 extends PdfGenerator {
 	override val wholePageWidth: Float = mmToPoints(210)
 	override val wholePageHeight: Float = mmToPoints(297)
 	val singleWidth: Float = cmToPoints(19)
-	val singleHeight: Float = cmToPoints(3.48f)
-	val verticalSpace: Float = cmToPoints(1)
+	val singleHeight: Float = cmToPoints(3.8f)
+	val verticalSpace: Float = cmToPoints(0.6f)
 	val horizontalSpace: Float = cmToPoints(1)
 	val bottomVerticalSpace: Float = cmToPoints(1.9f)
 	override val fontSize = 8

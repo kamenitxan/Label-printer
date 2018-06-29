@@ -47,10 +47,10 @@ class TeslaToner extends Toner6x1 {
 			color(pos)
 			pn(pos)
 			desc(pos)
-			desc(pos + (100, 0))
+			desc(pos + (240, 0))
 			manufacturer(pos)
 			capacity(pos)
-			capacity(pos + (100, 0))
+			capacity(pos + (240, 0))
 
 			divider(pos)
 		}
@@ -58,18 +58,18 @@ class TeslaToner extends Toner6x1 {
 
 	private def desc(pos: Position): Unit = {
 		val top = pos.y + singleHeight - 15
-		val paddingLeft = pos.x + 90
-		val lineWidth = 80
+		val paddingLeft = pos.x + 40
+		val lineWidth = 170
 		val lineHeight = 8
-		cs.printCenteredLines(product.invNum :: Nil, new Position(paddingLeft, top), lineHeight,lineWidth)
+		cs.printCenteredLines(product.invNum :: Nil, new Position(paddingLeft + 10, top), lineHeight,lineWidth)
 		val lines = splitByWidth(product.name, lineWidth)
-		cs.printCenteredLines(lines, pos + (90, 55), lineHeight, lineWidth)
+		cs.printCenteredLines(lines, pos + (60, 75), lineHeight, lineWidth)
 
 	}
 
 	private def pn(pos: Position): Unit = {
 		val leftPadding = 20
-		val bottomPadding = 32
+		val bottomPadding = 52
 
 		cs.setColor(Color.WHITE)
 		cs.addRect(pos.x + leftPadding, pos.y + bottomPadding - 2, 100, 12)
@@ -137,7 +137,7 @@ class TeslaToner extends Toner6x1 {
 	}
 
 	def divider(pos: Position): Unit = {
-		val left = 244
+		val left = cmToPoints(11.5f)
 		cs.drawLine(pos + (left, 0), pos + (left, 10))
 		cs.drawLine(pos + (left, singleHeight), pos + (left, singleHeight - 10))
 	}
@@ -147,7 +147,7 @@ class TeslaToner extends Toner6x1 {
 	}
 
 	private def capacity(pos: Position): Unit = {
-		cs.print(product.capacity, pos.x + 150, pos.y + 5)
+		cs.print(product.capacity, pos.x + 130, pos.y + 10)
 	}
 
 }

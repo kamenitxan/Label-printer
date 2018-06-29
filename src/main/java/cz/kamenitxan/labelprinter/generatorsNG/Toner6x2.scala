@@ -17,13 +17,14 @@ abstract class Toner6x2 extends PdfGenerator {
 
 	val singleWidth: Float = cmToPoints(14)
 	val singleHeight: Float = cmToPoints(2.8f)
-	val verticalSpace: Float = (wholePageHeight - (6 * singleHeight)) / 7
+	val verticalSpace: Float = mmToPoints(4.4f)
 	val horizontalSpace: Float = (wholePageWidth - (2 * singleWidth)) / 3
+	val bottomVerticalSpace: Float = cmToPoints(1.1f)
 	override val fontSize = 8
 
 	override def getPosition(line: Int, row: Int): Position = {
 		val x = horizontalSpace + singleWidth * row + horizontalSpace * row
-		val y = verticalSpace + singleHeight * line + verticalSpace * line
+		val y = bottomVerticalSpace + singleHeight * line + verticalSpace * line
 		new Position(x, y toFloat)
 	}
 

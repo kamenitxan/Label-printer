@@ -50,26 +50,26 @@ class LamdaToner2 extends TeslaToner {
 			cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 			cs.drawImage(logo, pos.x + 19, pos.y + 30, logo.getWidth * 0.30 toFloat, logo.getHeight * 0.30 toFloat)
 			//cs.drawImage(icons, pos.x + 177, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
-			cs.drawImage(icons, pos.x + 325, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
+			cs.drawImage(icons, pos.x + cmToPoints(16.5f), pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
 
 			color(pos)
-			desc(pos - (10, 0))
-			desc(pos + (120, 0), withPn = false)
+			desc(pos - (20, 0))
+			desc(pos + (180, 0), withPn = false)
 			manufacturer(pos)
 			divider(pos)
 		}
 	}
 
 	private def desc(pos: Position, withPn: Boolean = true): Unit = {
-		val lineWidth = 80
+		val lineWidth = 140
 		val lineHeight = 8
 		val lines = splitByWidth(product.name, lineWidth)
-		cs.printCenteredLines(lines, pos + (90, 65), lineHeight, lineWidth)
+		cs.printCenteredLines(lines, pos + (cmToPoints(3.5f), cmToPoints(3)), lineHeight, lineWidth)
 
-		if(withPn) cs.printCentered("Kat.č: " + product.invNum, pos + (80, 21), 100, bold = true)
+		if(withPn) cs.printCentered("Kat.č: " + product.invNum, pos + (90, 21), 100, bold = true)
 		//cs.print("Productcode:" + product.productCode, pos.x + 130, pos.y + 29)
-		cs.print(product.capacity, pos.x + 130, pos.y + 13)
-		cs.print("Lamdaprint cz", pos.x + 130, pos.y + 5)
+		cs.print(product.capacity, pos.x + 165, pos.y + 13)
+		cs.print("Lamdaprint cz", pos.x + 166, pos.y + 5)
 
 	}
 
