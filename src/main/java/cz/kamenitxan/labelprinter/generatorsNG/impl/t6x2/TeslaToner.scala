@@ -42,7 +42,7 @@ class TeslaToner extends Toner6x2 {
 	private def drawSingle(pos: Position): Unit = {
 		if(borders) debugRect(pos)
 		if(!onlyBorders) {
-			cs.drawImage(eanImage, pos.x + 20, pos.y + 3, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
+			cs.drawImage(eanImage, pos.x + 20, pos.y + 6, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 			madein(pos)
 			color(pos)
 			pn(pos)
@@ -69,13 +69,13 @@ class TeslaToner extends Toner6x2 {
 
 	private def pn(pos: Position): Unit = {
 		val leftPadding = 20
-		val bottomPadding = 32
+		val bottomPadding = 35
 
 		cs.setColor(Color.WHITE)
 		cs.addRect(pos.x + leftPadding, pos.y + bottomPadding - 2, 100, 12)
 		cs.fillAndStroke()
 		cs.setColor(Color.GRAY)
-		cs.setFont(font, fontSize + 7)
+		cs.setFont(font, fontSize + 5)
 		cs.print(product.invNum, pos.x + leftPadding, pos.y + bottomPadding)
 		cs.setFont(font, fontSize)
 		cs.setColor(Color.BLACK)
@@ -147,7 +147,7 @@ class TeslaToner extends Toner6x2 {
 	}
 
 	private def capacity(pos: Position): Unit = {
-		cs.print(product.capacity, pos.x + 150, pos.y + 5)
+		cs.print(product.capacity, pos.x + 150, pos.y + 7)
 	}
 
 }
