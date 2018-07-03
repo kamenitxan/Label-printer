@@ -3,6 +3,7 @@ package cz.kamenitxan.labelprinter;
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,6 +24,7 @@ import java.util.stream.StreamSupport;
  * Created by Kamenitxan (kamenitxan@me.com) on 27.06.15.
  */
 public class ExcelReader {
+	private static Logger logger = Logger.getLogger(ExcelReader.class);
 
 	public static List<Product> importFile(String filename, Generators generator) {
 		return importFile(new File(filename), generator);
@@ -41,11 +43,11 @@ public class ExcelReader {
 			file = new FileInputStream(FileR);
 			workbook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
-			System.out.println("Soubor nenalezen!!!");
+			logger.error("Soubor nenalezen", e);
 			Utils.showException(e, "Soubor nenalezen");
 			return products;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Neočekávaná chyba při čtení souboru", e);
 			Utils.showException(e, "Neočekávaná chyba při čtení souboru");
 			return products;
 		}
@@ -70,25 +72,17 @@ public class ExcelReader {
 				}*/
 				//long startTime = System.nanoTime();
 
-				switch (generator) {
-					case INK_LAMDA: {
-						manufacturers.forEach(m -> products.add(createLamdaToner(row, evaluator, m.code)));
-						break;
-					}
-					default: {
-						manufacturers.forEach(m -> products.add(createAltXInk(row, evaluator, m.code)));
-						break;
-					}
-				}
+				manufacturers.forEach(m -> products.add(createAltXInk(row, evaluator, m.code)));
+
 				//long stopTime = System.nanoTime();
 				//System.out.println(row.getRowNum() + " - "+ (stopTime - startTime) / 1000000000.0);
 
 			} catch (NullPointerException ex) {
-				System.out.println("NULL na radce " + row.getRowNum());
+				logger.info("NULL na radce " + row.getRowNum());
 			}
 		});
 		long stop = System.nanoTime();
-		System.out.println("imported total - "+ (stop - start) / 1000000000.0 + "s");
+		logger.info("imported total - "+ (stop - start) / 1000000000.0 + "s");
 
 		return products;
 	}
@@ -150,10 +144,10 @@ public class ExcelReader {
 			file = new FileInputStream(fileR);
 			workbook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
-			System.out.println("Soubor nenalezen!!!");
+			logger.error("Soubor nenalezen", e);
 			return manufacturers;
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Neočekávaná chyba při čtení souboru", e);
 			return manufacturers;
 		}
 
@@ -169,7 +163,7 @@ public class ExcelReader {
 				}};
 				manufacturers.add(manufacturer);
 			} catch (NullPointerException ex) {
-				System.out.println("NULL na radce " + row.getRowNum());
+				logger.info("NULL na radce " + row.getRowNum());
 			}
 		}
 
