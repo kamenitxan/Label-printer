@@ -108,7 +108,7 @@ class LamdaInk extends Ink9x4 {
 
 	private def lamda(pos: Position): Unit = {
 		cs.setFont(font, 6)
-		cs.print("Lamdaprint s.r.o.", pos.x + 80, pos.y + 20)
+		cs.print(companyName, pos.x + 80, pos.y + 20)
 		cs.setFont(font, fontSize)
 	}
 }

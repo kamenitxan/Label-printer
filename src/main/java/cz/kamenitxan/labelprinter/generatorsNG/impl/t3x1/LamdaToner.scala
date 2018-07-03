@@ -52,7 +52,7 @@ class LamdaToner extends Toner3x1 {
 		cs.drawImage(logo, pos.x + 480, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
 		cs.drawImage(icons, pos.x + 375, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
 		cs.drawImage(icons, pos.x + 695, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
-		cs.print("Výrobce: Lamdaprint cz a.s.", pos.x + 20, pos.y + 40)
+		cs.print("Výrobce: " + companyName, pos.x + 20, pos.y + 40)
 		cs.print("Katalogové číslo: ", pos.x + 20, pos.y + 55)
 		cs.printBold(product.invNum, pos.x + 115, pos.y + 55)
 		cs.printBold(product.name, pos.x + 20, pos.y + 80)
@@ -63,7 +63,7 @@ class LamdaToner extends Toner3x1 {
 		cs.showText(product.productCode)
 		cs.endText()
 
-		cs.print("Výrobce: Lamdaprint cz a.s.", pos.x + 480, pos.y + 40)
+		cs.print("Výrobce: " + companyName, pos.x + 480, pos.y + 40)
 		cs.print("Katalogové číslo: ", pos.x + 480, pos.y + 55)
 		cs.printBold(product.invNum, pos.x + 575, pos.y + 55)
 		cs.printBold(product.name, pos.x + 480, pos.y + 80)
