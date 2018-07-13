@@ -10,6 +10,8 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
+import scala.language.postfixOps
+
 
 /**
   * Created by tomaspavel on 5.3.17.
@@ -44,8 +46,9 @@ class TeslaInk extends AltxInk {
 	}
 
 	private def drawTeslaSingle(pos: Position): Unit = {
-		if(borders) drawSingle(pos)
+		if(borders) debugRect(pos)
 		if(!onlyBorders) {
+			drawSingle(pos)
 			//pn2
 			val size: Int = (fontSize * font.getStringWidth(product.productCode) / 1000).asInstanceOf[Int]
 			val center = 45 - size toFloat
