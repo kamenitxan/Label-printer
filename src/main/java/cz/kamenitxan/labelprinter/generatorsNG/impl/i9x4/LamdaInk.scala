@@ -48,7 +48,9 @@ class LamdaInk extends Ink9x4 {
 
 			cs.drawImage(logo, pos.x + 15, pos.y + 5, logo.getWidth * 0.1 toFloat, logo.getHeight * 0.1 toFloat)
 			cs.drawImage(icons, pos.x + 70, pos.y + 5, logo.getWidth * 0.18 toFloat, logo.getHeight * 0.08 toFloat)
-			cs.print(product.name, pos.x + 15, pos.y + singleHeight - 10)
+			val lineWidth = 115
+			val lineHeight = 8
+			cs.printLines(product.name, pos + (-45, singleHeight - 10), lineHeight, lineWidth)
 			cs.print("Kat. č. " + product.invNum, pos.x + 15, pos.y + 40)
 			cs.print(product.capacity, pos.x + 15, pos.y + 25)
 			color(pos)
@@ -56,7 +58,7 @@ class LamdaInk extends Ink9x4 {
 			cs.beginText()
 			cs.setColor(product.getColorRectTextColor)
 			cs.newLineAtOffset(pos.x + 0, pos.y + 10)
-			cs.setTextRotation(Math.toRadians(270), pos.x + 3, pos.y + 60)
+			cs.setTextRotation(Math.toRadians(270), pos.x + 3, pos.y + 55)
 			cs.showText(product.colorName)
 			cs.setFont(font, fontSize)
 			cs.endText()
