@@ -50,7 +50,7 @@ class LamdaToner2 extends TeslaToner {
 			cs.drawImage(eanImage, pos.x + 20, pos.y + 5, eanImage.getWidth * 0.35 toFloat, eanImage.getHeight * 0.35 toFloat)
 			cs.drawImage(logo, pos.x + 19, pos.y + 32, logo.getWidth * 0.30 toFloat, logo.getHeight * 0.30 toFloat)
 			//cs.drawImage(icons, pos.x + 177, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
-			cs.drawImage(icons, pos.x + 325, pos.y + 2, logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
+			cs.drawImage(icons, pos.x + 325, pos.y + 2 + + mmToPoints(1.5f), logo.getWidth * 0.20 toFloat, logo.getHeight * 0.07 toFloat)
 
 			color(pos)
 			desc(pos - (10, 0))
@@ -69,7 +69,7 @@ class LamdaToner2 extends TeslaToner {
 		if(withPn) cs.printCentered("Kat.č: " + product.invNum, pos + (55, 21), 100, bold = true)
 		//cs.print("Productcode:" + product.productCode, pos.x + 130, pos.y + 29)
 		cs.print(product.capacity, pos.x + 130, pos.y + 13)
-		cs.print(companyName, pos.x + 130, pos.y + 5)
+		cs.print(companyName, pos.x + 130, pos.y + 5 + mmToPoints(0.5f))
 
 	}
 
