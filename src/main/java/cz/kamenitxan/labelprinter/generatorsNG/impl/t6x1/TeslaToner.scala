@@ -62,8 +62,7 @@ class TeslaToner extends Toner6x1 {
 		val lineWidth = 170
 		val lineHeight = 8
 		cs.printCenteredLines(product.invNum :: Nil, new Position(paddingLeft + 10, top), lineHeight,lineWidth)
-		val lines = splitByWidth(product.name, lineWidth)
-		cs.printCenteredLines(lines, pos + (60, 75), lineHeight, lineWidth)
+		cs.printCenteredAutosizedLines(product.name, pos + (60, 75), lineWidth)
 
 	}
 

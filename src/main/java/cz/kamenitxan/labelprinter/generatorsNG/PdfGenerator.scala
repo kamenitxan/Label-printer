@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPageContentStream}
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 /**
   * Created by tomaspavel on 1.3.17.
@@ -40,7 +41,7 @@ abstract class PdfGenerator {
 		generatePdf()
 	}
 
-	protected def splitByWidth(text: String, allowedWidth: Int): List[String] = {
+	protected def splitByWidth(text: String, allowedWidth: Int, fs: Int = fontSize): List[String] = {
 		var myLine: String = ""
 		var lines: mutable.MutableList[String] = mutable.MutableList()
 
@@ -53,7 +54,7 @@ abstract class PdfGenerator {
 				myLine += ""
 			}
 			// test the width of the current line + the current word
-			val size: Int = getStringWidth(myLine + word)
+			val size: Int = getStringWidth(myLine + word, fs)
 			if (size > allowedWidth) {
 				// if the line would be too long with the current word, add the line without the current word
 				lines += myLine
@@ -69,8 +70,8 @@ abstract class PdfGenerator {
 		lines.toList
 	}
 
-	private def getStringWidth(s: String): Int = {
-		(fontSize * font.getStringWidth(s) / 1000).asInstanceOf[Int]
+	private def getStringWidth(s: String, fs: Int = fontSize): Int = {
+		(fs * font.getStringWidth(s) / 1000).asInstanceOf[Int]
 	}
 
 	protected def savePdf(document: PDDocument) {
@@ -157,7 +158,7 @@ abstract class PdfGenerator {
 			cs.setFont(font, fontSize)
 		}
 
-		def printCenteredLines(lines: List[String], pos: Position, lh: Int, lineWidth: Int): Unit = {
+		def printCenteredLines(lines: List[String], pos: Position, lh: Float, lineWidth: Int): Unit = {
 			var i = 0
 			for (line <- lines) {
 				val width:Int = getStringWidth(line)
@@ -170,6 +171,18 @@ abstract class PdfGenerator {
 				//cs.drawString(line)
 				cs.endText()
 				i += 1
+			}
+		}
+
+		def printCenteredAutosizedLines(text: String, pos: Position, lineWidth: Int, minLines: Int = 3, fs: Int = fontSize): Unit = {
+			val lines = splitByWidth(text, lineWidth, fs)
+			if (lines.size >= minLines) {
+				cs.setFont(font, fs)
+				val lineHeight = font.getFontDescriptor.getCapHeight / 1000 * fs
+				printCenteredLines(lines, pos, lineHeight + lineHeight / 2, lineWidth)
+				cs.setFont(font, fontSize)
+			} else {
+				printCenteredAutosizedLines(text, pos, lineWidth, fs = fs + 1)
 			}
 		}
 
