@@ -57,12 +57,9 @@ class TeslaToner extends Toner6x1 {
 	}
 
 	private def desc(pos: Position): Unit = {
-		val top = pos.y + singleHeight - 15
-		val paddingLeft = pos.x + 40
 		val lineWidth = 170
-		val lineHeight = 8
-		cs.printCenteredLines(product.invNum :: Nil, new Position(paddingLeft + 10, top), lineHeight,lineWidth)
-		cs.printCenteredAutosizedLines(product.name, pos + (60, 75), lineWidth)
+		//cs.printCenteredLines(product.invNum :: Nil, new Position(paddingLeft + 10, top), lineHeight,lineWidth)
+		cs.printCenteredAutosizedLines(product.name, pos + (60, singleHeight - 15), lineWidth)
 
 	}
 
