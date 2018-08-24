@@ -63,8 +63,9 @@ class LamdaToner2 extends TeslaToner {
 	private def desc(pos: Position, withPn: Boolean = true): Unit = {
 		val lineWidth = 80
 		val lineHeight = 8
-		val lines = splitByWidth(product.name, lineWidth)
-		cs.printCenteredLines(lines, pos + (90, 65), lineHeight, lineWidth)
+		//val lines = splitByWidth(product.name, lineWidth)
+		//cs.printCenteredLines(lines, pos + (90, 65), lineHeight, lineWidth)
+		cs.printCenteredAutosizedLines(product.name, pos + (90, 65), lineWidth)
 
 		if(withPn) cs.printCentered("Kat.č: " + product.invNum, pos + (55, 21), 100, bold = true)
 		//cs.print("Productcode:" + product.productCode, pos.x + 130, pos.y + 29)

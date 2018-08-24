@@ -174,15 +174,24 @@ abstract class PdfGenerator {
 			}
 		}
 
-		def printCenteredAutosizedLines(text: String, pos: Position, lineWidth: Int, minLines: Int = 3, fs: Int = fontSize): Unit = {
-			val lines = splitByWidth(text, lineWidth, fs)
+		def printCenteredAutosizedLines(text: String, pos: Position, lineWidth: Int, fs: Int = fontSize): Unit = {
+			val lines: List[String] = splitByWidth(text, lineWidth, fs)
+			if (lines.size < 3 ) {
+				printCenteredAutosizedLinesInt(text, pos, lineWidth, fs, lines.size + 1)
+			} else {
+				printCenteredAutosizedLinesInt(text, pos, lineWidth, fs, lines.size)
+			}
+		}
+
+		private def printCenteredAutosizedLinesInt(text: String, pos: Position, lineWidth: Int, fs: Int = fontSize, minLines: Int): Unit = {
+			val lines: List[String] = splitByWidth(text, lineWidth, fs)
 			if (lines.size >= minLines) {
 				cs.setFont(font, fs)
 				val lineHeight = font.getFontDescriptor.getCapHeight / 1000 * fs
 				printCenteredLines(lines, pos, lineHeight + lineHeight / 2, lineWidth)
 				cs.setFont(font, fontSize)
 			} else {
-				printCenteredAutosizedLines(text, pos, lineWidth, fs = fs + 1)
+				printCenteredAutosizedLinesInt(text, pos, lineWidth, fs + 1, minLines)
 			}
 		}
 

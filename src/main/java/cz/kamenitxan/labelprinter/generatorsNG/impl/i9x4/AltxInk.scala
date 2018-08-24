@@ -104,12 +104,7 @@ class AltxInk extends Ink9x4 {
 
 	private def desc(pos: Position): Unit = {
 		val allowedWidth = 55
-		val lineHeight = 10
-
-		val lines = splitByWidth(product.name, allowedWidth)
-
-		cs.printCenteredLines(lines, pos + (0, 70), lineHeight, allowedWidth)
-
+		cs.printCenteredAutosizedLines(product.name ,pos + (0, 70), allowedWidth)
 	}
 
 
