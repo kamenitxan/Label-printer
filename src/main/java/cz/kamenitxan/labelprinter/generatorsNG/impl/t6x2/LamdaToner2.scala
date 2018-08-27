@@ -54,7 +54,7 @@ class LamdaToner2 extends TeslaToner {
 
 			color(pos)
 			desc(pos - (10, 0))
-			desc(pos + (120, 0), withPn = false)
+			desc(pos + (120, 0))
 			manufacturer(pos)
 			divider(pos)
 		}
