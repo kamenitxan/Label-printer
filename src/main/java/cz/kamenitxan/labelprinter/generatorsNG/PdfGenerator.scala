@@ -145,11 +145,17 @@ abstract class PdfGenerator {
 		}
 
 		def printCentered(text: String, pos: Position, lw: Int, bold: Boolean = false): Unit = {
+			printCentered(text, pos, lw, bold, fontSize)
+		}
+
+		def printCentered(text: String, pos: Position, lw: Int, bold: Boolean, fs: Int): Unit = {
 			val width:Int = getStringWidth(text)
 			val center:Float = (lw - width) toFloat
 
 			if (bold) {
-				cs.setFont(boldFont, fontSize)
+				cs.setFont(boldFont, fs)
+			} else {
+				cs.setFont(font, fs)
 			}
 			cs.beginText()
 			cs.newLineAtOffset(pos.x + 60 + center/2, pos.y)
@@ -174,6 +180,24 @@ abstract class PdfGenerator {
 			}
 		}
 
+		def printCenteredLinesWithFs(text: String, pos: Position, lineWidth: Int, fs: Int): Unit = {
+			val lines: List[String] = splitByWidth(text, lineWidth, fs)
+			cs.setFont(font, fs)
+			val lineHeight = font.getFontDescriptor.getCapHeight / 1000 * fs
+			printCenteredLines(lines, pos, lineHeight + lineHeight / 2, lineWidth)
+			cs.setFont(font, fontSize)
+		}
+
+		def calculateAutosizeFontSize(text: String, lineWidth: Int, fs: Int = fontSize, maxLines: Int = 3): Int = {
+			val lines: List[String] = splitByWidth(text, lineWidth, fs)
+			if(lines.size >= maxLines) {
+				fs
+			} else  {
+				calculateAutosizeFontSize(text, lineWidth, fs + 1, lines.size + 1)
+			}
+		}
+
+		/** Pokud bude mít popis 3 a více řádku, nechat velikost písma původní, pokud bude mít popis do dvou řádku písmo zvětšit do maximální velikosti. */
 		def printCenteredAutosizedLines(text: String, pos: Position, lineWidth: Int, fs: Int = fontSize): Unit = {
 			val lines: List[String] = splitByWidth(text, lineWidth, fs)
 			if (lines.size < 3 ) {
@@ -197,6 +221,13 @@ abstract class PdfGenerator {
 
 		def printLines(text: String, pos: Position, lh: Int, width: Int): Unit = {
 			printLines(splitByWidth(text, width), pos, lh)
+		}
+
+		def getLineHeight(fs: Int): Float = {
+			cs.setFont(font, fs)
+			val lineHeight = font.getFontDescriptor.getCapHeight / 1000 * fs
+			cs.setFont(font, fontSize)
+			lineHeight
 		}
 
 		def drawLine(from: Position, to: Position): Unit = {
