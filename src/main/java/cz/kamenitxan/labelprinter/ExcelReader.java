@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.StreamSupport;
 
 /**
@@ -114,24 +115,33 @@ public class ExcelReader {
 		}};
 	}
 
+	private static final Pattern lnPatter = Pattern.compile("[\n\r]");
+
 	private static String getCellValue(Cell cell, FormulaEvaluator evaluator) {
 		if (cell == null) {
 			return "";
 		}
 		final int cellType = cell.getCellType();
+		String returnValue = null;
 		if (cellType == 0) {
-			return String.valueOf(cell.getNumericCellValue()).replace(".0", "");
+			returnValue = String.valueOf(cell.getNumericCellValue()).replace(".0", "");
 		} else if (cellType == 1) {
-			return cell.getStringCellValue();
+			returnValue = cell.getStringCellValue();
 		} else if (cellType == 2) {
 			switch (cell.getCachedFormulaResultType()) {
 				case XSSFCell.CELL_TYPE_STRING:
-					return cell.getStringCellValue();
+					returnValue = cell.getStringCellValue();
+					break;
 				case XSSFCell.CELL_TYPE_NUMERIC:
-					return String.valueOf(cell.getNumericCellValue());
+					returnValue = String.valueOf(cell.getNumericCellValue());
+					break;
 			}
 		}
-		return "";
+		if (returnValue != null) {
+			return lnPatter.matcher(returnValue).replaceAll(" ");
+		} else {
+			return "";
+		}
 	}
 
 	public static ArrayList<Manufacturer> importManufacturers(File fileR) {
