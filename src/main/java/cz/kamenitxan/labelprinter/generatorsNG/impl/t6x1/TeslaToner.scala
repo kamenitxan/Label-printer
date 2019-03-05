@@ -15,10 +15,12 @@ import scala.language.postfixOps
   * Created by tomaspavel on 5.3.17.
   */
 class TeslaToner extends Toner6x1 {
+	var document: PDDocument = _
+
 	override def getFolderName: String = Generators.TONER_TESLA_BIG.folder
 
 	override def generatePdf(): Unit = {
-		val document: PDDocument = new PDDocument
+		document = new PDDocument
 		val page: PDPage = new PDPage(PAGE_SIZE_A4)
 		document.addPage(page)
 
@@ -51,7 +53,7 @@ class TeslaToner extends Toner6x1 {
 			manufacturer(pos)
 			capacity(pos)
 			capacity(pos + (240, 0))
-
+			rohsImage(pos)
 			divider(pos)
 		}
 	}
@@ -147,5 +149,7 @@ class TeslaToner extends Toner6x1 {
 	private def capacity(pos: Position): Unit = {
 		cs.print(product.capacity, pos.x + 130, pos.y + 10)
 	}
+
+	def rohsImage(pos: Position): Unit = {}
 
 }
