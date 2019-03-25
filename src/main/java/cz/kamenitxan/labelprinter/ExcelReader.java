@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Spliterator;
@@ -124,7 +125,7 @@ public class ExcelReader {
 		final int cellType = cell.getCellType();
 		String returnValue = null;
 		if (cellType == 0) {
-			returnValue = String.valueOf(cell.getNumericCellValue()).replace(".0", "");
+			returnValue = new BigDecimal(cell.getNumericCellValue()).toPlainString().replace(".0", "");
 		} else if (cellType == 1) {
 			returnValue = cell.getStringCellValue();
 		} else if (cellType == 2) {
