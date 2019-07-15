@@ -1,9 +1,8 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl.i9x4
+package cz.kamenitxan.labelprinter.generators.impl.i9x4
 
 import java.awt.Color
 
-import cz.kamenitxan.labelprinter.generators.Generators
-import cz.kamenitxan.labelprinter.generatorsNG.Ink9x4
+import cz.kamenitxan.labelprinter.generators.{Generators, Ink9x4}
 import cz.kamenitxan.labelprinter.models.Position
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font

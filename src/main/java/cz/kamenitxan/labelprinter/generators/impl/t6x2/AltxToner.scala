@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl.t6x2
+package cz.kamenitxan.labelprinter.generators.impl.t6x2
 
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.models.Position

@@ -33,6 +33,7 @@ public class ExcelReader {
 	}
 
 	public static List<Product> importFile(File FileR, Generators generator) {
+		logger.info("Importing file: " + FileR.getAbsolutePath());
 		final List<Product> products = new ArrayList<>();
 
 		System.setProperty("org.apache.poi.util.POILogger", "org.apache.poi.util.SystemOutLogger");
@@ -68,17 +69,7 @@ public class ExcelReader {
 		//TODO: jednovlaknove pri malem poctu radku
 		StreamSupport.stream(spliterator, true).forEach(row -> {
 			try {
-				/*if (Objects.equals(getCellValue(row.getCell(0), row.getCell(0).getCellType(), evaluator), "200853")) {
-					System.out.println("stuj");
-					evaluator.setDebugEvaluationOutputForNextEval(true);
-				}*/
-				//long startTime = System.nanoTime();
-
 				manufacturers.forEach(m -> products.add(createAltXInk(row, evaluator, m.code)));
-
-				//long stopTime = System.nanoTime();
-				//System.out.println(row.getRowNum() + " - "+ (stopTime - startTime) / 1000000000.0);
-
 			} catch (NullPointerException ex) {
 				logger.info("NULL na radce " + row.getRowNum());
 			}
@@ -89,20 +80,20 @@ public class ExcelReader {
 		return products;
 	}
 
+	private static final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
+
 	private static Product createAltXInk(Row row, FormulaEvaluator evaluator, String manu) {
-		final String invNum = getCellValue(row.getCell(0), evaluator);
-		final String productCode = getCellValue(row.getCell(1), evaluator);
-		final String name = getCellValue(row.getCell(5), evaluator);
-		final String capacity = getCellValue(row.getCell(7), evaluator);
-		final String colorName = getCellValue(row.getCell(6), evaluator);
-		final String ean = getCellValue(row.getCell(9), evaluator);
-		final String eanCode = getCellValue(row.getCell(10), evaluator);
-		// todo: musi se tu vzdy vytvaret novy objekt?
-		final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
-		return new Product(invNum, name, capacity, colorName, productCode, ean, eanCode, validator, manu);
+		final String invNum = getCellValue(row.getCell(0), evaluator); // A
+		final String productCode = getCellValue(row.getCell(1), evaluator); // B
+		final String name = getCellValue(row.getCell(5), evaluator); // F
+		final String capacity = getCellValue(row.getCell(7), evaluator); // H
+		final String colorName = getCellValue(row.getCell(6), evaluator); // G
+		final String ean = getCellValue(row.getCell(9), evaluator);  // I
+		final String ean2 = getCellValue(row.getCell(11), evaluator); // L
+		return new Product(invNum, name, capacity, colorName, productCode, ean, ean2, validator, manu);
 	}
 
-	private static Product createLamdaToner(Row row, FormulaEvaluator evaluator, String manu) {
+	/*private static Product createLamdaToner(Row row, FormulaEvaluator evaluator, String manu) {
 		final Function<Product, Boolean> val = p -> p.invNum != null && !p.invNum.equals("");
 		return new Product() {{
 			invNum = getCellValue(row.getCell(0), evaluator);
@@ -114,7 +105,7 @@ public class ExcelReader {
 			manufacturer = manu;
 			validator = val;
 		}};
-	}
+	}*/
 
 	private static final Pattern lnPatter = Pattern.compile("[\n\r]");
 

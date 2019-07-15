@@ -1,11 +1,13 @@
-package cz.kamenitxan.labelprinter.generatorsNG
+package cz.kamenitxan.labelprinter.generators
 
 import java.awt.Color
 import java.io.{File, FileNotFoundException, IOException}
 
+import cz.kamenitxan.labelprinter.barcode.{BarcodeGenerator, Ean13}
 import cz.kamenitxan.labelprinter.models.{Position, Product}
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.font.PDType0Font
+import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPageContentStream}
 
 import scala.collection.mutable
@@ -110,6 +112,14 @@ abstract class PdfGenerator {
 	  */
 	protected def cmToPoints(cm: Float): Float = {
 		mmToPoints(cm * 10)
+	}
+
+	protected def createBarcodeImage(document: PDDocument, ean: String, generator: BarcodeGenerator = Ean13): PDImageXObject = {
+		if (ean == null || ean.isEmpty) {
+			return null
+		}
+		val eanRaw = generator.createEan(ean)
+		LosslessFactory.createFromImage(document, eanRaw)
 	}
 
 	implicit class PDPageContentStreamExtensions(val cs: PDPageContentStream) {

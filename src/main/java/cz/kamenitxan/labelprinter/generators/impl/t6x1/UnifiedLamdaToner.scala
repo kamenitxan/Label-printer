@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl.t6x1
+package cz.kamenitxan.labelprinter.generators.impl.t6x1
 
 import cz.kamenitxan.labelprinter.generators.Generators
 

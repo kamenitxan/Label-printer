@@ -1,9 +1,8 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl.t3x1
+package cz.kamenitxan.labelprinter.generators.impl.t3x1
 
 import java.awt.Color
 
-import cz.kamenitxan.labelprinter.generators.Generators
-import cz.kamenitxan.labelprinter.generatorsNG.Toner3x1
+import cz.kamenitxan.labelprinter.generators.{Generators, Toner3x1}
 import cz.kamenitxan.labelprinter.models.Position
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font

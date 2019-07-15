@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter.generatorsNG
+package cz.kamenitxan.labelprinter.generators
 
 import java.awt.Color
 

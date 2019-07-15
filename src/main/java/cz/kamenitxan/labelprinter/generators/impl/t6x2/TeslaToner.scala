@@ -1,10 +1,9 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl.t6x2
+package cz.kamenitxan.labelprinter.generators.impl.t6x2
 
 import java.awt.Color
 
-import cz.kamenitxan.labelprinter.generators.Generators
-import cz.kamenitxan.labelprinter.generatorsNG.Toner6x2
-import cz.kamenitxan.labelprinter.models.{Ean13, Position}
+import cz.kamenitxan.labelprinter.generators.{Generators, Toner6x2}
+import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
@@ -25,8 +24,7 @@ class TeslaToner extends Toner6x2 {
 		document.addPage(page)
 
 
-		val eanRaw = Ean13.createEan(product.ean)
-		eanImage = LosslessFactory.createFromImage(document, eanRaw)
+		eanImage = createBarcodeImage(document, product.ean)
 
 		cs = new PDPageContentStream(document, page)
 		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))

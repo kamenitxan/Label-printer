@@ -1,8 +1,6 @@
 package cz.kamenitxan.labelprinter.models;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -17,7 +15,7 @@ public class Product {
 	public String hexColor = "";
 	public String productCode = "";
 	public String ean = "";
-	public String eanCode = "";
+	public String ean2 = "";
 	public String manufacturer = "";
 
 	public Function<Product, Boolean> validator;
@@ -25,7 +23,7 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String eanCode) {
+	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String ean2) {
 		this.invNum = invNum;
 		this.name = name;
 		this.capacity = capacity;
@@ -34,14 +32,14 @@ public class Product {
 		this.hexColor =  String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
 		this.productCode = productCode;
 		this.ean = ean;
-		this.eanCode = eanCode;
+		this.ean2 = ean2;
 
 		if (this.name != null) {
 			this.name = this.name.replace("+", "+ ");
 		}
 	}
 
-	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String eanCode, Function<Product, Boolean> validator, String manufacturer) {
+	public Product(String invNum, String name, String capacity, String colorName, String productCode, String ean, String ean2, Function<Product, Boolean> validator, String manufacturer) {
 		this.invNum = invNum;
 		this.name = name;
 		this.capacity = capacity;
@@ -50,7 +48,7 @@ public class Product {
 		this.hexColor =  String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
 		this.productCode = productCode;
 		this.ean = ean;
-		this.eanCode = eanCode;
+		this.ean2 = ean2;
 
 		if (this.name != null) {
 			this.name = this.name.replace("+", "+ ");
@@ -65,22 +63,7 @@ public class Product {
 		return validator.apply(this);
 	}
 
-	public Map<String, Object> getContext() {
-		Map<String, Object> context = new HashMap<>();
-		context.put("invNum", invNum);
-		context.put("name", name);
-		context.put("capacity", capacity);
-		context.put("colorName", colorName);
-		context.put("color", color);
-		context.put("productCode", productCode);
-		context.put("ean", ean);
-		context.put("eanCode", eanCode);
-		context.put("hexColor", hexColor);
-		context.put("manufacturer", manufacturer);
-		return context;
-	}
 
-        
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -95,24 +78,19 @@ public class Product {
 	public static Color getProductColor(String color) {
 		Color currentColor;
 		switch (color) {
-			case "Black":
-				currentColor = Color.BLACK;
-				break;
 			case "Yellow":
 				currentColor = Color.YELLOW;
 				break;
 			case "Cyan":
+			case "Photo Cyan":
 				currentColor = Color.CYAN;
 				break;
 			case "Magenta":
+			case "Photo Magenta":
 				currentColor = Color.MAGENTA;
 				break;
-			case "Black/Rot":
-				currentColor = Color.BLACK;
-				break;
 			case "CMYK":
-				currentColor = Color.WHITE;
-				break;
+			case "Photo":
 			case "Color":
 				currentColor = Color.WHITE;
 				break;
@@ -125,27 +103,16 @@ public class Product {
 			case "Light Magenta":
 				currentColor = Color.MAGENTA.brighter();
 				break;
-			case "Matte black":
-				currentColor = Color.BLACK;
-				break;
-			case "Photo":
-				currentColor = Color.WHITE;
-				break;
-			case "Photo Black":
-				currentColor = Color.BLACK;
-				break;
-			case "Photo Cyan":
-				currentColor = Color.CYAN;
-				break;
-			case "Photo Magenta":
-				currentColor = Color.MAGENTA;
-				break;
 			case "Red/Black":
 				currentColor = Color.RED;
 				break;
 			case "Violett":
 				currentColor = Color.magenta.darker();
 				break;
+			case "Photo Black":
+			case "Matte black":
+			case "Black/Rot":
+			case "Black":
 			default:
 				currentColor = Color.BLACK;
 				break;
@@ -156,39 +123,23 @@ public class Product {
 	public Color getColorRectTextColor() {
 		switch (colorName) {
 			case "Black":
-				return Color.WHITE;
-			case "Yellow":
-				return Color.BLACK;
-			case "Cyan":
-				return Color.BLACK;
-			case "Magenta":
-				return Color.BLACK;
+			case "Photo Black":
+			case "Matte black":
 			case "Black/Rot":
 				return Color.WHITE;
-			case "CMYK":
-				return Color.BLACK;
-			case "Color":
-				return Color.BLACK;
-			case "Grey":
-				return Color.BLACK;
-			case "Light Cyan":
-				return Color.BLACK;
-			case "Light Magenta":
-				return Color.BLACK;
-			case "Matte black":
-				return Color.WHITE;
-			case "Photo":
-				return Color.BLACK;
-			case "Photo Black":
-				return Color.WHITE;
-			case "Photo Cyan":
-				return Color.BLACK;
-			case "Photo Magenta":
-				return Color.BLACK;
-			case "Red/Black":
-				return Color.BLACK;
 			case "Violett":
-				return Color.BLACK;
+			case "Red/Black":
+			case "Photo Magenta":
+			case "Photo Cyan":
+			case "Photo":
+			case "Light Magenta":
+			case "Light Cyan":
+			case "Grey":
+			case "Color":
+			case "CMYK":
+			case "Magenta":
+			case "Cyan":
+			case "Yellow":
 			default:
 				return Color.BLACK;
 		}

@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter.generatorsNG
+package cz.kamenitxan.labelprinter.generators
 
 import java.awt.Color
 
@@ -6,17 +6,18 @@ import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 
 /**
-  * Created by tomaspavel on 6.3.17.
+  * Created by tomaspavel on 23.3.17.
   */
-abstract class Ink9x4 extends PdfGenerator {
-	val PAGE_SIZE_A4 = new PDRectangle(wholePageHeight, wholePageWidth)
-	val singleWidth = 134
-	val singleHeight = 84
-	override val fontSize = 8
+abstract class Toner3x1 extends PdfGenerator {
+	val PAGE_SIZE_A4 = new PDRectangle(wholePageWidth, wholePageHeight)
+
+	val singleWidth = 805
+	val singleHeight = 185
+	override val fontSize = 12
 
 	override def getPosition(line: Int, row: Int): Position = {
-		val x = 30 + singleWidth * row + 4 * row
-		val y = 22 + singleHeight * line + 5 * line
+		val x = 20 + singleWidth * row + 10 * row
+		val y = 10 + singleHeight * line + 10 * line
 		new Position(x, y)
 	}
 
@@ -25,5 +26,4 @@ abstract class Ink9x4 extends PdfGenerator {
 		cs.setStrokingColor(Color.BLACK)
 		cs.stroke()
 	}
-
 }

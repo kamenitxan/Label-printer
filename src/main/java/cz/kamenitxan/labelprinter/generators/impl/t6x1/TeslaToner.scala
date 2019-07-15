@@ -1,10 +1,10 @@
-package cz.kamenitxan.labelprinter.generatorsNG.impl.t6x1
+package cz.kamenitxan.labelprinter.generators.impl.t6x1
 
 import java.awt.Color
 
-import cz.kamenitxan.labelprinter.generators.Generators
-import cz.kamenitxan.labelprinter.generatorsNG.Toner6x1
-import cz.kamenitxan.labelprinter.models.{Ean13, Position}
+import cz.kamenitxan.labelprinter.barcode.Ean13
+import cz.kamenitxan.labelprinter.generators.{Generators, Toner6x1}
+import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
