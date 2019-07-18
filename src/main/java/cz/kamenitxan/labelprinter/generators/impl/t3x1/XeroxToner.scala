@@ -12,8 +12,9 @@ import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject
 
 import scala.language.postfixOps
 
-class XeroxToner extends  Toner3x1 {
+class XeroxToner extends Toner3x1 {
 
+	override val fontSize: Int = 8
 	var eanImage: PDImageXObject = _
 	var eanImage2: PDImageXObject = _
 	var rohs: PDImageXObject = _
@@ -26,7 +27,7 @@ class XeroxToner extends  Toner3x1 {
 		document.addPage(page)
 
 		eanImage = createBarcodeImage(document, product.ean)
-		eanImage2 = createBarcodeImage(document, product.ean2, Code39)
+		eanImage2 = createBarcodeImage(document, product.invNum, Code39)
 
 		cs = new PDPageContentStream(document, page)
 		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
@@ -44,10 +45,63 @@ class XeroxToner extends  Toner3x1 {
 	}
 
 	private def drawSingle(pos: Position): Unit = {
-		if(borders) debugRect(pos)
+		if (borders) debugRect(pos)
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 130, eanImage.getWidth * 0.42 toFloat, eanImage.getHeight * 0.40 toFloat)
 		cs.drawImage(eanImage2, pos.x + 20, pos.y + 95, eanImage.getWidth * 0.65 toFloat, eanImage.getHeight * 0.25 toFloat)
+		cs.drawImage(rohs, pos.x + singleWidth - 150, pos.y + 0, rohs.getWidth * 0.25 toFloat, rohs.getHeight * 0.25 toFloat)
 
+		staticText(pos)
+		variableText(pos)
 	}
+
+	private def staticText(pos: Position): Unit = {
+		alternativeText(pos)
+		xeroxText(pos)
+		contentsText(pos + (-50, 75))
+	}
+
+	private def alternativeText(pos: Position): Unit = {
+		cs.printLines(XeroxToner.ALT, pos + (100, 140), 8, 6)
+	}
+
+	private def xeroxText(pos: Position): Unit = {
+		cs.printLines(XeroxToner.XEROX, pos + (-50, 15), 6, 600, 5)
+	}
+
+	private def contentsText(pos: Position): Unit = {
+		cs.printLines(XeroxToner.CONTENTS, pos, 8)
+		cs.printLines(XeroxToner.MADEIN, pos + (150, 0), 8)
+	}
+
+	private def variableText(pos: Position): Unit = {
+		colorBox(pos)
+
+		cs.print(product.invNum, pos.x + 120, pos.y + singleHeight - 40, 40)
+	}
+
+	private def colorBox(pos: Position): Unit = {
+		cs.drawRoundedRectangle(pos + (500, 10), 60, 100, 10)
+	}
+}
+
+object XeroxToner {
+	val ALT = List("Replaces/Alternativa/Alternatíva/", "Alternatywa dla/Echivalent")
+	val XEROX = "©2018 Xerox Corporation. All rights reserved. Xerox® and Xerox and Design® are trademarks of Xerox Corporation in the United States and/or other countries. HP®, LaserJet, and CB380A are trademarks of Hawlett Packard Industries Ltd."
+	val CONTENTS = List(
+		"Contents: 1 Cartrige",
+		"Složení: 1 kazeta",
+		"Zloženie: 1 kazeta",
+		"Tartalom: 1 kazetta",
+		"Zawoera: 1 kasete",
+		"todo"
+	)
+	val MADEIN = List(
+		"Made in Czech Republic",
+		"Vyrobeno v České republice",
+		"Vyroboné v Čechách",
+		"Made in Czech Republic",
+		"Wyprodukowane w Czechach",
+		"Produs in Republica Ceha"
+	)
 }

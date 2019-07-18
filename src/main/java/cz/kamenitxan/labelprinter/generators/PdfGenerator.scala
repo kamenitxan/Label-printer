@@ -79,7 +79,7 @@ abstract class PdfGenerator {
 	protected def savePdf(document: PDDocument) {
 		var filename: String = null
 		if (product.manufacturer != null) {
-			filename = "pdf/" + getFolderName + "/" + product.manufacturer +"/" + product.invNum + ".pdf"
+			filename = "pdf/" + getFolderName + "/" + product.manufacturer + "/" + product.invNum + ".pdf"
 		} else {
 			filename = "pdf/" + getFolderName + "/" + product.invNum + ".pdf"
 		}
@@ -128,11 +128,13 @@ abstract class PdfGenerator {
 			cs.setNonStrokingColor(color)
 		}
 
-		def print(text: String, x: Float, y: Float): Unit = {
+		def print(text: String, x: Float, y: Float, fs: Int = fontSize): Unit = {
+			cs.setFont(font, fs)
 			cs.beginText()
 			cs.newLineAtOffset(x, y)
 			cs.showText(text)
 			cs.endText()
+			cs.setFont(font, fontSize)
 		}
 
 		def printBold(text: String, x: Float, y: Float): Unit = {
@@ -141,8 +143,15 @@ abstract class PdfGenerator {
 			cs.setFont(font, fontSize)
 		}
 
-		def printLines(lines: List[String], pos: Position, lh: Int): Unit = {
+		/**
+		  * @param lines radky k vypsani
+		  * @param pos   pozice
+		  * @param lh    vyska radku
+		  * @param fs    velikost pisma
+		  */
+		def printLines(lines: List[String], pos: Position, lh: Int, fs: Int = fontSize): Unit = {
 			var i = 0
+			cs.setFont(font, fs)
 			for (line <- lines) {
 				cs.beginText()
 				cs.newLineAtOffset(pos.x + 60, pos.y - lh * i)
@@ -152,6 +161,15 @@ abstract class PdfGenerator {
 				cs.endText()
 				i += 1
 			}
+			cs.setFont(font, fontSize)
+		}
+
+		def printLines(text: String, pos: Position, lh: Int, width: Int): Unit = {
+			printLines(splitByWidth(text, width), pos, lh)
+		}
+
+		def printLines(text: String, pos: Position, lh: Int, width: Int, fs: Int): Unit = {
+			printLines(splitByWidth(text, width), pos, lh, fs)
 		}
 
 		def printCentered(text: String, pos: Position, lw: Int, bold: Boolean = false): Unit = {
@@ -159,8 +177,8 @@ abstract class PdfGenerator {
 		}
 
 		def printCentered(text: String, pos: Position, lw: Int, bold: Boolean, fs: Int): Unit = {
-			val width:Int = getStringWidth(text)
-			val center:Float = (lw - width) toFloat
+			val width: Int = getStringWidth(text)
+			val center: Float = (lw - width) toFloat
 
 			if (bold) {
 				cs.setFont(boldFont, fs)
@@ -168,7 +186,7 @@ abstract class PdfGenerator {
 				cs.setFont(font, fs)
 			}
 			cs.beginText()
-			cs.newLineAtOffset(pos.x + 60 + center/2, pos.y)
+			cs.newLineAtOffset(pos.x + 60 + center / 2, pos.y)
 			cs.showText(text)
 			cs.endText()
 			cs.setFont(font, fontSize)
@@ -177,11 +195,11 @@ abstract class PdfGenerator {
 		def printCenteredLines(lines: List[String], pos: Position, lh: Float, lineWidth: Int): Unit = {
 			var i = 0
 			for (line <- lines) {
-				val width:Int = getStringWidth(line)
-				val center:Float = (lineWidth - width) toFloat
+				val width: Int = getStringWidth(line)
+				val center: Float = (lineWidth - width) toFloat
 
 				cs.beginText()
-				cs.newLineAtOffset(pos.x + 60 + center/2, pos.y - lh * i)
+				cs.newLineAtOffset(pos.x + 60 + center / 2, pos.y - lh * i)
 				cs.showText(line + "")
 				//cs.moveTextPositionByAmount(60, y)
 				//cs.drawString(line)
@@ -200,9 +218,9 @@ abstract class PdfGenerator {
 
 		def calculateAutosizeFontSize(text: String, lineWidth: Int, fs: Int = fontSize, maxLines: Int = 3): Int = {
 			val lines: List[String] = splitByWidth(text, lineWidth, fs)
-			if(lines.size >= maxLines) {
+			if (lines.size >= maxLines) {
 				fs
-			} else  {
+			} else {
 				calculateAutosizeFontSize(text, lineWidth, fs + 1, lines.size + 1)
 			}
 		}
@@ -210,7 +228,7 @@ abstract class PdfGenerator {
 		/** Pokud bude mít popis 3 a více řádku, nechat velikost písma původní, pokud bude mít popis do dvou řádku písmo zvětšit do maximální velikosti. */
 		def printCenteredAutosizedLines(text: String, pos: Position, lineWidth: Int, fs: Int = fontSize): Unit = {
 			val lines: List[String] = splitByWidth(text, lineWidth, fs)
-			if (lines.size < 3 ) {
+			if (lines.size < 3) {
 				printCenteredAutosizedLinesInt(text, pos, lineWidth, fs, lines.size + 1)
 			} else {
 				printCenteredAutosizedLinesInt(text, pos, lineWidth, fs, lines.size)
@@ -227,10 +245,6 @@ abstract class PdfGenerator {
 			} else {
 				printCenteredAutosizedLinesInt(text, pos, lineWidth, fs + 1, minLines)
 			}
-		}
-
-		def printLines(text: String, pos: Position, lh: Int, width: Int): Unit = {
-			printLines(splitByWidth(text, width), pos, lh)
 		}
 
 		def getLineHeight(fs: Int): Float = {
@@ -254,6 +268,35 @@ abstract class PdfGenerator {
 			cs.curveTo(cx + k * r, cy + r, cx + r, cy + k * r, cx + r, cy)
 			cs.curveTo(cx + r, cy - k * r, cx + k * r, cy - r, cx, cy - r)
 			cs.curveTo(cx - k * r, cy - r, cx - r, cy - k * r, cx - r, cy)
+			cs.fill()
+		}
+
+		def drawRoundedRectangle(pos: Position, width: Int, height: Int, r: Int): Unit = {
+			cs.moveTo(pos.x, pos.y + r)
+			cs.lineTo(pos.x, pos.y + height - r) // levá nahoru
+			cs.curveTo(
+				pos.x, pos.y + height - r / 2,
+				pos.x + r / 2, pos.y + height,
+				pos.x + r, pos.y + height
+			)
+			cs.lineTo(pos.x + width - r, pos.y + height) // horni doprava
+			cs.curveTo(
+				pos.x + width - r / 2, pos.y + height,
+				pos.x + width, pos.y + height - r / 2,
+				pos.x + width, pos.y + height - r
+			)
+			cs.lineTo(pos.x + width, pos.y + r) // prava dolu
+			cs.curveTo(
+				pos.x + width, pos.y + r /2 ,
+				pos.x + width - r /2 , pos.y ,
+				pos.x + width -r, pos.y
+			)
+			cs.lineTo(pos.x + r, pos.y) // dolni doleva
+			cs.curveTo(
+				pos.x + r /2 , pos.y ,
+				pos.x  , pos.y + r /2,
+				pos.x, pos.y + r
+	 		)
 			cs.fill()
 		}
 	}
