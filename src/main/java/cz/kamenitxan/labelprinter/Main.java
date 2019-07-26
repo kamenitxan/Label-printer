@@ -102,7 +102,7 @@ public class Main extends Application {
 
 
 		if (!gui) {
-			List<Product> products = ExcelReader.importFile(filename, generator);
+			List<Product> products = ExcelReader.importFile(filename, generator, debug);
 			if (limit) {
 				products = products.subList(0, 5);
 			}

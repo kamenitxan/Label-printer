@@ -4,12 +4,13 @@ import java.awt.Color
 
 import cz.kamenitxan.labelprinter.barcode.Ean13
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner6x1}
-import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.models.{Position, ProductColor}
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
 import scala.language.postfixOps
+
 
 /**
   * Created by tomaspavel on 5.3.17.

@@ -13,6 +13,9 @@ import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
 import scala.language.postfixOps
+import scala.language.implicitConversions
+
+
 
 /**
   * Created by tomaspavel on 1.3.17.

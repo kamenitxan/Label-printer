@@ -2,6 +2,7 @@ package cz.kamenitxan.labelprinter.generators
 
 import java.awt.Color
 import java.io.{File, FileNotFoundException, IOException}
+import java.util.Calendar
 
 import cz.kamenitxan.labelprinter.barcode.{BarcodeGenerator, Ean13}
 import cz.kamenitxan.labelprinter.models.{Position, Product}
@@ -77,6 +78,12 @@ abstract class PdfGenerator {
 	}
 
 	protected def savePdf(document: PDDocument) {
+		val di = document.getDocumentInformation
+		di.setCreationDate(Calendar.getInstance())
+		di.setModificationDate(Calendar.getInstance())
+		di.setCreator("Labelprinter")
+		di.setTitle(product.invNum)
+
 		var filename: String = null
 		if (product.manufacturer != null) {
 			filename = "pdf/" + getFolderName + "/" + product.manufacturer + "/" + product.invNum + ".pdf"
@@ -149,7 +156,7 @@ abstract class PdfGenerator {
 		  * @param lh    vyska radku
 		  * @param fs    velikost pisma
 		  */
-		def printLines(lines: List[String], pos: Position, lh: Int, fs: Int = fontSize): Unit = {
+		def printLines(lines: Seq[String], pos: Position, lh: Int, fs: Float = fontSize): Unit = {
 			var i = 0
 			cs.setFont(font, fs)
 			for (line <- lines) {
@@ -168,7 +175,7 @@ abstract class PdfGenerator {
 			printLines(splitByWidth(text, width), pos, lh)
 		}
 
-		def printLines(text: String, pos: Position, lh: Int, width: Int, fs: Int): Unit = {
+		def printLines(text: String, pos: Position, lh: Int, width: Int, fs: Float): Unit = {
 			printLines(splitByWidth(text, width), pos, lh, fs)
 		}
 

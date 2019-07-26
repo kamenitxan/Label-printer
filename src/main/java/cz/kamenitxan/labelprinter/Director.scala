@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 object Director {
 
 	def generate(file: File, generator: Generators, borders: Boolean, onlyBorders: Boolean): Unit = {
-		val products = ExcelReader.importFile(file, generator).asScala
+		val products = ExcelReader.importFile(file, generator, Main.debug).asScala
 		print("File imported")
 		val generatorF = generator
 		if (Main.debug) {

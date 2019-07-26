@@ -1,6 +1,7 @@
 package cz.kamenitxan.labelprinter.generators.impl.t3x1
 
 import java.awt.Color
+import java.util.Calendar
 
 import cz.kamenitxan.labelprinter.barcode.Code39
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner3x1}
@@ -14,7 +15,7 @@ import scala.language.postfixOps
 
 class XeroxToner extends Toner3x1 {
 
-	override val fontSize: Int = 8
+	override val fontSize: Int = 7
 	var eanImage: PDImageXObject = _
 	var eanImage2: PDImageXObject = _
 	var rohs: PDImageXObject = _
@@ -26,11 +27,13 @@ class XeroxToner extends Toner3x1 {
 		val page: PDPage = new PDPage(PAGE_SIZE_A4)
 		document.addPage(page)
 
+
+
 		eanImage = createBarcodeImage(document, product.ean)
 		eanImage2 = createBarcodeImage(document, product.invNum, Code39)
 
 		cs = new PDPageContentStream(document, page)
-		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
+		font = PDType0Font.load(document, getClass.getResourceAsStream("/ARIALMT.ttf"))
 		boldFont = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
 		cs.setStrokingColor(Color.BLACK)
@@ -49,7 +52,7 @@ class XeroxToner extends Toner3x1 {
 
 		cs.drawImage(eanImage, pos.x + 20, pos.y + 130, eanImage.getWidth * 0.42 toFloat, eanImage.getHeight * 0.40 toFloat)
 		cs.drawImage(eanImage2, pos.x + 20, pos.y + 95, eanImage.getWidth * 0.65 toFloat, eanImage.getHeight * 0.25 toFloat)
-		cs.drawImage(rohs, pos.x + singleWidth - 150, pos.y + 0, rohs.getWidth * 0.25 toFloat, rohs.getHeight * 0.25 toFloat)
+		cs.drawImage(rohs, pos.x + singleWidth - 144, pos.y + 1, rohs.getWidth * 0.28 toFloat, rohs.getHeight * 0.28 toFloat)
 
 		staticText(pos)
 		variableText(pos)
@@ -58,7 +61,7 @@ class XeroxToner extends Toner3x1 {
 	private def staticText(pos: Position): Unit = {
 		alternativeText(pos)
 		xeroxText(pos)
-		contentsText(pos + (-50, 75))
+		contentsText(pos + (-42, 66))
 	}
 
 	private def alternativeText(pos: Position): Unit = {
@@ -66,22 +69,31 @@ class XeroxToner extends Toner3x1 {
 	}
 
 	private def xeroxText(pos: Position): Unit = {
-		cs.printLines(XeroxToner.XEROX, pos + (-50, 15), 6, 600, 5)
+		cs.printLines(XeroxToner.XEROX, pos + (-42, 15), 6, 340, 5.5f)
 	}
 
 	private def contentsText(pos: Position): Unit = {
-		cs.printLines(XeroxToner.CONTENTS, pos, 8)
-		cs.printLines(XeroxToner.MADEIN, pos + (150, 0), 8)
+		cs.printLines(XeroxToner.CONTENTS, pos, 8, 8)
+		cs.printLines(XeroxToner.MADEIN, pos + (108, 0), 8, 8)
 	}
 
 	private def variableText(pos: Position): Unit = {
-		colorBox(pos)
+		val top = 47
+		colorBox(pos + (238, top), 54, 65, pos + (195, 100), 7)
+		colorBox(pos + (singleWidth - 80, top - 16), 66, 78, pos + (singleWidth - 120, 90), 8)
 
 		cs.print(product.invNum, pos.x + 120, pos.y + singleHeight - 40, 40)
+		cs.setColor(Color.GREEN.darker())
+		cs.print("HP CLJ CP6015", pos.x + 350, pos.y + singleHeight - 25, 26)
+		cs.setColor(Color.BLACK)
 	}
 
-	private def colorBox(pos: Position): Unit = {
-		cs.drawRoundedRectangle(pos + (500, 10), 60, 100, 10)
+	private def colorBox(pos: Position, width: Int, height: Int, textPos: Position, fs: Int): Unit = {
+		cs.drawRoundedRectangle(pos, width, height, 6)
+		cs.setColor(product.color.textColor)
+		//cs.setColor(Color.RED)
+		cs.printLines(product.color.colorNames, textPos, 9, fs)
+		cs.setColor(Color.BLACK)
 	}
 }
 

@@ -28,11 +28,11 @@ import java.util.stream.StreamSupport;
 public class ExcelReader {
 	private static Logger logger = Logger.getLogger(ExcelReader.class);
 
-	public static List<Product> importFile(String filename, Generators generator) {
-		return importFile(new File(filename), generator);
+	public static List<Product> importFile(String filename, Generators generator, boolean debug) {
+		return importFile(new File(filename), generator, debug);
 	}
 
-	public static List<Product> importFile(File FileR, Generators generator) {
+	public static List<Product> importFile(File FileR, Generators generator, boolean debug) {
 		logger.info("Importing file: " + FileR.getAbsolutePath());
 		final List<Product> products = new ArrayList<>();
 
@@ -66,8 +66,8 @@ public class ExcelReader {
 
 		Spliterator<Row> spliterator = new RowSpliterator(iterable, sheet.getPhysicalNumberOfRows());
 
-		//TODO: jednovlaknove pri malem poctu radku
-		StreamSupport.stream(spliterator, true).forEach(row -> {
+		boolean parallel = debug || sheet.getPhysicalNumberOfRows() > 50;
+		StreamSupport.stream(spliterator, parallel).forEach(row -> {
 			try {
 				manufacturers.forEach(m -> products.add(createAltXInk(row, evaluator, m.code)));
 			} catch (NullPointerException ex) {
@@ -80,7 +80,7 @@ public class ExcelReader {
 		return products;
 	}
 
-	private static final Function<Product, Boolean> validator = p -> p.invNum != null && !p.invNum.equals("");
+	private static final Function<Product, Boolean> validator = p -> p.invNum() != null && !p.invNum().equals("");
 
 	private static Product createAltXInk(Row row, FormulaEvaluator evaluator, String manu) {
 		final String invNum = getCellValue(row.getCell(0), evaluator); // A
