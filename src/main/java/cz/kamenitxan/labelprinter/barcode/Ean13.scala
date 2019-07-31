@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 
 /**
   * Created by tomaspavel on 1.3.17.

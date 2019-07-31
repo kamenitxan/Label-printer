@@ -1,39 +1,50 @@
 package cz.kamenitxan.labelprinter.generators.impl.t3x1
 
 import java.awt.Color
-import java.util.Calendar
 
+import cz.kamenitxan.labelprinter.Main
 import cz.kamenitxan.labelprinter.barcode.Code39
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner3x1}
 import cz.kamenitxan.labelprinter.models.Position
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
-import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
+import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
 import scala.language.postfixOps
 
 class XeroxToner extends Toner3x1 {
 
+	override val singleWidth: Float = cmToPoints(27.3f)
 	override val fontSize: Int = 7
+	val rightStart = 350
 	var eanImage: PDImageXObject = _
 	var eanImage2: PDImageXObject = _
 	var rohs: PDImageXObject = _
 
 	override def getFolderName: String = Generators.TONER_XEROX.folder
 
+	override def getPosition(line: Int, row: Int): Position = {
+		val x = mmToPoints(15)
+		val y = mmToPoints(5) + singleHeight * line + 5 * line
+		new Position(x, y)
+	}
+
 	override def generatePdf(): Unit = {
 		val document: PDDocument = new PDDocument
 		val page: PDPage = new PDPage(PAGE_SIZE_A4)
 		document.addPage(page)
 
-
+		if (Main.debug) {
+			product.productCode = "CB380A"
+			product.name = "HP CLJ CP6015"
+		}
 
 		eanImage = createBarcodeImage(document, product.ean)
 		eanImage2 = createBarcodeImage(document, product.invNum, Code39)
 
 		cs = new PDPageContentStream(document, page)
-		font = PDType0Font.load(document, getClass.getResourceAsStream("/ARIALMT.ttf"))
+		font = PDType0Font.load(document, getClass.getResourceAsStream("/arial.ttf"))
 		boldFont = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Bold.ttf"))
 		cs.setFont(font, fontSize)
 		cs.setStrokingColor(Color.BLACK)
@@ -66,6 +77,9 @@ class XeroxToner extends Toner3x1 {
 
 	private def alternativeText(pos: Position): Unit = {
 		cs.printLines(XeroxToner.ALT, pos + (100, 140), 8, 6)
+		cs.withColor(Color.GRAY) {
+			cs.printLines(XeroxToner.ALT, pos + (rightStart-60, 50), 12, 14)
+		}
 	}
 
 	private def xeroxText(pos: Position): Unit = {
@@ -83,9 +97,22 @@ class XeroxToner extends Toner3x1 {
 		colorBox(pos + (singleWidth - 80, top - 16), 66, 78, pos + (singleWidth - 120, 90), 8)
 
 		cs.print(product.invNum, pos.x + 120, pos.y + singleHeight - 40, 40)
-		cs.setColor(Color.GREEN.darker())
-		cs.print("HP CLJ CP6015", pos.x + 350, pos.y + singleHeight - 25, 26)
-		cs.setColor(Color.BLACK)
+		cs.print(product.productCode, pos.x + 120, pos.y + singleHeight - 60, 14)
+		cs.withColor(Color.GREEN.darker()) {
+			cs.print(product.name, pos.x + rightStart, pos.y + singleHeight - 25, 26)
+		}
+		cs.withColor(Color.GRAY) {
+			cs.print(product.productCode, pos.x + rightStart, pos.y + 10, 26)
+			val v = product.color.colorNames
+			val colorText = {
+				if (v.nonEmpty) {
+					v.init.map(n => n + " toner • ").mkString + v.last + " toner"
+				} else {
+					""
+				}
+			}
+			cs.printLines(colorText, pos + (rightStart - 60, 90), 20, 130, 17)
+		}
 	}
 
 	private def colorBox(pos: Position, width: Int, height: Int, textPos: Position, fs: Int): Unit = {
@@ -97,6 +124,7 @@ class XeroxToner extends Toner3x1 {
 	}
 }
 
+//noinspection SpellCheckingInspection
 object XeroxToner {
 	val ALT = List("Replaces/Alternativa/Alternatíva/", "Alternatywa dla/Echivalent")
 	val XEROX = "©2018 Xerox Corporation. All rights reserved. Xerox® and Xerox and Design® are trademarks of Xerox Corporation in the United States and/or other countries. HP®, LaserJet, and CB380A are trademarks of Hawlett Packard Industries Ltd."
@@ -106,7 +134,7 @@ object XeroxToner {
 		"Zloženie: 1 kazeta",
 		"Tartalom: 1 kazetta",
 		"Zawoera: 1 kasete",
-		"todo"
+		"Continut: 1 cartus"
 	)
 	val MADEIN = List(
 		"Made in Czech Republic",

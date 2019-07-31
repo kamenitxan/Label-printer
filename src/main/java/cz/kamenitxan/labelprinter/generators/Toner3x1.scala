@@ -11,8 +11,8 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle
 abstract class Toner3x1 extends PdfGenerator {
 	val PAGE_SIZE_A4 = new PDRectangle(wholePageWidth, wholePageHeight)
 
-	val singleWidth = 805
-	val singleHeight = 185
+	val singleWidth: Float = 805
+	val singleHeight: Float = 185
 	override val fontSize = 12
 
 	override def getPosition(line: Int, row: Int): Position = {

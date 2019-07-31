@@ -306,6 +306,12 @@ abstract class PdfGenerator {
 	 		)
 			cs.fill()
 		}
+
+		def withColor(color: Color)(fun: => Unit): Unit = {
+			cs.setColor(color)
+			fun
+			cs.setColor(Color.BLACK)
+		}
 	}
 
 }

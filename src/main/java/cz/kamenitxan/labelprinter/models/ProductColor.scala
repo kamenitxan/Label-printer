@@ -29,6 +29,7 @@ object ProductColor {
 	implicit def asOldColor(c: ProductColor): Color = c.color
 }
 
+//noinspection SpellCheckingInspection
 case object Black extends ProductColor {
 	override val color: Color = Color.BLACK
 	override val textColor: Color = Color.WHITE
@@ -39,16 +40,22 @@ case object White extends ProductColor {
 	override val color: Color = Color.WHITE
 }
 
+//noinspection SpellCheckingInspection
 case object Yellow extends ProductColor {
 	override val color: Color = Color.YELLOW
+	override val colorNames: Seq[String] = Seq("Yellow", "Žlutý", "Žltý", "Sárga", "Żółty", "Galben")
 }
 
+//noinspection SpellCheckingInspection
 case object Cyan extends ProductColor {
 	override val color: Color = Color.CYAN
+	override val colorNames: Seq[String] = Seq("Cyan", "Modrý", "Niebieski", "Cián", "Albastru", "Cyjan")
 }
 
+//noinspection SpellCheckingInspection
 case object Magenta extends ProductColor {
 	override val color: Color = Color.MAGENTA
+	override val colorNames: Seq[String] = Seq("Magenta", "Červený", "Purpurowy", "Rosu")
 }
 
 case object Gray extends ProductColor {
