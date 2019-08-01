@@ -46,7 +46,7 @@ abstract class PdfGenerator {
 
 	protected def splitByWidth(text: String, allowedWidth: Int, fs: Int = fontSize): List[String] = {
 		var myLine: String = ""
-		var lines: mutable.MutableList[String] = mutable.MutableList()
+		var lines: mutable.Seq[String] = mutable.Seq()
 
 		// get all words from the text
 		// keep in mind that words are separated by spaces -> "Lorem ipsum!!!!:)" -> words are "Lorem" and "ipsum!!!!:)"
@@ -60,7 +60,8 @@ abstract class PdfGenerator {
 			val size: Int = getStringWidth(myLine + word, fs)
 			if (size > allowedWidth) {
 				// if the line would be too long with the current word, add the line without the current word
-				lines += myLine
+
+				lines appended myLine
 				// and start a new line with the current word
 				myLine = word
 			} else {
@@ -69,7 +70,7 @@ abstract class PdfGenerator {
 			}
 		}
 		// add the rest to lines
-		lines += myLine
+		lines appended myLine
 		lines.toList
 	}
 

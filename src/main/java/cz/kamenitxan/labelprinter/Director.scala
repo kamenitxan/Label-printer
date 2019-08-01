@@ -21,7 +21,8 @@ object Director {
 			  .foreach(p => generatorF.genNG.newInstance()
 			  .generate(p, borders, onlyBorders))
 		} else {
-			products.filter(p => p != null && p.isValid).par.foreach(p => generatorF.genNG.newInstance().generate(p, borders, onlyBorders))
+			//TODO: parallel
+			products.filter(p => p != null && p.isValid).foreach(p => generatorF.genNG.newInstance().generate(p, borders, onlyBorders))
 		}
 		System.gc()
 	}
