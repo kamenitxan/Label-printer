@@ -15,9 +15,11 @@ import scala.language.postfixOps
 
 class XeroxToner extends Toner3x1 {
 
-	override val singleWidth: Float = cmToPoints(27.3f)
+	override val singleWidth: Float = mmToPoints(297)
+	override val singleHeight: Float = cmToPoints(21/3)
 	override val fontSize: Int = 7
-	val rightStart = 350
+	val leftStart = 40
+	val rightStart = 367
 	var eanImage: PDImageXObject = _
 	var eanImage2: PDImageXObject = _
 	var rohs: PDImageXObject = _
@@ -25,8 +27,8 @@ class XeroxToner extends Toner3x1 {
 	override def getFolderName: String = Generators.TONER_XEROX.folder
 
 	override def getPosition(line: Int, row: Int): Position = {
-		val x = mmToPoints(15)
-		val y = mmToPoints(5) + singleHeight * line + 5 * line
+		val x = 0
+		val y = singleHeight * line
 		new Position(x, y)
 	}
 
@@ -61,9 +63,9 @@ class XeroxToner extends Toner3x1 {
 	private def drawSingle(pos: Position): Unit = {
 		if (borders) debugRect(pos)
 
-		cs.drawImage(eanImage, pos.x + 20, pos.y + 130, eanImage.getWidth * 0.42 toFloat, eanImage.getHeight * 0.40 toFloat)
-		cs.drawImage(eanImage2, pos.x + 20, pos.y + 95, eanImage.getWidth * 0.65 toFloat, eanImage.getHeight * 0.25 toFloat)
-		cs.drawImage(rohs, pos.x + singleWidth - 144, pos.y + 1, rohs.getWidth * 0.28 toFloat, rohs.getHeight * 0.28 toFloat)
+		cs.drawImage(eanImage, leftStart, pos.y + 130, eanImage.getWidth * 0.42 toFloat, eanImage.getHeight * 0.40 toFloat)
+		cs.drawImage(eanImage2, leftStart, pos.y + 95, eanImage.getWidth * 0.65 toFloat, eanImage.getHeight * 0.25 toFloat)
+		cs.drawImage(rohs, pos.x + singleWidth - 162, pos.y + 11, rohs.getWidth * 0.28 toFloat, rohs.getHeight * 0.28 toFloat)
 
 		staticText(pos)
 		variableText(pos)
@@ -72,18 +74,18 @@ class XeroxToner extends Toner3x1 {
 	private def staticText(pos: Position): Unit = {
 		alternativeText(pos)
 		xeroxText(pos)
-		contentsText(pos + (-42, 66))
+		contentsText(pos + (-22, 76))
 	}
 
 	private def alternativeText(pos: Position): Unit = {
-		cs.printLines(XeroxToner.ALT, pos + (100, 140), 8, 6)
+		cs.printLines(XeroxToner.ALT, pos + (150, 138), 7, 6)
 		cs.withColor(Color.GRAY) {
 			cs.printLines(XeroxToner.ALT, pos + (rightStart-60, 50), 12, 14)
 		}
 	}
 
 	private def xeroxText(pos: Position): Unit = {
-		cs.printLines(XeroxToner.XEROX, pos + (-42, 15), 6, 340, 5.5f)
+		cs.printLines(XeroxToner.XEROX, pos + (-22, 24), 6, 340, 5.5f)
 	}
 
 	private def contentsText(pos: Position): Unit = {
@@ -93,13 +95,13 @@ class XeroxToner extends Toner3x1 {
 
 	private def variableText(pos: Position): Unit = {
 		val top = 47
-		colorBox(pos + (238, top), 54, 65, pos + (195, 100), 7)
-		colorBox(pos + (singleWidth - 80, top - 16), 66, 78, pos + (singleWidth - 120, 90), 8)
+		colorBox(pos + (258, top + 6), 54, 65, pos + (215, 105), 7)
+		colorBox(pos + (singleWidth - 98, top - 8), 66, 78, pos + (singleWidth - 135, 98), 8)
 
-		cs.print(product.invNum, pos.x + 120, pos.y + singleHeight - 40, 40)
-		cs.print(product.productCode, pos.x + 120, pos.y + singleHeight - 60, 14)
+		cs.print(product.invNum, pos.x + 141, pos.y + singleHeight - 45, 33)
+		cs.print(product.productCode, pos.x + 146, pos.y + singleHeight - 69, 15)
 		cs.withColor(Color.GREEN.darker()) {
-			cs.print(product.name, pos.x + rightStart, pos.y + singleHeight - 25, 26)
+			cs.print(product.name, pos.x + rightStart, pos.y + singleHeight - 39, 27)
 		}
 		cs.withColor(Color.GRAY) {
 			cs.print(product.productCode, pos.x + rightStart, pos.y + 10, 26)
@@ -111,7 +113,7 @@ class XeroxToner extends Toner3x1 {
 					""
 				}
 			}
-			cs.printLines(colorText, pos + (rightStart - 60, 90), 20, 130, 17)
+			cs.printLines(colorText, pos + (rightStart - 60, 102), 25, 130, 18)
 		}
 	}
 
