@@ -14,6 +14,7 @@ object Ean13 extends BarcodeGenerator {
 	@throws[Exception]
 	def main(args: Array[String]): Unit = { //Create the barcode bean
 		val bean = new EAN13Bean
+		bean.doQuietZone(true)
 		val dpi = 150
 		//Configure the barcode generator
 		bean.setModuleWidth(0.4) //makes the narrow bar
@@ -33,11 +34,11 @@ object Ean13 extends BarcodeGenerator {
 
 	}
 
-	def createEan(ean: String): BufferedImage = {
+	def createEan(ean: String, doQuietZone: Boolean): BufferedImage = {
 		val bean = new EAN13Bean
 		val dpi = 150
 		bean.setModuleWidth(0.4)
-		bean.doQuietZone(false)
+		bean.doQuietZone(doQuietZone)
 		try {
 			val canvas = new BitmapCanvasProvider(null, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0)
 			bean.generateBarcode(canvas, ean)

@@ -42,7 +42,7 @@ class XeroxToner extends Toner3x1 {
 			product.name = "HP CLJ CP6015"
 		}
 
-		eanImage = createBarcodeImage(document, product.ean)
+		eanImage = createBarcodeImage(document, product.ean, doQuietZone = true)
 		eanImage2 = createBarcodeImage(document, product.invNum, Code39)
 
 		cs = new PDPageContentStream(document, page)

@@ -122,11 +122,11 @@ abstract class PdfGenerator {
 		mmToPoints(cm * 10)
 	}
 
-	protected def createBarcodeImage(document: PDDocument, ean: String, generator: BarcodeGenerator = Ean13): PDImageXObject = {
+	protected def createBarcodeImage(document: PDDocument, ean: String, generator: BarcodeGenerator = Ean13, doQuietZone: Boolean = false): PDImageXObject = {
 		if (ean == null || ean.isEmpty) {
 			return null
 		}
-		val eanRaw = generator.createEan(ean)
+		val eanRaw = generator.createEan(ean, doQuietZone)
 		LosslessFactory.createFromImage(document, eanRaw)
 	}
 
