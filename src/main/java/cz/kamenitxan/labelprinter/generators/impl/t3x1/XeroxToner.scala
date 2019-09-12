@@ -104,7 +104,7 @@ class XeroxToner extends Toner3x1 {
 			cs.print(product.name, pos.x + rightStart, pos.y + singleHeight - 39, 27)
 		}
 		cs.withColor(Color.GRAY) {
-			cs.print(product.productCode, pos.x + rightStart, pos.y + 10, 26)
+			cs.print(product.productCode, pos.x + rightStart, pos.y + 12, 26)
 			val v = product.color.colorNames
 			val colorText = {
 				if (v.nonEmpty) {
