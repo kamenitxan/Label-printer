@@ -4,7 +4,7 @@ import java.awt.Color
 
 import cz.kamenitxan.labelprinter.barcode.Ean13
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner6x1}
-import cz.kamenitxan.labelprinter.models.{Position, ProductColor}
+import cz.kamenitxan.labelprinter.models.Position
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
@@ -125,16 +125,14 @@ class TeslaToner extends Toner6x1 {
 	private def madein(pos: Position): Unit = {
 		val leftPadding = 20
 		val top = pos.y + singleHeight - 10
-		val lh = 4.5
-
-		cs.setFont(font, fontSize - 3)
-		cs.print("Made in Czech Republic.", pos.x + leftPadding, top)
-		cs.print("Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat)
-		cs.print("Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat)
-		cs.print("Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat)
-		cs.print("Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat)
-		cs.print("Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat)
-		cs.setFont(font, fontSize)
+		val lh = 6.5
+		val fs = 6
+		cs.print("Made in Czech Republic.", pos.x + leftPadding, top, fs)
+		cs.print("Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat, fs)
+		cs.print("Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat, fs)
+		cs.print("Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat, fs)
+		cs.print("Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat, fs)
+		cs.print("Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat, fs)
 	}
 
 	def divider(pos: Position): Unit = {

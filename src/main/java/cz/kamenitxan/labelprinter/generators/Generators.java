@@ -1,6 +1,5 @@
 package cz.kamenitxan.labelprinter.generators;
 
-import cz.kamenitxan.labelprinter.generators.PdfGenerator;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.AltxInk;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.TeslaInk;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.UnifiedLamdaInk;

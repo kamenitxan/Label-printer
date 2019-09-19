@@ -122,17 +122,15 @@ class TeslaToner extends Toner6x2 {
 
 	private def madein(pos: Position): Unit = {
 		val leftPadding = 20
-		val top = pos.y + singleHeight - 10
-		val lh = 4.5
-
-		cs.setFont(font, fontSize - 3)
-		cs.print("Made in Czech Republic.", pos.x + leftPadding, top)
-		cs.print("Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat)
-		cs.print("Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat)
-		cs.print("Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat)
-		cs.print("Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat)
-		cs.print("Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat)
-		cs.setFont(font, fontSize)
+		val top = pos.y + singleHeight - 8
+		val lh = 6
+		val fs = 5
+		cs.print("Made in Czech Republic.", pos.x + leftPadding, top, fs)
+		cs.print("Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1, fs)
+		cs.print("Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2, fs)
+		cs.print("Made in Czech Republic.", pos.x + leftPadding, top - lh * 3, fs)
+		cs.print("Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4, fs)
+		cs.print("Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5, fs)
 	}
 
 	def divider(pos: Position): Unit = {
