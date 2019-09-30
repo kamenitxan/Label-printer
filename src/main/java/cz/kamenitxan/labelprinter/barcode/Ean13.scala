@@ -41,6 +41,7 @@ object Ean13 extends BarcodeGenerator {
 		bean.doQuietZone(doQuietZone)
 		try {
 			val canvas = new BitmapCanvasProvider(null, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0)
+			// TODO: pridat validaci na spatnou delku eanu
 			bean.generateBarcode(canvas, ean)
 			canvas.finish()
 			return canvas.getBufferedImage
