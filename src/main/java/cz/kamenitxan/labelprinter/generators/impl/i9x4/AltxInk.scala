@@ -7,7 +7,7 @@ import java.awt.image.AffineTransformOp
 import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.barcode.Ean13
 import cz.kamenitxan.labelprinter.generators.{Generators, Ink9x4}
-import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.models.{Position, ProductColor, White}
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
@@ -87,7 +87,7 @@ class AltxInk extends Ink9x4 {
 		val pos = new Position(posB.x + 56, posB.y + 13)
 
 		product.color match {
-			case Color.WHITE =>
+			case White =>
 				cs.setNonStrokingColor(Color.CYAN)
 				cs.drawCircle(pos.x, pos.y, 3)
 

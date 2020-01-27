@@ -16,7 +16,7 @@ object ProductColor {
 			case "Yellow" => Yellow
 			case "Cyan" | "Photo Cyan" => Cyan
 			case "Magenta" | "Photo Magenta" => Magenta
-			case "CMYK" | "Color"  | "Photo" =>White
+			case "CMYK" | "Color"  | "Photo" => White
 			case "Grey" => Gray
 			case "Light Cyan" => LightCyan
 			case "Light Magenta" => LightMagenta

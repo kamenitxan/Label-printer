@@ -118,6 +118,7 @@ class XeroxToner extends Toner3x1 {
 	}
 
 	private def colorBox(pos: Position, width: Int, height: Int, textPos: Position, fs: Int): Unit = {
+		cs.setColor(product.color.color)
 		cs.drawRoundedRectangle(pos, width, height, 6)
 		cs.setColor(product.color.textColor)
 		//cs.setColor(Color.RED)
