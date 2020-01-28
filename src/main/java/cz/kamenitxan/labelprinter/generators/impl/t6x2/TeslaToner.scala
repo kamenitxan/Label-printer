@@ -4,8 +4,9 @@ import java.awt.Color
 
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner6x2}
 import cz.kamenitxan.labelprinter.models.Position
+import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
-import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
+import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
 import scala.language.postfixOps
@@ -15,6 +16,7 @@ import scala.language.postfixOps
   */
 class TeslaToner extends Toner6x2 {
 	var document: PDDocument = _
+	var ceImage: PDImageXObject = _
 
 	override def getFolderName: String = Generators.TONER_TESLA.folder
 
@@ -25,6 +27,7 @@ class TeslaToner extends Toner6x2 {
 
 
 		eanImage = createBarcodeImage(document, product.ean)
+		ceImage = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/ce-mark.png")))
 
 		cs = new PDPageContentStream(document, page)
 		font = PDType0Font.load(document, getClass.getResourceAsStream("/OpenSans-Regular.ttf"))
@@ -52,7 +55,7 @@ class TeslaToner extends Toner6x2 {
 			capacity(pos)
 			capacity(pos + (140, 0))
 			rohsImage(pos)
-
+			ceImage(pos)
 			divider(pos)
 		}
 	}
@@ -149,4 +152,8 @@ class TeslaToner extends Toner6x2 {
 
 	def rohsImage(pos: Position): Unit = {}
 
+	def ceImage(pos: Position): Unit = {
+		val scale = 0.1
+		cs.drawImage(ceImage, pos.x + singleWidth - 26, pos.y + 6,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
+	}
 }

@@ -1,6 +1,7 @@
 package cz.kamenitxan.labelprinter.generators;
 
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.AltxInk;
+import cz.kamenitxan.labelprinter.generators.impl.i9x4.InkBonusInfo;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.TeslaInk;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.UnifiedLamdaInk;
 import cz.kamenitxan.labelprinter.generators.impl.t3x1.LamdaToner;
@@ -23,7 +24,8 @@ public enum Generators {
 	TONER_TESLA("toner_tesla_6x2", TeslaToner.class, "Tesla toner 6x2"),
 	TONER_TESLA_BIG("toner_tesla_6x1", cz.kamenitxan.labelprinter.generators.impl.t6x1.TeslaToner.class, "Tesla toner 6x1"),
 	INK_TESLA("ink_tesla", TeslaInk.class, "Tesla ink 9x4"),
-	TONER_XEROX("toner_xerox_3x1", XeroxToner.class, "Xerox toner 3x1");
+	TONER_XEROX("toner_xerox_3x1", XeroxToner.class, "Xerox toner 3x1"),
+	INK_BONUS_INFO("ink_bonus_info", InkBonusInfo.class, "Ink Bonus Info");
 
 	public String folder;
 	public Class<? extends PdfGenerator> genNG;

@@ -17,6 +17,7 @@ import scala.language.postfixOps
 class LamdaToner extends Toner3x1 {
 	var logo: PDImageXObject = _
 	var icons: PDImageXObject = _
+	var ceImage: PDImageXObject = _
 
 	def getFolderName: String = Generators.TONER_LAMDA_OLD.folder
 
@@ -34,6 +35,7 @@ class LamdaToner extends Toner3x1 {
 
 		logo = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/lamda2.jpg")))
 		icons = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/label2.jpg")))
+		ceImage = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/ce-mark.png")))
 
 		for (line <- 0 to 2; row <- 0 to 0) {
 			drawSingle(getPosition(line, row))
@@ -46,7 +48,7 @@ class LamdaToner extends Toner3x1 {
 		if(borders) debugRect(pos)
 
 		divider(pos)
-
+		ceImage(pos)
 		cs.drawImage(logo, pos.x + 20, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
 		cs.drawImage(logo, pos.x + 480, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
 		cs.drawImage(icons, pos.x + 375, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
@@ -126,5 +128,10 @@ class LamdaToner extends Toner3x1 {
 	private def divider(pos: Position): Unit = {
 		cs.drawLine(pos + (470, 0), pos + (470, 10))
 		cs.drawLine(pos + (470, singleHeight), pos + (470, singleHeight - 10))
+	}
+
+	def ceImage(pos: Position): Unit = {
+		val scale = 0.12
+		cs.drawImage(ceImage, pos.x + singleWidth - 25, pos.y + 8,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
 	}
 }

@@ -23,6 +23,7 @@ class XeroxToner extends Toner3x1 {
 	var eanImage: PDImageXObject = _
 	var eanImage2: PDImageXObject = _
 	var rohs: PDImageXObject = _
+	var ceImage: PDImageXObject = _
 
 	override def getFolderName: String = Generators.TONER_XEROX.folder
 
@@ -44,6 +45,7 @@ class XeroxToner extends Toner3x1 {
 
 		eanImage = createBarcodeImage(document, product.ean, doQuietZone = true)
 		eanImage2 = createBarcodeImage(document, product.invNum, Code39)
+		ceImage = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/ce-mark.png")))
 
 		cs = new PDPageContentStream(document, page)
 		font = PDType0Font.load(document, getClass.getResourceAsStream("/arial.ttf"))
@@ -66,7 +68,7 @@ class XeroxToner extends Toner3x1 {
 		cs.drawImage(eanImage, leftStart, pos.y + 130, eanImage.getWidth * 0.42 toFloat, eanImage.getHeight * 0.40 toFloat)
 		cs.drawImage(eanImage2, leftStart, pos.y + 95, eanImage.getWidth * 0.65 toFloat, eanImage.getHeight * 0.25 toFloat)
 		cs.drawImage(rohs, pos.x + singleWidth - 162, pos.y + 11, rohs.getWidth * 0.28 toFloat, rohs.getHeight * 0.28 toFloat)
-
+		ceImage(pos)
 		staticText(pos)
 		variableText(pos)
 	}
@@ -124,6 +126,11 @@ class XeroxToner extends Toner3x1 {
 		//cs.setColor(Color.RED)
 		cs.printLines(product.color.colorNames, textPos, 9, fs)
 		cs.setColor(Color.BLACK)
+	}
+
+	def ceImage(pos: Position): Unit = {
+		val scale = 0.12
+		cs.drawImage(ceImage, pos.x + singleWidth - 25, pos.y + 8,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
 	}
 }
 
