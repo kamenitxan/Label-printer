@@ -11,8 +11,8 @@ import java.io.File;
  * Created by tomaspavel on 6.3.17.
  */
 public class DirectorService extends Service<Void> {
-	public  File file;
-	public  Generators generator;
+	public File file;
+	public Generators generator;
 	public boolean borders = false;
 	public boolean onlyBorders = false;
 
@@ -21,7 +21,7 @@ public class DirectorService extends Service<Void> {
 	protected Task<Void> createTask() {
 		return new Task<Void>() {
 			@Override
-			protected Void call() throws Exception {
+			protected Void call() {
 				Director.generate(file, generator, borders, onlyBorders);
 				return null;
 			}

@@ -1,7 +1,8 @@
 package cz.kamenitxan.labelprinter.generators;
 
+import cz.kamenitxan.labelprinter.generators.impl.i13x5.AltxBonusInfo;
+import cz.kamenitxan.labelprinter.generators.impl.i13x5.LamdaBonusInfo;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.AltxInk;
-import cz.kamenitxan.labelprinter.generators.impl.i9x4.InkBonusInfo;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.TeslaInk;
 import cz.kamenitxan.labelprinter.generators.impl.i9x4.UnifiedLamdaInk;
 import cz.kamenitxan.labelprinter.generators.impl.t3x1.LamdaToner;
@@ -25,16 +26,25 @@ public enum Generators {
 	TONER_TESLA_BIG("toner_tesla_6x1", cz.kamenitxan.labelprinter.generators.impl.t6x1.TeslaToner.class, "Tesla toner 6x1"),
 	INK_TESLA("ink_tesla", TeslaInk.class, "Tesla ink 9x4"),
 	TONER_XEROX("toner_xerox_3x1", XeroxToner.class, "Xerox toner 3x1"),
-	INK_BONUS_INFO("ink_bonus_info", InkBonusInfo.class, "Ink Bonus Info");
+	INK_LAMDA_INFO("ink_lamda_info", LamdaBonusInfo.class, "Ink Lamda Info", true),
+	INK_ALTX_INFO("ink_allprint_info", AltxBonusInfo.class, "Ink Allprint Info", true);
 
 	public String folder;
 	public Class<? extends PdfGenerator> genNG;
 	public String title;
+	public boolean staticPdf = false;
 
 	Generators(String folder, Class<? extends PdfGenerator> genNG, String title) {
 		this.folder = folder;
 		this.genNG = genNG;
 		this.title = title;
+	}
+
+	Generators(String folder, Class<? extends PdfGenerator> genNG, String title, boolean staticPdf) {
+		this.folder = folder;
+		this.genNG = genNG;
+		this.title = title;
+		this.staticPdf = staticPdf;
 	}
 
 	@Override

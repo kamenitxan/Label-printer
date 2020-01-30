@@ -33,11 +33,11 @@ abstract class PdfGenerator {
 
 	def getFolderName: String
 
-	def generatePdf()
+	def generatePdf(): Unit
 
 	protected def getPosition(line: Int, row: Int): Position
 
-	def generate(product: Product, borders: Boolean, onlyBorders: Boolean) {
+	def generate(product: Product, borders: Boolean, onlyBorders: Boolean): Unit = {
 		this.product = product
 		this.borders = borders
 		this.onlyBorders = onlyBorders
@@ -78,7 +78,7 @@ abstract class PdfGenerator {
 		(fs * font.getStringWidth(s) / 1000).asInstanceOf[Int]
 	}
 
-	protected def savePdf(document: PDDocument) {
+	protected def savePdf(document: PDDocument): Unit = {
 		val di = document.getDocumentInformation
 		di.setCreationDate(Calendar.getInstance())
 		di.setModificationDate(Calendar.getInstance())

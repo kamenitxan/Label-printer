@@ -126,7 +126,7 @@ public class Controller implements Initializable {
 		}
 		logger.info("Starting export");
 
-		if (selectedFile == null || !selectedFile.exists()) {
+		if (!generator.staticPdf && (selectedFile == null || !selectedFile.exists())) {
 			String fileName = selectedFile != null ? selectedFile.getAbsolutePath() : "";
 			Alert alert = new Alert(Alert.AlertType.WARNING);
 			alert.setTitle("Nebyl vybran zdrojový soubor");

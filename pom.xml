@@ -89,8 +89,13 @@
 				<groupId>org.scala-tools</groupId>
 				<artifactId>maven-scala-plugin</artifactId>
 				<version>2.15.2</version>
+				<configuration>
+					<args>
+						<arg>-feature</arg>
+						<arg>-deprecation</arg>
+					</args>
+				</configuration>
 				<executions>
-
 					<execution>
 						<id>compile</id>
 						<goals>
