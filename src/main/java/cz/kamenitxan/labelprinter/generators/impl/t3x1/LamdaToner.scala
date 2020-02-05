@@ -4,6 +4,7 @@ import java.awt.Color
 
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner3x1}
 import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.utils.LamdaAddress
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
@@ -14,7 +15,7 @@ import scala.language.postfixOps
 /**
   * Created by tomaspavel on 23.3.17.
   */
-class LamdaToner extends Toner3x1 {
+class LamdaToner extends Toner3x1 with LamdaAddress {
 	var logo: PDImageXObject = _
 	var icons: PDImageXObject = _
 	var ceImage: PDImageXObject = _
@@ -53,7 +54,7 @@ class LamdaToner extends Toner3x1 {
 		cs.drawImage(logo, pos.x + 480, pos.y + 100, logo.getWidth * 0.55 toFloat, logo.getHeight * 0.55 toFloat)
 		cs.drawImage(icons, pos.x + 375, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
 		cs.drawImage(icons, pos.x + 695, pos.y + 10, logo.getWidth * 0.27 toFloat, logo.getHeight * 0.1 toFloat)
-		cs.print("Výrobce: " + companyName, pos.x + 20, pos.y + 40)
+		cs.print("Výrobce: " + company, pos.x + 20, pos.y + 40)
 		cs.print("Katalogové číslo: ", pos.x + 20, pos.y + 55)
 		cs.printBold(product.invNum, pos.x + 115, pos.y + 55)
 		cs.printBold(product.name, pos.x + 20, pos.y + 80)
@@ -64,7 +65,7 @@ class LamdaToner extends Toner3x1 {
 		cs.showText(product.productCode)
 		cs.endText()
 
-		cs.print("Výrobce: " + companyName, pos.x + 480, pos.y + 40)
+		cs.print("Výrobce: " + company, pos.x + 480, pos.y + 40)
 		cs.print("Katalogové číslo: ", pos.x + 480, pos.y + 55)
 		cs.printBold(product.invNum, pos.x + 575, pos.y + 55)
 		cs.printBold(product.name, pos.x + 480, pos.y + 80)

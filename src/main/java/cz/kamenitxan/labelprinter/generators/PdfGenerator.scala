@@ -30,7 +30,6 @@ abstract class PdfGenerator {
 	protected var cs: PDPageContentStream = _
 	protected var font: PDType0Font = _
 	protected var boldFont: PDType0Font = _
-	protected var companyName: String = "Lamdaprint cz s.r.o."
 
 	def getFolderName: String
 

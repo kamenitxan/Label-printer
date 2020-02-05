@@ -4,6 +4,7 @@ import java.awt.Color
 
 import cz.kamenitxan.labelprinter.generators.{Generators, Ink9x4}
 import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.utils.LamdaAddress
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
@@ -14,7 +15,7 @@ import scala.language.postfixOps
 /**
   * Created by tomaspavel on 8.4.17.
   */
-class LamdaInk extends Ink9x4 {
+class LamdaInk extends Ink9x4 with LamdaAddress {
 	override def getFolderName: String = Generators.INK_LAMDA.folder
 
 	var logo: PDImageXObject = _
@@ -109,7 +110,7 @@ class LamdaInk extends Ink9x4 {
 
 	private def lamda(pos: Position): Unit = {
 		cs.setFont(font, 6)
-		cs.print(companyName, pos.x + 80, pos.y + 20)
+		cs.print(company, pos.x + 80, pos.y + 20)
 		cs.setFont(font, fontSize)
 	}
 }
