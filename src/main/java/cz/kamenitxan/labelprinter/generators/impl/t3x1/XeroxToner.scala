@@ -6,6 +6,7 @@ import cz.kamenitxan.labelprinter.Main
 import cz.kamenitxan.labelprinter.barcode.Code39
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner3x1}
 import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.utils.AltXAddress
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
@@ -13,7 +14,7 @@ import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}
 
 import scala.language.postfixOps
 
-class XeroxToner extends Toner3x1 {
+class XeroxToner extends Toner3x1 with AltXAddress {
 
 	override val singleWidth: Float = mmToPoints(297)
 	override val singleHeight: Float = cmToPoints(21/3)
@@ -77,6 +78,7 @@ class XeroxToner extends Toner3x1 {
 		alternativeText(pos)
 		xeroxText(pos)
 		contentsText(pos + (-22, 76))
+		manufacturer(pos + (590, -137))
 	}
 
 	private def alternativeText(pos: Position): Unit = {
@@ -131,6 +133,19 @@ class XeroxToner extends Toner3x1 {
 	def ceImage(pos: Position): Unit = {
 		val scale = 0.12
 		cs.drawImage(ceImage, pos.x + singleWidth - 73, pos.y + 12,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
+	}
+
+	def manufacturer(pos: Position): Unit = {
+		val leftPadding = 20
+		val top = pos.y + singleHeight - 6
+		val lh = 6
+		val fs = 5
+		cs.print(manufacturer1, pos.x + leftPadding, top, fs)
+		cs.print(manufacturer2, pos.x + leftPadding, top - lh * 1, fs)
+		cs.print(company, pos.x + leftPadding, top - lh * 2, fs)
+		cs.print(street, pos.x + leftPadding, top - lh * 3, fs)
+		cs.print(city, pos.x + leftPadding, top - lh * 4, fs)
+		cs.print(companyId, pos.x + leftPadding, top - lh * 5, fs)
 	}
 }
 
