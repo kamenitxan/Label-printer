@@ -6,6 +6,7 @@ import java.util.Calendar
 
 import cz.kamenitxan.labelprinter.barcode.{BarcodeGenerator, Ean13}
 import cz.kamenitxan.labelprinter.models.{Position, Product}
+import cz.kamenitxan.labelprinter.utils.AltXAddress
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}

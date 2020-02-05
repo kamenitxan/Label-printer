@@ -3,10 +3,10 @@ package cz.kamenitxan.labelprinter.generators.impl.i9x4
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 
-import cz.kamenitxan.labelprinter.Utils
 import cz.kamenitxan.labelprinter.barcode.Ean13
 import cz.kamenitxan.labelprinter.generators.Generators
 import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.utils.Utils
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
 import org.apache.pdfbox.pdmodel.{PDDocument, PDPage, PDPageContentStream}

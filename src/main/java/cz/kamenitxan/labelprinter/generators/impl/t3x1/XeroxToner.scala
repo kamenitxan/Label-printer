@@ -130,7 +130,7 @@ class XeroxToner extends Toner3x1 {
 
 	def ceImage(pos: Position): Unit = {
 		val scale = 0.12
-		cs.drawImage(ceImage, pos.x + singleWidth - 25, pos.y + 8,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
+		cs.drawImage(ceImage, pos.x + singleWidth - 73, pos.y + 12,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
 	}
 }
 

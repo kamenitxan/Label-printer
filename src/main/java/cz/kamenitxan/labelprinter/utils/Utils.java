@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter;
+package cz.kamenitxan.labelprinter.utils;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

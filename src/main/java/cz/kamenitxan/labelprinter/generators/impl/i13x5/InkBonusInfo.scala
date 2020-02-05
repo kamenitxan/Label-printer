@@ -46,7 +46,7 @@ abstract class InkBonusInfo extends Ink13x5 {
 			cs.print(town, pos.x + 5, pos.y + singleHeight - 42)
 
 			val scale = 0.1
-			cs.drawImage(ceImage, pos.x + singleWidth - 23, pos.y + 3,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
+			cs.drawImage(ceImage, pos.x + singleWidth - 23, pos.y + 6,  ceImage.getWidth * scale toFloat, ceImage.getHeight * scale toFloat)
 		}
 	}
 

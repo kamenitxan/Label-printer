@@ -15,7 +15,6 @@ class AltxToner extends TeslaToner {
 
 	override def rohsImage(pos: Position): Unit = {
 		val rohs = LosslessFactory.createFromImage(document, ImageIO.read(getClass.getResourceAsStream("/rohs.jpg")))
-		//cs.drawImage(rohs, pos.x + 290, pos.y + 5, rohs.getWidth * 0.10 toFloat, rohs.getHeight * 0.10 toFloat)
 		cs.drawImage(rohs, pos.x + 329, pos.y + 65, rohs.getWidth * 0.168 toFloat, rohs.getHeight * 0.168 toFloat)
 	}
 }

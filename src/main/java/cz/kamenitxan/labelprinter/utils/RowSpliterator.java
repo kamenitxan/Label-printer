@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter;
+package cz.kamenitxan.labelprinter.utils;
 
 import org.apache.poi.ss.usermodel.Row;
 
@@ -17,7 +17,7 @@ public class RowSpliterator extends FixedBatchSpliterator<Row> {
 		this.size = size;
 	}
 
-	RowSpliterator(Iterable<Row> cr, long size) {
+	public RowSpliterator(Iterable<Row> cr, long size) {
 		this(cr, 100, size);
 	}
 

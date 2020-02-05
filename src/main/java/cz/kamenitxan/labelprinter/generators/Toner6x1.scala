@@ -3,6 +3,7 @@ package cz.kamenitxan.labelprinter.generators
 import java.awt.Color
 
 import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.utils.AltXAddress
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 
@@ -11,7 +12,7 @@ import scala.language.postfixOps
 /**
   * Created by tomaspavel on 5.3.17.
   */
-abstract class Toner6x1 extends PdfGenerator {
+abstract class Toner6x1 extends PdfGenerator with AltXAddress {
 	val PAGE_SIZE_A4: PDRectangle = PDRectangle.A4
 	var eanImage: PDImageXObject = _
 

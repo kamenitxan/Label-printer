@@ -3,6 +3,8 @@ package cz.kamenitxan.labelprinter;
 import cz.kamenitxan.labelprinter.generators.Generators;
 import cz.kamenitxan.labelprinter.models.Manufacturer;
 import cz.kamenitxan.labelprinter.models.Product;
+import cz.kamenitxan.labelprinter.utils.RowSpliterator;
+import cz.kamenitxan.labelprinter.utils.Utils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;

@@ -1,4 +1,4 @@
-package cz.kamenitxan.labelprinter
+package cz.kamenitxan.labelprinter.utils
 
 import org.apache.log4j.Logger
 

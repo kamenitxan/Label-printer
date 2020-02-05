@@ -5,6 +5,7 @@ import java.awt.Color
 import cz.kamenitxan.labelprinter.barcode.Ean13
 import cz.kamenitxan.labelprinter.generators.{Generators, Toner6x1}
 import cz.kamenitxan.labelprinter.models.Position
+import cz.kamenitxan.labelprinter.utils.LamdaAddress
 import javax.imageio.ImageIO
 import org.apache.pdfbox.pdmodel.font.PDType0Font
 import org.apache.pdfbox.pdmodel.graphics.image.{LosslessFactory, PDImageXObject}
@@ -54,7 +55,7 @@ class TeslaToner extends Toner6x1 {
 			pn(pos)
 			desc(pos)
 			desc(pos + (240, 0), withPn = true)
-			manufacturer(pos)
+			catridgeManufacturer(pos)
 			capacity(pos)
 			capacity(pos + (240, 0))
 			rohsImage(pos)
@@ -131,12 +132,12 @@ class TeslaToner extends Toner6x1 {
 		val top = pos.y + singleHeight - 10
 		val lh = 6.5
 		val fs = 6
-		cs.print("Made in Czech Republic.", pos.x + leftPadding, top, fs)
-		cs.print("Vyrobeno v České republice.", pos.x + leftPadding, top - lh * 1 toFloat, fs)
-		cs.print("Vyrobené v Českej republike.", pos.x + leftPadding, top - lh * 2 toFloat, fs)
-		cs.print("Made in Czech Republic.", pos.x + leftPadding, top - lh * 3 toFloat, fs)
-		cs.print("Wyprodukowane w Czechach.", pos.x + leftPadding, top - lh * 4 toFloat, fs)
-		cs.print("Produs in Republica Ceha.", pos.x + leftPadding, top - lh * 5 toFloat, fs)
+		cs.print(manufacturer1, pos.x + leftPadding, top, fs)
+		cs.print(manufacturer2, pos.x + leftPadding, top - lh * 1 toFloat, fs)
+		cs.print(company, pos.x + leftPadding, top - lh * 2 toFloat, fs)
+		cs.print(street, pos.x + leftPadding, top - lh * 3 toFloat, fs)
+		cs.print(city, pos.x + leftPadding, top - lh * 4 toFloat, fs)
+		cs.print(companyId, pos.x + leftPadding, top - lh * 5 toFloat, fs)
 	}
 
 	def divider(pos: Position): Unit = {
@@ -145,7 +146,7 @@ class TeslaToner extends Toner6x1 {
 		cs.drawLine(pos + (left, singleHeight), pos + (left, singleHeight - 10))
 	}
 
-	def manufacturer(pos: Position): Unit = {
+	def catridgeManufacturer(pos: Position): Unit = {
 		cs.print(product.manufacturer, pos.x + 105, pos.y + 10)
 	}
 
