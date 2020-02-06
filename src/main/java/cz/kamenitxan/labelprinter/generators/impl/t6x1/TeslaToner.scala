@@ -131,7 +131,7 @@ class TeslaToner extends Toner6x1 {
 		val leftPadding = 20
 		val top = pos.y + singleHeight - 10
 		val lh = 6.5
-		val fs = 6
+		val fs = 5
 		cs.print(manufacturer1, pos.x + leftPadding, top, fs)
 		cs.print(manufacturer2, pos.x + leftPadding, top - lh * 1 toFloat, fs)
 		cs.print(company, pos.x + leftPadding, top - lh * 2 toFloat, fs)
