@@ -54,7 +54,7 @@ class TeslaToner extends Toner6x1 {
 			color(pos)
 			pn(pos)
 			desc(pos)
-			desc(pos + (240, 0), withPn = true)
+			desc(pos + (225, 0), withPn = true)
 			catridgeManufacturer(pos)
 			capacity(pos)
 			capacity(pos + (240, 0))
