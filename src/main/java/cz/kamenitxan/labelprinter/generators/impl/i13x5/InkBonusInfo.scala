@@ -12,7 +12,7 @@ import scala.language.postfixOps
 abstract class InkBonusInfo extends Ink13x5 {
 
 	val firm: String
-	val street: String = "Lednická 17"
+	val street: String
 	val town: String = "198 00 Praha 9"
 	var ceImage: PDImageXObject = _
 
