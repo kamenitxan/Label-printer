@@ -77,12 +77,12 @@ class XeroxToner extends Toner3x1 with AltXAddress {
 	private def staticText(pos: Position): Unit = {
 		alternativeText(pos)
 		xeroxText(pos)
-		contentsText(pos + (-22, 76))
+		contentsText(pos + (-22, 73))
 		manufacturer(pos + (590, -137))
 	}
 
 	private def alternativeText(pos: Position): Unit = {
-		cs.printLines(XeroxToner.ALT, pos + (150, 138), 7, 6)
+		cs.printLines(XeroxToner.ALT, pos + (86, 88), 6, 5)
 		cs.withColor(Color.GRAY) {
 			cs.printLines(XeroxToner.ALT, pos + (rightStart-60, 50), 12, 14)
 		}
