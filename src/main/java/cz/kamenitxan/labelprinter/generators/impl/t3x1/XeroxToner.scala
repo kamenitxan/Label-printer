@@ -105,7 +105,7 @@ class XeroxToner extends Toner3x1 with AltXAddress {
 		cs.print(product.invNum, pos.x + 141, pos.y + singleHeight - 45, 33)
 		cs.print(product.productCode, pos.x + 146, pos.y + singleHeight - 69, 15)
 		cs.withColor(Color.GREEN.darker()) {
-			cs.print(product.name, pos.x + rightStart, pos.y + singleHeight - 39, 27)
+			cs.print(product.name, pos.x + rightStart, pos.y + singleHeight - 39, 25)
 		}
 		cs.withColor(Color.GRAY) {
 			cs.print(product.productCode, pos.x + rightStart, pos.y + 12, 26)
