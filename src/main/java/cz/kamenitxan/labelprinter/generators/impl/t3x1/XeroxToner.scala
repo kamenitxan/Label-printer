@@ -117,7 +117,7 @@ class XeroxToner extends Toner3x1 with AltXAddress {
 					""
 				}
 			}
-			cs.printLines(colorText, pos + (rightStart - 60, 102), 25, 130, 18)
+			cs.printLines(colorText, pos + (rightStart - 60, 102), 25, 140, 16)
 		}
 	}
 
